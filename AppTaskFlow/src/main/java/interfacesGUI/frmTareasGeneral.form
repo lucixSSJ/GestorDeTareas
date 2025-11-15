@@ -149,7 +149,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/casa.png"/>
+                  <Image iconType="3" name="/img/casa.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Inicio"/>
               </Properties>
@@ -163,7 +163,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/estrella.png"/>
+                  <Image iconType="3" name="/img/estrella.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Prioridad"/>
               </Properties>
@@ -177,7 +177,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/categoria (1).png"/>
+                  <Image iconType="3" name="/img/categoria (1).png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Categoria"/>
               </Properties>
@@ -191,7 +191,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/archivos.png"/>
+                  <Image iconType="3" name="/img/archivos.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Estado"/>
               </Properties>
@@ -205,7 +205,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/exportar (1).png"/>
+                  <Image iconType="3" name="/img/exportar (1).png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Exportar"/>
               </Properties>
@@ -242,7 +242,7 @@
                       <Color blue="9" green="9" red="9" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/iconos/check negro 24px.png"/>
+                      <Image iconType="3" name="/img/check negro 24px.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Tareas"/>
                   </Properties>
@@ -306,28 +306,28 @@
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/usuario 32.png"/>
+                  <Image iconType="3" name="/img/usuario 32.png"/>
                 </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel6">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/cerrarSesion.png"/>
+                  <Image iconType="3" name="/img/cerrarSesion.png"/>
                 </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel7">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/buscar.png"/>
+                  <Image iconType="3" name="/img/buscar.png"/>
                 </Property>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/iconos/logo.png"/>
+                  <Image iconType="3" name="/img/logo.png"/>
                 </Property>
               </Properties>
             </Component>
@@ -548,7 +548,7 @@
                           <Color blue="33" green="33" red="33" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/iconos/calendariooo4.png"/>
+                          <Image iconType="3" name="/img/calendariooo4.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Estado"/>
                       </Properties>
@@ -708,7 +708,7 @@
                           <Color blue="33" green="33" red="33" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/iconos/calendariooo4.png"/>
+                          <Image iconType="3" name="/img/calendariooo4.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Estado"/>
                       </Properties>
@@ -863,7 +863,7 @@
                           <Color blue="33" green="33" red="33" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/iconos/calendariooo4.png"/>
+                          <Image iconType="3" name="/img/calendariooo4.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Estado"/>
                       </Properties>
@@ -1023,7 +1023,7 @@
                           <Color blue="33" green="33" red="33" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/iconos/calendariooo4.png"/>
+                          <Image iconType="3" name="/img/calendariooo4.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Estado"/>
                       </Properties>
@@ -1183,7 +1183,7 @@
                           <Color blue="33" green="33" red="33" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/iconos/calendariooo4.png"/>
+                          <Image iconType="3" name="/img/calendariooo4.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Estado"/>
                       </Properties>
@@ -1343,7 +1343,7 @@
                           <Color blue="33" green="33" red="33" type="rgb"/>
                         </Property>
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                          <Image iconType="3" name="/iconos/calendariooo4.png"/>
+                          <Image iconType="3" name="/img/calendariooo4.png"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="Estado"/>
                       </Properties>
@@ -1375,7 +1375,7 @@
         <Component class="javax.swing.JLabel" name="A&#xf1;adirTareaNueva">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/iconos/signo-de-mas.png"/>
+              <Image iconType="3" name="/img/signo-de-mas.png"/>
             </Property>
           </Properties>
         </Component>
@@ -1391,7 +1391,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/iconos/borrar.png"/>
+              <Image iconType="3" name="/img/borrar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Eliminar"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -1418,7 +1418,7 @@
               <Color blue="33" green="33" red="33" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/iconos/seleccionar.png"/>
+              <Image iconType="3" name="/img/seleccionar.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Seleccionar"/>
           </Properties>
@@ -1438,7 +1438,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/iconos/editar blanco.png"/>
+              <Image iconType="3" name="/img/editar blanco.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Modificar"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

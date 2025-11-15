@@ -108,32 +108,32 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/check blanco24px.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check blanco24px.png"))); // NOI18N
         jLabel2.setText("Tareas");
 
         jLabel8.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/estrella.png"))); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/estrella.png"))); // NOI18N
         jLabel8.setText("Prioridad");
 
         jLabel9.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/categoria (1).png"))); // NOI18N
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/categoria (1).png"))); // NOI18N
         jLabel9.setText("Categoria");
 
         jLabel10.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/archivos.png"))); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/archivos.png"))); // NOI18N
         jLabel10.setText("Estado");
 
         jLabel11.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/exportar (1).png"))); // NOI18N
+        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exportar (1).png"))); // NOI18N
         jLabel11.setText("Exportar");
 
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(22, 22, 22));
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/casita negra 24px.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casita negra 24px.png"))); // NOI18N
         jLabel1.setText("Inicio");
 
         javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
@@ -188,13 +188,13 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(41, 43, 66));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/usuario 32.png"))); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario 32.png"))); // NOI18N
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/cerrarSesion.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cerrarSesion.png"))); // NOI18N
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/buscar.png"))); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar.png"))); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/logo.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
 
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,7 +240,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(32, 32, 32));
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/despertador.png"))); // NOI18N
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/despertador.png"))); // NOI18N
         jLabel12.setText(" Proximas a vencer");
 
         jPanel4.setBackground(new java.awt.Color(216, 216, 232));
@@ -275,7 +275,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
         jLabel14.setFont(new java.awt.Font("Segoe UI Light", 1, 14)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/calendariooo4.png"))); // NOI18N
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendariooo4.png"))); // NOI18N
         jLabel14.setText("Estado");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -367,7 +367,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
         jLabel15.setFont(new java.awt.Font("Segoe UI Light", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/calendariooo4.png"))); // NOI18N
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendariooo4.png"))); // NOI18N
         jLabel15.setText("Estado");
 
         javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
@@ -459,7 +459,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
         jLabel16.setFont(new java.awt.Font("Segoe UI Light", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/calendariooo4.png"))); // NOI18N
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendariooo4.png"))); // NOI18N
         jLabel16.setText("Estado");
 
         javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
@@ -549,7 +549,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
         jLabel13.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(32, 32, 32));
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/prioridad1.png"))); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/prioridad1.png"))); // NOI18N
         jLabel13.setText(" Alta prioridad");
 
         jPanel5.setBackground(new java.awt.Color(216, 216, 232));
@@ -584,7 +584,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
         jLabel49.setFont(new java.awt.Font("Segoe UI Light", 1, 14)); // NOI18N
         jLabel49.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel49.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/calendariooo4.png"))); // NOI18N
+        jLabel49.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendariooo4.png"))); // NOI18N
         jLabel49.setText("Estado");
 
         javax.swing.GroupLayout jPanel28Layout = new javax.swing.GroupLayout(jPanel28);
@@ -677,7 +677,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
         jLabel61.setFont(new java.awt.Font("Segoe UI Light", 1, 14)); // NOI18N
         jLabel61.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel61.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/calendariooo4.png"))); // NOI18N
+        jLabel61.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendariooo4.png"))); // NOI18N
         jLabel61.setText("Estado");
 
         javax.swing.GroupLayout jPanel37Layout = new javax.swing.GroupLayout(jPanel37);
@@ -770,7 +770,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
         jLabel65.setFont(new java.awt.Font("Segoe UI Light", 1, 14)); // NOI18N
         jLabel65.setForeground(new java.awt.Color(51, 51, 51));
-        jLabel65.setIcon(new javax.swing.ImageIcon(getClass().getResource("/iconos/calendariooo4.png"))); // NOI18N
+        jLabel65.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/calendariooo4.png"))); // NOI18N
         jLabel65.setText("Por vencer");
 
         javax.swing.GroupLayout jPanel40Layout = new javax.swing.GroupLayout(jPanel40);
