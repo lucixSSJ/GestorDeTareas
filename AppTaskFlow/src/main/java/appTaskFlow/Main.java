@@ -4,17 +4,13 @@
  */
 package appTaskFlow;
 
-import interfacesGUI.InterfazPrueba;
-
 /**
  *
  * @author Luciano
  */
 public class Main {
     public static void main(String[] args){
-        InterfazPrueba miVentana = new InterfazPrueba();
-        
-        miVentana.setVisible(true);
+
     }
     
 }

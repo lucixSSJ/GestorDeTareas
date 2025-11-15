@@ -9,5 +9,7 @@ package domain;
  * @author Luciano
  */
 public class Tarea {
-    
+    public static void main(String[] args) {
+        System.out.println("Prueba");
+    }
 }

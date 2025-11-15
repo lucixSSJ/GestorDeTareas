@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7734b18c-a5f3-47ae-b092-71d3fd699210" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/appTaskFlow/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/appTaskFlow/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/domain/Tarea.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/domain/Tarea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/InterfazPrueba.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/InterfazPrueba.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmAgregarNuevaTarea.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmAgregarNuevaTarea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmCategorias.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmCategorias.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmExportarTareas.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmExportarTareas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmModificarTarea.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmModificarTarea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmPantallaPrincipal.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmPantallaPrincipal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmTareasGeneral.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmTareasGeneral.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmTareasPrioridad.form" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmTareasPrioridad.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "lucixSSJ"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/lucixSSJ/GestorDeTareas.git",
+    "accountId": "9412d4f0-c91b-4fad-ab62-d048ccb27e06"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="35LFEqnktx1hJFftcYhZQEFXiQh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Tarea.executor": "Run",
+    "Application.frmAgregarNuevaTarea.executor": "Run",
+    "Application.frmTareasGeneral.executor": "Run",
+    "Application.interfacesGUI.frmAgregarNuevaTarea.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Luciano/Desktop/Proyecto_DiseñoPatrones/GestorDeTareas/AppTaskFlow/src/main/java/interfacesGUI",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Luciano\Desktop\Proyecto_DiseñoPatrones\GestorDeTareas\AppTaskFlow\src\main\java\interfacesGUI" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.frmTareasGeneral">
+    <configuration name="Tarea" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="domain.Tarea" />
+      <module name="AppTaskFlow" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="domain.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="frmAgregarNuevaTarea" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Vista.frmAgregarNuevaTarea" />
+      <module name="AppTaskFlow" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="Vista.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="frmTareasGeneral" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="interfacesGUI.frmTareasGeneral" />
+      <module name="AppTaskFlow" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="interfacesGUI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="interfacesGUI.frmAgregarNuevaTarea" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="interfacesGUI.frmAgregarNuevaTarea" />
+      <module name="AppTaskFlow" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="interfacesGUI.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.frmTareasGeneral" />
+        <item itemvalue="Application.interfacesGUI.frmAgregarNuevaTarea" />
+        <item itemvalue="Application.Tarea" />
+        <item itemvalue="Application.frmAgregarNuevaTarea" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7734b18c-a5f3-47ae-b092-71d3fd699210" name="Changes" comment="" />
+      <created>1762881336533</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762881336533</updated>
+    </task>
+    <servers />
+  </component>
+</project>
