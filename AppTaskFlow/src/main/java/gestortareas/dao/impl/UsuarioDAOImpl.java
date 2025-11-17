@@ -183,4 +183,21 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
         return usuario;
     }
+
+    @Override
+    public boolean actualizarContraseña(String newPassword, String email) {
+        String sql = "UPDATE usuarios SET password_hash = ? WHERE email = ?";
+        try(Connection conn = getValidConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ){
+            stmt.setString(1, newPassword);
+            stmt.setString(2, email);
+            
+            return stmt.executeUpdate() > 0;
+        }catch(SQLException ex){
+            System.out.println("Error al actualizar la contraseña: "+ex.getMessage());
+            DatabaseConnection.reconnect();
+            return false;
+        }
+    }    
 }

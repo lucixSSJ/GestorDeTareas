@@ -16,7 +16,7 @@ import java.util.Properties;
 public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/gestor_tareas";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = ""; //ponen su password de su MySQL
+    private static final String PASSWORD = "123456"; //ponen su password de su MySQL
 
     // Singleton instance
     private static volatile DatabaseConnection instance;

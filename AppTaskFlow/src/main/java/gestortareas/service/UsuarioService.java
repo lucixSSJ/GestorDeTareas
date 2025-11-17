@@ -6,10 +6,13 @@ import gestortareas.model.Usuario;
 import gestortareas.utilidad.passwordhasher.PasswordHasher;
 
 public class UsuarioService {
+
     private final UsuarioDAO usuarioDAO;
+    private final EmailService emailService;
 
     public UsuarioService() {
         this.usuarioDAO = new UsuarioDAOImpl();
+        this.emailService = new EmailService();
     }
 
     public Usuario iniciarSesion(String username, String password) {
@@ -26,7 +29,7 @@ public class UsuarioService {
     }
 
     public boolean registrarUsuario(String nombres, String apellidos, String email,
-                                    String username, String password) {
+            String username, String password) {
         // Validaciones
         if (nombres == null || nombres.trim().isEmpty()) {
             throw new IllegalArgumentException("Los nombres son obligatorios");
@@ -71,5 +74,16 @@ public class UsuarioService {
 
     public Usuario obtenerUsuarioPorId(int id) {
         return usuarioDAO.obtenerPorId(id);
+    }
+
+    public boolean resetearPassoword(String password, String email) {
+        System.out.println(" clave: " + password + " email: " + email);
+        if (password.isEmpty() && email.isEmpty()) {
+            System.out.println("Los campos son obligatorios");
+            return false;
+        }
+
+        return this.usuarioDAO.actualizarContraseña(PasswordHasher.hashPassword(password), email);
+
     }
 }

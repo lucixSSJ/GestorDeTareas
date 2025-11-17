@@ -9,4 +9,5 @@ public interface UsuarioDAO {
     boolean actualizarUltimoLogin(int idUsuario);
     boolean existeUsername(String username);
     boolean existeEmail(String email);
+    boolean actualizarContraseña(String newPassword, String email);
 }
