@@ -4,17 +4,422 @@
  */
 package interfacesGUI;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import service.TareaService;
+import domain.Tarea;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import javax.swing.JOptionPane;
+import java.awt.Color;
+import utilidad.WindowStateManager;
+
 /**
  *
  * @author SERT
  */
 public class frmPantallaPrincipal extends javax.swing.JFrame {
+    
+    private TareaService tareaService;
+    private List<Tarea> todasLasTareas;
+    private List<Tarea> tareasProximasAVencer;
+    private List<Tarea> tareasAltaPrioridad;
 
     /**
      * Creates new form Login
      */
     public frmPantallaPrincipal() {
         initComponents();
+        configurarVentana();
+        inicializarDatos();
+        configurarNavegacion();
+        cargarDashboard();
+    }
+    
+    /**
+     * Constructor que recibe una ventana anterior para transferir estado
+     */
+    public frmPantallaPrincipal(javax.swing.JFrame ventanaAnterior) {
+        initComponents();
+        if (ventanaAnterior != null) {
+            WindowStateManager.getInstance().transferState(ventanaAnterior, this);
+        } else {
+            configurarVentana();
+        }
+        inicializarDatos();
+        configurarNavegacion();
+        cargarDashboard();
+    }
+    
+    private void inicializarDatos() {
+        tareaService = TareaService.getInstance();
+        todasLasTareas = tareaService.obtenerTodasLasTareas();
+        
+        // Filtrar tareas próximas a vencer (próximos 7 días)
+        LocalDate ahora = LocalDate.now();
+        LocalDate limite = ahora.plusDays(7);
+        
+        tareasProximasAVencer = todasLasTareas.stream()
+            .filter(t -> t.getFechaVencimiento() != null)
+            .filter(t -> !t.getFechaVencimiento().isBefore(ahora))
+            .filter(t -> !t.getFechaVencimiento().isAfter(limite))
+            .filter(t -> !"completada".equalsIgnoreCase(t.getEstado()))
+            .collect(Collectors.toList());
+            
+        // Filtrar tareas de alta prioridad no completadas
+        tareasAltaPrioridad = todasLasTareas.stream()
+            .filter(t -> "alta".equalsIgnoreCase(t.getPrioridad()))
+            .filter(t -> !"completada".equalsIgnoreCase(t.getEstado()))
+            .collect(Collectors.toList());
+    }
+    
+    private void cargarDashboard() {
+        cargarTareasProximasAVencer();
+        cargarTareasAltaPrioridad();
+        actualizarEstadisticas();
+        
+        // Asegurar que el contenido se muestre correctamente
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            this.revalidate();
+            this.repaint();
+        });
+    }
+    
+    private void actualizarEstadisticas() {
+        // Actualizar contador de tareas próximas a vencer
+        jLabel12.setText("   Próximas a vencer (" + tareasProximasAVencer.size() + ")");
+        
+        // Actualizar contador de tareas de alta prioridad
+        jLabel13.setText("   Alta prioridad (" + tareasAltaPrioridad.size() + ")");
+    }
+    
+    private void configurarVentana() {
+        // Usar WindowStateManager para configuración consistente
+        WindowStateManager.getInstance().configureWindow(this);
+        this.setTitle("TaskFlow - Dashboard Principal");
+        
+        // Configurar scroll y mejor visualización
+        configurarLayoutOptimizado();
+    }
+    
+    private void configurarLayoutOptimizado() {
+        // Asegurar que todos los componentes se muestren correctamente
+        this.revalidate();
+        this.repaint();
+        
+        // Configurar espaciado idéntico en ambas secciones
+        if (jPanel4 != null) {
+            jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        }
+        if (jPanel5 != null) {
+            jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        }
+        
+        // Configurar tamaños uniformes para todos los paneles de tareas
+        configurarTamanosUniformes();
+    }
+    
+    private void configurarTamanosUniformes() {
+        // Paneles de "Próximas a vencer"
+        javax.swing.JPanel[] panelesProximos = {jPanel6, jPanel9, jPanel23};
+        
+        // Paneles de "Alta prioridad"
+        javax.swing.JPanel[] panelesAlta = {jPanel26, jPanel35, jPanel38};
+        
+        java.awt.Dimension tamanoEstandar = new java.awt.Dimension(305, 180);
+        java.awt.Dimension tamanoMinimo = new java.awt.Dimension(300, 170);
+        java.awt.Dimension tamanoMaximo = new java.awt.Dimension(320, 190);
+        
+        // Configurar tamaños uniformes para todas las tarjetas
+        for (javax.swing.JPanel panel : panelesProximos) {
+            if (panel != null) {
+                panel.setPreferredSize(tamanoEstandar);
+                panel.setMinimumSize(tamanoMinimo);
+                panel.setMaximumSize(tamanoMaximo);
+            }
+        }
+        
+        for (javax.swing.JPanel panel : panelesAlta) {
+            if (panel != null) {
+                panel.setPreferredSize(tamanoEstandar);
+                panel.setMinimumSize(tamanoMinimo);
+                panel.setMaximumSize(tamanoMaximo);
+            }
+        }
+    }
+    
+    private void configurarNavegacion() {
+        // Navegación a Tareas
+        jLabel2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarATareas();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Navegación a Prioridad
+        jLabel8.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarAPrioridad();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Navegación a Categorías
+        jLabel9.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarACategorias();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Navegación a Estado
+        jLabel10.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarAEstado();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Navegación a Exportar
+        jLabel11.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarAExportar();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+    }
+    
+    private void navegarATareas() {
+        try {
+            frmTareasGeneral tareas = new frmTareasGeneral(this);
+            tareas.setVisible(true);
+            this.dispose(); // Cerrar ventana actual
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error al abrir tareas: " + ex.getMessage(),
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void navegarAPrioridad() {
+        // Por ahora mostrar mensaje, se puede implementar una ventana específica de prioridad
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Funcionalidad de Prioridad en desarrollo",
+            "Información", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void navegarACategorias() {
+        try {
+            frmCategorias categorias = new frmCategorias(this);
+            categorias.setVisible(true);
+            this.dispose(); // Cerrar ventana actual
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error al abrir categorías: " + ex.getMessage(),
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void navegarAEstado() {
+        // Por ahora mostrar mensaje, se puede implementar una ventana específica de estado
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Funcionalidad de Estado en desarrollo",
+            "Información", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void navegarAExportar() {
+        try {
+            frmExportarTareas exportar = new frmExportarTareas(this);
+            exportar.setVisible(true);
+            this.dispose(); // Cerrar ventana actual
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error al abrir exportar tareas: " + ex.getMessage(),
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void cargarTareasProximasAVencer() {
+        // Paneles para tareas próximas a vencer
+        javax.swing.JPanel[] paneles = {jPanel6, jPanel9, jPanel23};
+        javax.swing.JLabel[][] labels = {
+            {jLabel20, jLabel21, jLabel22, jLabel29},
+            {jLabel23, jLabel24, jLabel25, jLabel30},
+            {jLabel26, jLabel27, jLabel28, jLabel31}
+        };
+        
+        // Limpiar paneles primero
+        for (int i = 0; i < paneles.length; i++) {
+            limpiarPanel(paneles[i], labels[i]);
+        }
+        
+        // Cargar hasta 3 tareas próximas a vencer
+        for (int i = 0; i < Math.min(tareasProximasAVencer.size(), paneles.length); i++) {
+            Tarea tarea = tareasProximasAVencer.get(i);
+            cargarDatosTarea(paneles[i], labels[i], tarea, true);
+        }
+    }
+    
+    private void cargarTareasAltaPrioridad() {
+        // Paneles para tareas de alta prioridad
+        javax.swing.JPanel[] paneles = {jPanel26, jPanel35, jPanel38};
+        javax.swing.JLabel[][] labels = {
+            {jLabel46, jLabel47, jLabel48, jLabel32},
+            {jLabel58, jLabel59, jLabel60, jLabel33},
+            {jLabel62, jLabel63, jLabel64, jLabel34}
+        };
+        
+        // Limpiar paneles primero
+        for (int i = 0; i < paneles.length; i++) {
+            limpiarPanel(paneles[i], labels[i]);
+        }
+        
+        // Cargar hasta 3 tareas de alta prioridad
+        for (int i = 0; i < Math.min(tareasAltaPrioridad.size(), paneles.length); i++) {
+            Tarea tarea = tareasAltaPrioridad.get(i);
+            cargarDatosTarea(paneles[i], labels[i], tarea, false);
+        }
+    }
+    
+    private void limpiarPanel(javax.swing.JPanel panel, javax.swing.JLabel[] labels) {
+        labels[0].setText("Sin tareas");
+        labels[1].setText("No hay tareas para mostrar");
+        labels[2].setText("-");
+        labels[3].setText("-");
+        
+        // Remover listeners de clic
+        for (java.awt.event.MouseListener ml : panel.getMouseListeners()) {
+            panel.removeMouseListener(ml);
+        }
+    }
+    
+    private void cargarDatosTarea(javax.swing.JPanel panel, javax.swing.JLabel[] labels, Tarea tarea, boolean esProximaAVencer) {
+        // Configurar textos con mejor longitud
+        labels[0].setText(limitarTexto(tarea.getTitulo(), 18));
+        labels[1].setText(limitarTexto(tarea.getDescripcion(), 25));
+        labels[3].setText("Cat: " + (tarea.getCategoria() != null ? tarea.getCategoria() : "General"));
+        
+        // Configurar fecha con días restantes si es próxima a vencer
+        if (esProximaAVencer && tarea.getFechaVencimiento() != null) {
+            long diasRestantes = ChronoUnit.DAYS.between(LocalDate.now(), tarea.getFechaVencimiento());
+            if (diasRestantes == 0) {
+                labels[2].setText("HOY!");
+            } else if (diasRestantes == 1) {
+                labels[2].setText("Mañana");
+            } else {
+                labels[2].setText(diasRestantes + " días");
+            }
+        } else if (tarea.getFechaVencimiento() != null) {
+            labels[2].setText(tarea.getFechaVencimiento().toString());
+        } else {
+            labels[2].setText("Sin fecha");
+        }
+        
+        // Configurar tamaño del panel para consistencia
+        panel.setPreferredSize(new java.awt.Dimension(300, 180));
+        panel.setMinimumSize(new java.awt.Dimension(280, 160));
+        panel.setMaximumSize(new java.awt.Dimension(350, 200));
+        
+        // Añadir listener para mostrar detalles
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                mostrarDetallesTarea(tarea);
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                panel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+    }
+    
+    private String limitarTexto(String texto, int maxLength) {
+        if (texto == null) return "";
+        if (texto.length() <= maxLength) return texto;
+        return texto.substring(0, maxLength - 3) + "...";
+    }
+    
+    private void mostrarDetallesTarea(Tarea tarea) {
+        String diasVencimiento = "";
+        if (tarea.getFechaVencimiento() != null) {
+            long dias = ChronoUnit.DAYS.between(LocalDate.now(), tarea.getFechaVencimiento());
+            if (dias < 0) {
+                diasVencimiento = "\n⚠️  VENCIDA hace " + Math.abs(dias) + " día(s)";
+            } else if (dias == 0) {
+                diasVencimiento = "\n🔥  VENCE HOY";
+            } else if (dias <= 3) {
+                diasVencimiento = "\n⏰  Vence en " + dias + " día(s)";
+            }
+        }
+        
+        String mensaje = String.format(
+            "=== DETALLES DE LA TAREA ===\n\n" +
+            "📋 Título: %s\n" +
+            "📝 Descripción: %s\n" +
+            "🏷️  Categoría: %s\n" +
+            "⭐ Prioridad: %s\n" +
+            "📊 Estado: %s\n" +
+            "📅 Vencimiento: %s%s\n" +
+            "📆 Creada: %s",
+            tarea.getTitulo(),
+            tarea.getDescripcion() != null ? tarea.getDescripcion() : "Sin descripción",
+            tarea.getCategoria() != null ? tarea.getCategoria() : "General",
+            tarea.getPrioridad(),
+            tarea.getEstado(),
+            tarea.getFechaVencimiento() != null ? tarea.getFechaVencimiento().toString() : "Sin fecha",
+            diasVencimiento,
+            tarea.getFechaCreacion().toString()
+        );
+        
+        JOptionPane.showMessageDialog(this, mensaje, "Detalles de la Tarea", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    // Método público para actualizar el dashboard desde otras ventanas
+    public void actualizarDashboard() {
+        inicializarDatos();
+        cargarDashboard();
+        
+        // Forzar redibujado completo
+        this.invalidate();
+        this.validate();
+        this.repaint();
+        
+        // Recentrar la ventana si es necesario
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -528,13 +933,13 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addGap(33, 33, 33)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
+                .addGap(47, 47, 47)
                 .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
+                .addGap(31, 31, 31))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -544,7 +949,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
                     .addComponent(jPanel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jLabel13.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
@@ -909,8 +1314,49 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
+        buscarTareas();
     }//GEN-LAST:event_jTextField2ActionPerformed
+    
+    private void buscarTareas() {
+        String termino = jTextField2.getText().trim();
+        if (termino.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "Por favor, ingrese un término de búsqueda",
+                "Búsqueda", 
+                JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        List<Tarea> resultados = todasLasTareas.stream()
+            .filter(t -> t.getTitulo().toLowerCase().contains(termino.toLowerCase()) ||
+                        (t.getDescripcion() != null && t.getDescripcion().toLowerCase().contains(termino.toLowerCase())) ||
+                        (t.getCategoria() != null && t.getCategoria().toLowerCase().contains(termino.toLowerCase())))
+            .collect(Collectors.toList());
+            
+        if (resultados.isEmpty()) {
+            JOptionPane.showMessageDialog(this, 
+                "No se encontraron tareas que coincidan con: \"" + termino + "\"",
+                "Resultado de Búsqueda", 
+                JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            StringBuilder mensaje = new StringBuilder("Se encontraron " + resultados.size() + " tarea(s):\n\n");
+            for (int i = 0; i < Math.min(resultados.size(), 5); i++) {
+                Tarea t = resultados.get(i);
+                mensaje.append("• ").append(t.getTitulo())
+                       .append(" (").append(t.getPrioridad()).append(")\n");
+            }
+            if (resultados.size() > 5) {
+                mensaje.append("... y ").append(resultados.size() - 5).append(" más.");
+            }
+            
+            JOptionPane.showMessageDialog(this, 
+                mensaje.toString(),
+                "Resultado de Búsqueda", 
+                JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        jTextField2.setText(""); // Limpiar campo
+    }
 
     /**
      * @param args the command line arguments

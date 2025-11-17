@@ -4,6 +4,10 @@
  */
 package interfacesGUI;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import utilidad.WindowStateManager;
+
 /**
  *
  * @author SERT
@@ -15,6 +19,152 @@ public class frmExportarTareas extends javax.swing.JFrame {
      */
     public frmExportarTareas() {
         initComponents();
+        configurarVentana();
+        configurarNavegacion();
+    }
+    
+    /**
+     * Constructor que recibe la ventana anterior para mantener el estado
+     */
+    public frmExportarTareas(javax.swing.JFrame ventanaAnterior) {
+        initComponents();
+        if (ventanaAnterior != null) {
+            WindowStateManager.getInstance().transferState(ventanaAnterior, this);
+        } else {
+            configurarVentana();
+        }
+        this.setTitle("TaskFlow - Exportar Tareas");
+        configurarNavegacion();
+    }
+    
+    private void configurarVentana() {
+        WindowStateManager.getInstance().configureWindow(this);
+        this.setTitle("TaskFlow - Exportar Tareas");
+    }
+    
+    private void configurarNavegacion() {
+        // Navegación a Inicio
+        jLabel1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarAInicio();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Navegación a Tareas
+        jLabel2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarATareas();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Navegación a Prioridad
+        jLabel8.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarAPrioridad();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Navegación a Categorías
+        jLabel9.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarACategorias();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Navegación a Estado
+        jLabel10.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarAEstado();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+    }
+    
+    private void navegarAInicio() {
+        try {
+            WindowStateManager.getInstance().saveWindowState(this);
+            frmPantallaPrincipal pantallaPrincipal = new frmPantallaPrincipal(this);
+            pantallaPrincipal.setVisible(true);
+            this.dispose(); // Cerrar ventana actual
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error al abrir la pantalla principal: " + ex.getMessage(),
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void navegarATareas() {
+        try {
+            WindowStateManager.getInstance().saveWindowState(this);
+            frmTareasGeneral tareas = new frmTareasGeneral(this);
+            tareas.setVisible(true);
+            this.dispose(); // Cerrar ventana actual
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error al abrir tareas: " + ex.getMessage(),
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void navegarAPrioridad() {
+        // Por ahora mostrar mensaje, se puede implementar una ventana específica de prioridad
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Funcionalidad de Prioridad en desarrollo",
+            "Información", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void navegarACategorias() {
+        try {
+            WindowStateManager.getInstance().saveWindowState(this);
+            frmCategorias categorias = new frmCategorias(this);
+            categorias.setVisible(true);
+            this.dispose(); // Cerrar ventana actual
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error al abrir categorías: " + ex.getMessage(),
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void navegarAEstado() {
+        // Por ahora mostrar mensaje, se puede implementar una ventana específica de estado
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Funcionalidad de Estado en desarrollo",
+            "Información", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**

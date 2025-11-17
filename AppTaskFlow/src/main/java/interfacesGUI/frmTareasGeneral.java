@@ -4,17 +4,874 @@
  */
 package interfacesGUI;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import service.TareaService;
+import domain.Tarea;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.awt.Color;
+import utilidad.WindowStateManager;
+
 /**
  *
  * @author SERT
  */
 public class frmTareasGeneral extends javax.swing.JFrame {
+    
+    private TareaService tareaService;
+    private List<Tarea> tareas;
+    private List<Tarea> tareasFiltradas;
+    private Tarea tareaSeleccionada;
+    private int paginaActual = 0;
+    private final int TAREAS_POR_PAGINA = 6;
+    private String filtroActual = "";
 
     /**
      * Creates new form Login
      */
     public frmTareasGeneral() {
         initComponents();
+        configurarVentana();
+        inicializarComponentes();
+        configurarNavegacion();
+        cargarTareas();
+    }
+    
+    /**
+     * Constructor que recibe una ventana anterior para transferir estado
+     */
+    public frmTareasGeneral(javax.swing.JFrame ventanaAnterior) {
+        initComponents();
+        if (ventanaAnterior != null) {
+            WindowStateManager.getInstance().transferState(ventanaAnterior, this);
+        } else {
+            configurarVentana();
+        }
+        inicializarComponentes();
+        configurarNavegacion();
+        cargarTareas();
+    }
+    
+    private void configurarVentana() {
+        // Usar WindowStateManager para configuración consistente
+        WindowStateManager.getInstance().configureWindow(this);
+        this.setTitle("TaskFlow - Gestor de Tareas");
+        
+        // Mejorar la visibilidad de los botones
+        configurarVisibilidadBotones();
+        
+        // Configurar scroll para el contenido principal
+        configurarScrollPanel();
+    }
+    
+    private void configurarVisibilidadBotones() {
+        // Asegurar que los botones sean visibles y tengan el tamaño adecuado
+        java.awt.Font buttonFont = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 14);
+        
+        // Configurar botón Eliminar
+        jButton1.setFont(buttonFont);
+        jButton1.setPreferredSize(new java.awt.Dimension(140, 40));
+        jButton1.setMinimumSize(new java.awt.Dimension(140, 40));
+        jButton1.setVisible(true);
+        
+        // Configurar botón Seleccionar  
+        jButton2.setFont(buttonFont);
+        jButton2.setPreferredSize(new java.awt.Dimension(140, 40));
+        jButton2.setMinimumSize(new java.awt.Dimension(140, 40));
+        jButton2.setVisible(true);
+        
+        // Configurar botón Modificar
+        jButton3.setFont(buttonFont);
+        jButton3.setPreferredSize(new java.awt.Dimension(140, 40));
+        jButton3.setMinimumSize(new java.awt.Dimension(140, 40));
+        jButton3.setVisible(true);
+        
+        // Hacer que el botón de agregar tarea sea más visible
+        AñadirTareaNueva.setToolTipText("Agregar nueva tarea");
+        AñadirTareaNueva.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+    }
+    
+    private void configurarScrollPanel() {
+        // Configuración básica para mejor visualización
+        // Por ahora mantener el layout original pero optimizado
+    }
+    
+    private void inicializarComponentes() {
+        tareaService = TareaService.getInstance();
+        tareas = tareaService.obtenerTodasLasTareas();
+        tareasFiltradas = new java.util.ArrayList<>(tareas);
+        tareaSeleccionada = null;
+        
+        // Configurar el campo de búsqueda
+        configurarBusqueda();
+        
+        // Configurar botones inicialmente deshabilitados
+        jButton2.setEnabled(false); // Seleccionar
+        jButton3.setEnabled(false); // Modificar
+        jButton1.setEnabled(false); // Eliminar
+        
+        // Configurar evento del botón agregar tarea
+        configurarBotonAgregarTarea();
+        
+        // Configurar panel de botones con mejor layout
+        configurarPanelBotones();
+    }
+    
+    private void configurarPanelBotones() {
+        // Configurar textos más descriptivos
+        jButton2.setText("Ver Detalles");
+        jButton3.setText("Modificar");
+        jButton1.setText("Eliminar");
+        
+        // Configurar colores más visibles
+        jButton2.setBackground(new java.awt.Color(72, 133, 237));
+        jButton2.setForeground(java.awt.Color.WHITE);
+        jButton2.setBorder(javax.swing.BorderFactory.createRaisedBevelBorder());
+        
+        jButton3.setBackground(new java.awt.Color(60, 179, 113)); 
+        jButton3.setForeground(java.awt.Color.WHITE);
+        jButton3.setBorder(javax.swing.BorderFactory.createRaisedBevelBorder());
+        
+        jButton1.setBackground(new java.awt.Color(220, 53, 69));
+        jButton1.setForeground(java.awt.Color.WHITE);
+        jButton1.setBorder(javax.swing.BorderFactory.createRaisedBevelBorder());
+    }
+    
+    private void configurarBotonAgregarTarea() {
+        AñadirTareaNueva.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                abrirFormularioNuevaTarea();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                AñadirTareaNueva.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Configurar eventos de los botones de acción
+        configurarEventosBotones();
+    }
+    
+    private void configurarEventosBotones() {
+        // Botón Eliminar (jButton1)
+        jButton1.addActionListener(e -> eliminarTarea());
+        
+        // Botón Modificar (jButton3)  
+        jButton3.addActionListener(e -> modificarTarea());
+    }
+    
+    private void abrirFormularioNuevaTarea() {
+        try {
+            frmAgregarNuevaTarea formulario = new frmAgregarNuevaTarea();
+            formulario.setVisible(true);
+            formulario.setLocationRelativeTo(this);
+            
+            // Después de cerrar el formulario, actualizar la vista
+            formulario.addWindowListener(new java.awt.event.WindowAdapter() {
+                @Override
+                public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                    actualizarVista();
+                }
+            });
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al abrir el formulario de nueva tarea: " + ex.getMessage(),
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void cargarTareas() {
+        try {
+            tareas = tareaService.obtenerTodasLasTareas();
+            actualizarVistaTareas();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al cargar las tareas: " + ex.getMessage(),
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void actualizarVistaTareas() {
+        // Limpiar paneles de tareas primero
+        limpiarPanelesTareas();
+        
+        // Mostrar las tareas en los paneles
+        if (tareas != null && !tareas.isEmpty()) {
+            mostrarTareasEnPaneles();
+        }
+        
+        // Actualizar contador
+        jLabel12.setText("Todas las tareas (" + tareas.size() + ")");
+        
+        // Asegurar que el panel se redibuje correctamente
+        jPanel4.revalidate();
+        jPanel4.repaint();
+        this.revalidate();
+        this.repaint();
+    }
+    
+    private void limpiarPanelesTareas() {
+        // Limpiar contenido de los paneles de tareas (los 6 paneles visibles)
+        limpiarPanelTarea(jPanel6, jLabel20, jLabel21, jLabel22, jLabel23);
+        limpiarPanelTarea(jPanel13, jLabel30, jLabel38, jLabel39, jLabel24);
+        limpiarPanelTarea(jPanel22, jLabel40, jLabel41, jLabel42, jLabel25);
+        limpiarPanelTarea(jPanel25, jLabel44, jLabel45, jLabel46, jLabel26);
+        limpiarPanelTarea(jPanel28, jLabel48, jLabel49, jLabel50, jLabel27);
+        limpiarPanelTarea(jPanel31, jLabel52, jLabel53, jLabel54, jLabel28);
+    }
+    
+    private void limpiarPanelTarea(javax.swing.JPanel panel, 
+                                   javax.swing.JLabel lblTitulo, 
+                                   javax.swing.JLabel lblDescripcion, 
+                                   javax.swing.JLabel lblFecha, 
+                                   javax.swing.JLabel lblCategoria) {
+        lblTitulo.setText("Título");
+        lblDescripcion.setText("Descripción");
+        lblFecha.setText("Fecha");
+        lblCategoria.setText("Categoría");
+        panel.setBackground(new Color(255, 255, 255));
+        
+        // Remover cualquier listener anterior
+        for (java.awt.event.MouseListener ml : panel.getMouseListeners()) {
+            panel.removeMouseListener(ml);
+        }
+    }
+    
+    private void mostrarTareasEnPaneles() {
+        javax.swing.JPanel[] paneles = {jPanel6, jPanel13, jPanel22, jPanel25, jPanel28, jPanel31};
+        javax.swing.JLabel[][] labels = {
+            {jLabel20, jLabel21, jLabel22, jLabel23},
+            {jLabel30, jLabel38, jLabel39, jLabel24},
+            {jLabel40, jLabel41, jLabel42, jLabel25},
+            {jLabel44, jLabel45, jLabel46, jLabel26},
+            {jLabel48, jLabel49, jLabel50, jLabel27},
+            {jLabel52, jLabel53, jLabel54, jLabel28}
+        };
+        
+        // Limpiar todos los paneles primero
+        limpiarTodosLosPaneles(paneles, labels);
+        
+        // Calcular las tareas a mostrar según la página actual
+        int inicio = paginaActual * TAREAS_POR_PAGINA;
+        int fin = Math.min(inicio + TAREAS_POR_PAGINA, tareasFiltradas.size());
+        
+        // Actualizar el título con información de paginación
+        actualizarTituloPaginacion();
+        
+        // Mostrar tareas de la página actual
+        for (int i = 0; i < Math.min(fin - inicio, paneles.length); i++) {
+            Tarea tarea = tareasFiltradas.get(inicio + i);
+            javax.swing.JPanel panel = paneles[i];
+            javax.swing.JLabel[] lbls = labels[i];
+            
+            // Configurar textos
+            lbls[0].setText(tarea.getTitulo());
+            lbls[1].setText(tarea.getDescripcion());
+            lbls[2].setText(tarea.getFechaVencimiento() != null ? 
+                           tarea.getFechaVencimiento().toString() : "Sin fecha");
+            lbls[3].setText("Categoría: " + (tarea.getCategoria() != null ? tarea.getCategoria() : "Sin categoría"));
+            
+            // Configurar color según prioridad
+            configurarColorPorPrioridad(panel, tarea.getPrioridad());
+            
+            // Configurar tamaño del panel para que sea consistente
+            panel.setPreferredSize(new java.awt.Dimension(280, 160));
+            panel.setMinimumSize(new java.awt.Dimension(250, 140));
+            panel.setMaximumSize(new java.awt.Dimension(320, 180));
+            
+            // Hacer visible el panel
+            panel.setVisible(true);
+            
+            // Agregar listener para selección
+            agregarListenerSeleccion(panel, tarea);
+        }
+        
+        // Añadir controles de navegación si es necesario
+        configurarControlesPaginacion();
+    }
+    
+    private void configurarColorPorPrioridad(javax.swing.JPanel panel, String prioridad) {
+        javax.swing.JPanel panelColor = (javax.swing.JPanel) panel.getComponent(0); // Primer componente es el panel de color
+        
+        switch (prioridad != null ? prioridad.toLowerCase() : "media") {
+            case "alta":
+                panelColor.setBackground(new Color(231, 30, 30)); // Rojo
+                break;
+            case "media":
+                panelColor.setBackground(new Color(248, 231, 108)); // Amarillo
+                break;
+            case "baja":
+                panelColor.setBackground(new Color(153, 153, 153)); // Gris
+                break;
+            default:
+                panelColor.setBackground(new Color(153, 153, 153)); // Gris por defecto
+                break;
+        }
+    }
+    
+    private void agregarListenerSeleccion(javax.swing.JPanel panel, Tarea tarea) {
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                seleccionarTarea(panel, tarea);
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                panel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+    }
+    
+    private void seleccionarTarea(javax.swing.JPanel panel, Tarea tarea) {
+        // Desseleccionar panel anterior
+        if (tareaSeleccionada != null) {
+            limpiarSeleccion();
+        }
+        
+        // Seleccionar nueva tarea
+        tareaSeleccionada = tarea;
+        panel.setBackground(new Color(173, 216, 230)); // Color de selección (azul claro)
+        
+        // Habilitar botones
+        jButton2.setEnabled(true); // Seleccionar
+        jButton3.setEnabled(true); // Modificar
+        jButton1.setEnabled(true); // Eliminar
+        
+        // Mostrar información en consola (debug)
+        System.out.println("Tarea seleccionada: " + tarea.getTitulo());
+    }
+    
+    private void limpiarSeleccion() {
+        // Recargar vista para limpiar selección visual
+        actualizarVistaTareas();
+        
+        // Deshabilitar botones
+        jButton2.setEnabled(false);
+        jButton3.setEnabled(false);
+        jButton1.setEnabled(false);
+        
+        tareaSeleccionada = null;
+    }
+    
+    // Método para mostrar detalles de una tarea
+    private void mostrarDetallesTarea(Tarea tarea) {
+        String mensaje = String.format(
+            "=== DETALLES DE LA TAREA ===\n\n" +
+            "ID: %d\n" +
+            "Título: %s\n" +
+            "Descripción: %s\n" +
+            "Categoría: %s\n" +
+            "Prioridad: %s\n" +
+            "Estado: %s\n" +
+            "Fecha de vencimiento: %s\n" +
+            "Fecha de creación: %s",
+            tarea.getId(),
+            tarea.getTitulo(),
+            tarea.getDescripcion() != null ? tarea.getDescripcion() : "Sin descripción",
+            tarea.getCategoria() != null ? tarea.getCategoria() : "Sin categoría",
+            tarea.getPrioridad(),
+            tarea.getEstado(),
+            tarea.getFechaVencimiento() != null ? tarea.getFechaVencimiento().toString() : "Sin fecha límite",
+            tarea.getFechaCreacion().toString()
+        );
+        
+        JOptionPane.showMessageDialog(this, mensaje, "Detalles de la Tarea", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    // Método para eliminar una tarea
+    private void eliminarTarea() {
+        if (tareaSeleccionada == null) {
+            JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione una tarea primero",
+                "Información", 
+                JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        int opcion = JOptionPane.showConfirmDialog(this, 
+            "¿Está seguro de que desea eliminar la tarea '" + tareaSeleccionada.getTitulo() + "'?",
+            "Confirmar Eliminación", 
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
+        
+        if (opcion == JOptionPane.YES_OPTION) {
+            try {
+                boolean eliminado = tareaService.eliminarTarea(tareaSeleccionada.getId());
+                if (eliminado) {
+                    JOptionPane.showMessageDialog(this, 
+                        "Tarea eliminada exitosamente",
+                        "Éxito", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                    cargarTareas(); // Recargar la lista
+                    limpiarSeleccion();
+                } else {
+                    JOptionPane.showMessageDialog(this, 
+                        "No se pudo eliminar la tarea",
+                        "Error", 
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error al eliminar la tarea: " + ex.getMessage(),
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+    
+    // Método para modificar una tarea
+    private void modificarTarea() {
+        if (tareaSeleccionada == null) {
+            JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione una tarea primero",
+                "Información", 
+                JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        
+        try {
+            // Crear formulario pasando la tarea seleccionada y esta ventana como padre
+            frmModificarTarea formulario = new frmModificarTarea(tareaSeleccionada, this);
+            formulario.setVisible(true);
+            formulario.setLocationRelativeTo(this);
+            // Ocultar la ventana actual
+            this.setVisible(false);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al abrir el formulario de modificación: " + ex.getMessage(),
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    // Método público para actualizar la vista (llamado desde otros formularios)
+    public void actualizarVista() {
+        cargarTareas();
+    }
+    
+    /**
+     * Configurar la funcionalidad de búsqueda
+     */
+    private void configurarBusqueda() {
+        // Añadir placeholder text
+        jTextField2.setText("Buscar tareas por título...");
+        jTextField2.setForeground(Color.GRAY);
+        
+        // Añadir listeners para búsqueda en tiempo real
+        jTextField2.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                if (jTextField2.getText().equals("Buscar tareas por título...")) {
+                    jTextField2.setText("");
+                    jTextField2.setForeground(Color.BLACK);
+                }
+            }
+            
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                if (jTextField2.getText().trim().isEmpty()) {
+                    jTextField2.setText("Buscar tareas por título...");
+                    jTextField2.setForeground(Color.GRAY);
+                }
+            }
+        });
+        
+        // Búsqueda en tiempo real mientras se escribe
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                if (!jTextField2.getText().equals("Buscar tareas por título...")) {
+                    buscarTareas();
+                }
+            }
+        });
+    }
+    
+    /**
+     * Método para buscar tareas por título
+     */
+    private void buscarTareas() {
+        String textoBusqueda = jTextField2.getText().trim();
+        
+        // Si el texto es el placeholder o está vacío, mostrar todas las tareas
+        if (textoBusqueda.equals("Buscar tareas por título...") || textoBusqueda.isEmpty()) {
+            filtroActual = "";
+        } else {
+            filtroActual = textoBusqueda.toLowerCase();
+        }
+        
+        // Resetear a la primera página al buscar
+        paginaActual = 0;
+        
+        // Aplicar filtro y actualizar vista
+        aplicarFiltro();
+    }
+    
+    /**
+     * Aplica el filtro actual a las tareas
+     */
+    private void aplicarFiltro() {
+        if (filtroActual == null || filtroActual.isEmpty()) {
+            tareasFiltradas = new java.util.ArrayList<>(tareas);
+        } else {
+            tareasFiltradas = tareas.stream()
+                .filter(tarea -> tarea.getTitulo().toLowerCase().contains(filtroActual))
+                .collect(java.util.stream.Collectors.toList());
+        }
+        
+        // Ajustar página actual si es necesario
+        int maxPaginas = (int) Math.ceil((double) tareasFiltradas.size() / TAREAS_POR_PAGINA);
+        if (paginaActual >= maxPaginas && maxPaginas > 0) {
+            paginaActual = maxPaginas - 1;
+        }
+        
+        // Mostrar tareas filtradas
+        mostrarTareasEnPaneles();
+    }
+    
+    /**
+     * Limpia todos los paneles de tareas
+     */
+    private void limpiarTodosLosPaneles(javax.swing.JPanel[] paneles, javax.swing.JLabel[][] labels) {
+        for (int i = 0; i < paneles.length; i++) {
+            javax.swing.JPanel panel = paneles[i];
+            javax.swing.JLabel[] lbls = labels[i];
+            
+            // Limpiar textos
+            lbls[0].setText("");
+            lbls[1].setText("");
+            lbls[2].setText("");
+            lbls[3].setText("");
+            
+            // Restaurar color de fondo
+            panel.setBackground(new Color(240, 240, 240));
+            
+            // Ocultar panel si no hay tarea para mostrar
+            panel.setVisible(false);
+            
+            // Remover listeners previos
+            for (java.awt.event.MouseListener listener : panel.getMouseListeners()) {
+                panel.removeMouseListener(listener);
+            }
+        }
+    }
+    
+    /**
+     * Actualiza el título con información de paginación
+     */
+    private void actualizarTituloPaginacion() {
+        int totalTareas = tareasFiltradas.size();
+        int inicio = paginaActual * TAREAS_POR_PAGINA + 1;
+        int fin = Math.min((paginaActual + 1) * TAREAS_POR_PAGINA, totalTareas);
+        
+        String titulo;
+        if (totalTareas == 0) {
+            titulo = filtroActual.isEmpty() ? "No hay tareas" : "No se encontraron tareas";
+        } else {
+            String filtroTexto = filtroActual.isEmpty() ? "" : " (filtradas)";
+            titulo = String.format("Mostrando %d-%d de %d tareas%s", inicio, fin, totalTareas, filtroTexto);
+        }
+        
+        jLabel5.setText(titulo);
+    }
+    
+    /**
+     * Configura los controles de paginación
+     */
+    private void configurarControlesPaginacion() {
+        // Crear y configurar botones de navegación si hay más de una página
+        int maxPaginas = (int) Math.ceil((double) tareasFiltradas.size() / TAREAS_POR_PAGINA);
+        
+        if (maxPaginas > 1) {
+            crearBotonesNavegacion(maxPaginas);
+        } else {
+            ocultarBotonesNavegacion();
+        }
+        
+        // También mantener navegación por teclado
+        configurarNavegacionTeclado();
+    }
+    
+    /**
+     * Crea botones de navegación dinámicos
+     */
+    private void crearBotonesNavegacion(int maxPaginas) {
+        // Usar el área del jLabel6 para mostrar información de navegación
+        String infoNavegacion = String.format("Página %d de %d", paginaActual + 1, maxPaginas);
+        
+        if (jLabel6 != null) {
+            jLabel6.setText(infoNavegacion);
+            jLabel6.setVisible(true);
+        }
+        
+        // Crear tooltips informativos en los paneles no utilizados si hay menos de 6 tareas
+        int tareasEnPagina = Math.min(TAREAS_POR_PAGINA, tareasFiltradas.size() - (paginaActual * TAREAS_POR_PAGINA));
+        
+        if (tareasEnPagina < TAREAS_POR_PAGINA) {
+            // Usar el primer panel vacío para mostrar controles de navegación
+            javax.swing.JPanel[] paneles = {jPanel6, jPanel13, jPanel22, jPanel25, jPanel28, jPanel31};
+            
+            if (tareasEnPagina < paneles.length) {
+                javax.swing.JPanel panelNavegacion = paneles[tareasEnPagina];
+                configurarPanelNavegacion(panelNavegacion, maxPaginas);
+            }
+        }
+    }
+    
+    /**
+     * Configura un panel como control de navegación
+     */
+    private void configurarPanelNavegacion(javax.swing.JPanel panel, int maxPaginas) {
+        panel.setVisible(true);
+        panel.setBackground(new Color(230, 230, 250)); // Color lavanda suave
+        panel.setBorder(javax.swing.BorderFactory.createTitledBorder("Navegación"));
+        
+        // Limpiar listeners previos
+        for (java.awt.event.MouseListener listener : panel.getMouseListeners()) {
+            panel.removeMouseListener(listener);
+        }
+        
+        // Añadir texto informativo
+        if (panel.getComponentCount() > 0 && panel.getComponent(0) instanceof javax.swing.JPanel) {
+            javax.swing.JPanel subPanel = (javax.swing.JPanel) panel.getComponent(0);
+            if (subPanel.getComponentCount() > 0) {
+                // Buscar etiquetas dentro del subpanel
+                java.awt.Component[] componentes = subPanel.getComponents();
+                for (java.awt.Component comp : componentes) {
+                    if (comp instanceof javax.swing.JLabel) {
+                        javax.swing.JLabel label = (javax.swing.JLabel) comp;
+                        if (label == subPanel.getComponent(1)) { // Segunda etiqueta
+                            label.setText("◀ Anterior | Siguiente ▶");
+                            label.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        // Añadir funcionalidad de clic para navegación
+        panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Detectar si el clic fue en la mitad izquierda o derecha
+                int anchoPanel = panel.getWidth();
+                int xClic = e.getX();
+                
+                if (xClic < anchoPanel / 2) {
+                    // Clic en la mitad izquierda - página anterior
+                    if (paginaActual > 0) {
+                        paginaAnterior();
+                    }
+                } else {
+                    // Clic en la mitad derecha - página siguiente
+                    if (paginaActual < maxPaginas - 1) {
+                        paginaSiguiente();
+                    }
+                }
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                panel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+                panel.setBackground(new Color(200, 200, 240)); // Color más oscuro al pasar el mouse
+            }
+            
+            @Override
+            public void mouseExited(MouseEvent e) {
+                panel.setBackground(new Color(230, 230, 250)); // Volver al color original
+            }
+        });
+    }
+    
+    /**
+     * Oculta los botones de navegación cuando no son necesarios
+     */
+    private void ocultarBotonesNavegacion() {
+        if (jLabel6 != null) {
+            jLabel6.setText("");
+            jLabel6.setVisible(false);
+        }
+    }
+    
+    /**
+     * Configura la navegación por teclado para paginación
+     */
+    private void configurarNavegacionTeclado() {
+        this.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                switch(e.getKeyCode()) {
+                    case java.awt.event.KeyEvent.VK_LEFT:
+                        if (paginaActual > 0) {
+                            paginaActual--;
+                            mostrarTareasEnPaneles();
+                        }
+                        break;
+                    case java.awt.event.KeyEvent.VK_RIGHT:
+                        int maxPaginas = (int) Math.ceil((double) tareasFiltradas.size() / TAREAS_POR_PAGINA);
+                        if (paginaActual < maxPaginas - 1) {
+                            paginaActual++;
+                            mostrarTareasEnPaneles();
+                        }
+                        break;
+                }
+            }
+        });
+        
+        // Asegurar que la ventana pueda recibir eventos de teclado
+        this.setFocusable(true);
+        this.requestFocus();
+    }
+    
+    /**
+     * Método para ir a la página anterior
+     */
+    public void paginaAnterior() {
+        if (paginaActual > 0) {
+            paginaActual--;
+            mostrarTareasEnPaneles();
+        }
+    }
+    
+    /**
+     * Método para ir a la página siguiente
+     */
+    public void paginaSiguiente() {
+        int maxPaginas = (int) Math.ceil((double) tareasFiltradas.size() / TAREAS_POR_PAGINA);
+        if (paginaActual < maxPaginas - 1) {
+            paginaActual++;
+            mostrarTareasEnPaneles();
+        }
+    }
+    
+    private void configurarNavegacion() {
+        // Navegación a Inicio
+        jLabel1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarAInicio();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Navegación a Prioridad
+        jLabel8.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarAPrioridad();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Navegación a Categorías
+        jLabel9.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarACategorias();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel9.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Navegación a Estado
+        jLabel10.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarAEstado();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel10.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+        
+        // Navegación a Exportar
+        jLabel11.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                navegarAExportar();
+            }
+            
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                jLabel11.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            }
+        });
+    }
+    
+    private void navegarAInicio() {
+        try {
+            frmPantallaPrincipal pantallaPrincipal = new frmPantallaPrincipal(this);
+            pantallaPrincipal.setVisible(true);
+            this.dispose(); // Cerrar ventana actual
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error al abrir la pantalla principal: " + ex.getMessage(),
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void navegarAPrioridad() {
+        // Por ahora mostrar mensaje, se puede implementar una ventana específica de prioridad
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Funcionalidad de Prioridad en desarrollo",
+            "Información", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void navegarACategorias() {
+        try {
+            frmCategorias categorias = new frmCategorias(this);
+            categorias.setVisible(true);
+            this.dispose(); // Cerrar ventana actual
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error al abrir categorías: " + ex.getMessage(),
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void navegarAEstado() {
+        // Por ahora mostrar mensaje, se puede implementar una ventana específica de estado
+        javax.swing.JOptionPane.showMessageDialog(this, 
+            "Funcionalidad de Estado en desarrollo",
+            "Información", 
+            javax.swing.JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void navegarAExportar() {
+        try {
+            frmExportarTareas exportar = new frmExportarTareas(this);
+            exportar.setVisible(true);
+            this.dispose(); // Cerrar ventana actual
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error al abrir exportar tareas: " + ex.getMessage(),
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -245,7 +1102,7 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         jLabel12.setText("Todas las tareas");
 
         jPanel4.setBackground(new java.awt.Color(209, 209, 229));
-        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 20, 20, 20));
         jPanel4.setForeground(new java.awt.Color(255, 255, 255));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
@@ -899,11 +1756,19 @@ public class frmTareasGeneral extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
+        buscarTareas();
     }//GEN-LAST:event_jTextField2ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        // Botón Seleccionar - Mostrar detalles de la tarea seleccionada
+        if (tareaSeleccionada != null) {
+            mostrarDetallesTarea(tareaSeleccionada);
+        } else {
+            JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione una tarea primero",
+                "Información", 
+                JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

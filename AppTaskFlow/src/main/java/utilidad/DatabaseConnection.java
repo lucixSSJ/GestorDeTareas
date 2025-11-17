@@ -16,7 +16,7 @@ import java.util.Properties;
 public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/gestor_tareas";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "2000"; //ponene su contraseña del MySQL
+    private static final String PASSWORD = "20111203"; //ponene su contraseña del MySQL
 
     private static Connection connection = null;
 
@@ -37,14 +37,15 @@ public class DatabaseConnection {
                 connection = DriverManager.getConnection(URL, properties);
                 System.out.println("Conexión a la base de datos establecida correctamente");
             } catch (ClassNotFoundException e){
-                System.err.println("Error: No se encontró el driver de MySQL");
-                e.printStackTrace();
+                System.err.println("ADVERTENCIA: No se encontró el driver de MySQL. La aplicación funcionará en modo sin base de datos.");
+                System.err.println("Para usar base de datos, agrega el driver MySQL al classpath.");
+                return null;
             } catch (SQLException e){
-                System.err.println("Error al conectar con la base de datos:");
+                System.err.println("ADVERTENCIA: No se pudo conectar a la base de datos. La aplicación funcionará en modo sin base de datos.");
                 System.err.println("URL: " + URL);
                 System.err.println("Usuario: " + USERNAME);
                 System.err.println("Mensaje: " + e.getMessage());
-                e.printStackTrace();
+                return null;
             }
         }
         return connection;
@@ -63,8 +64,16 @@ public class DatabaseConnection {
     }
 
     public static boolean testConnection(){
-        try (Connection conn = getConnection()){
-            return conn != null && !conn.isClosed();
+        try {
+            Connection conn = getConnection();
+            if (conn != null && !conn.isClosed()) {
+                // Hacer una consulta simple para verificar que funciona
+                try (var stmt = conn.createStatement()) {
+                    stmt.executeQuery("SELECT 1");
+                }
+                return true;
+            }
+            return false;
         }catch (SQLException e){
             return false;
         }
