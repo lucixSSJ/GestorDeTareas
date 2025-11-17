@@ -4,7 +4,8 @@
  */
 package gestortareas.interfacesGUI;
 
-import gestortareas.controller.LogoutController;
+import gestortareas.controller.DashboardController;
+import gestortareas.controller.SessionController;
 import gestortareas.model.Usuario;
 
 /**
@@ -14,7 +15,8 @@ import gestortareas.model.Usuario;
 public class frmPantallaPrincipal extends javax.swing.JFrame {
 
     private Usuario usuario;
-    private LogoutController controller;
+    private DashboardController dashboarController; //para navegacion
+    private SessionController sessionController;
 
     /**
      * Creates new form Login
@@ -25,7 +27,8 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
     public frmPantallaPrincipal(Usuario usuario){
         this.usuario = usuario;
-        this.controller = new LogoutController(this, usuario);
+        this.dashboarController = new DashboardController(this, usuario);
+        this.sessionController = new SessionController(usuario);
         initComponents();
         mostrarNombreUsuario();
     }
@@ -41,13 +44,13 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jPanel18 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jButtonCategoria = new javax.swing.JButton();
+        jButtonEstado = new javax.swing.JButton();
+        jButtonExportar = new javax.swing.JButton();
+        jButtonPrioridad = new javax.swing.JButton();
+        jButtonTareas = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -119,31 +122,6 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(72, 74, 93));
 
-        jLabel2.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check blanco24px.png"))); // NOI18N
-        jLabel2.setText("Tareas");
-
-        jLabel8.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/estrella.png"))); // NOI18N
-        jLabel8.setText("Prioridad");
-
-        jLabel9.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/categoria (1).png"))); // NOI18N
-        jLabel9.setText("Categoria");
-
-        jLabel10.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/archivos.png"))); // NOI18N
-        jLabel10.setText("Estado");
-
-        jLabel11.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exportar (1).png"))); // NOI18N
-        jLabel11.setText("Exportar");
-
         jLabel1.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(22, 22, 22));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/casita negra 24px.png"))); // NOI18N
@@ -156,47 +134,98 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel18Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
+
+        jButtonCategoria.setBackground(new java.awt.Color(0, 0, 51));
+        jButtonCategoria.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButtonCategoria.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/categoria (1).png"))); // NOI18N
+        jButtonCategoria.setText("Categoria");
+        jButtonCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCategoriaActionPerformed(evt);
+            }
+        });
+
+        jButtonEstado.setBackground(new java.awt.Color(0, 0, 51));
+        jButtonEstado.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButtonEstado.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonEstado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/archivos.png"))); // NOI18N
+        jButtonEstado.setText("Estado");
+        jButtonEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEstadoActionPerformed(evt);
+            }
+        });
+
+        jButtonExportar.setBackground(new java.awt.Color(0, 0, 51));
+        jButtonExportar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButtonExportar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exportar (1).png"))); // NOI18N
+        jButtonExportar.setText("Exportar");
+        jButtonExportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExportarActionPerformed(evt);
+            }
+        });
+
+        jButtonPrioridad.setBackground(new java.awt.Color(0, 0, 51));
+        jButtonPrioridad.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButtonPrioridad.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonPrioridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/estrella.png"))); // NOI18N
+        jButtonPrioridad.setText("Prioridad");
+        jButtonPrioridad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPrioridadActionPerformed(evt);
+            }
+        });
+
+        jButtonTareas.setBackground(new java.awt.Color(0, 0, 51));
+        jButtonTareas.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButtonTareas.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonTareas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check blanco24px.png"))); // NOI18N
+        jButtonTareas.setText("Tareas");
+        jButtonTareas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTareasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
             .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButtonTareas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButtonPrioridad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButtonCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+            .addComponent(jButtonEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButtonExportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(23, 23, 23)
                 .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addComponent(jLabel11)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addGap(5, 5, 5)
+                .addComponent(jButtonTareas, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(jButtonCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(41, 43, 66));
@@ -312,12 +341,12 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(175, Short.MAX_VALUE))
+                .addContainerGap(210, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
-                .addContainerGap(9, Short.MAX_VALUE)
+                .addContainerGap(76, Short.MAX_VALUE)
                 .addComponent(jLabel14)
                 .addGap(9, 9, 9))
         );
@@ -894,13 +923,14 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(47, 47, 47)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addGap(273, 273, 273))
-                    .addComponent(jLabel13)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(44, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addContainerGap(0, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -918,7 +948,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 33, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -936,22 +966,47 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mostrarNombreUsuario(){
-        if (usuario != null && jTextFieldNombresUsuario != null){
-            String nombreCompleto = usuario.getNombres() + " " + usuario.getApellidos();
-            jTextFieldNombresUsuario.setText(nombreCompleto);
-        }
-    }
+    //btn cerrar sesión, volver al inicio de sesión
+    private void jButtonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarSesionActionPerformed
+        sessionController.cerrarSesion(this);
+    }//GEN-LAST:event_jButtonCerrarSesionActionPerformed
 
     //aparecer los nombres del usuario que inició sesión
     private void jTextFieldNombresUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombresUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNombresUsuarioActionPerformed
 
-    //btn cerrar sesión, volver al inicio de sesión
-    private void jButtonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarSesionActionPerformed
-        controller.cerrarSesion();
-    }//GEN-LAST:event_jButtonCerrarSesionActionPerformed
+    //botón para abrir la interfaz de tareas
+    private void jButtonTareasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTareasActionPerformed
+        dashboarController.abrirGestionTareas();
+    }//GEN-LAST:event_jButtonTareasActionPerformed
+
+    //botón para abrir la interfaz de categoría
+    private void jButtonCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCategoriaActionPerformed
+        dashboarController.abrirGestionCategorias();
+    }//GEN-LAST:event_jButtonCategoriaActionPerformed
+
+    //abrir interfaz de estado
+    private void jButtonEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonEstadoActionPerformed
+
+    //abrir interfaz exportar
+    private void jButtonExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonExportarActionPerformed
+
+    //botón para abrir la interfaz de prioridad
+    private void jButtonPrioridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrioridadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonPrioridadActionPerformed
+
+    private void mostrarNombreUsuario(){
+        if (usuario != null && jTextFieldNombresUsuario != null){
+            String nombreCompleto = usuario.getNombres() + " " + usuario.getApellidos();
+            jTextFieldNombresUsuario.setText(nombreCompleto);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -992,7 +1047,12 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCategoria;
     private javax.swing.JButton jButtonCerrarSesion;
+    private javax.swing.JButton jButtonEstado;
+    private javax.swing.JButton jButtonExportar;
+    private javax.swing.JButton jButtonPrioridad;
+    private javax.swing.JButton jButtonTareas;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JComboBox<String> jComboBox3;
@@ -1000,14 +1060,11 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBox5;
     private javax.swing.JComboBox<String> jComboBox6;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -1024,6 +1081,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
@@ -1031,6 +1089,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
@@ -1038,11 +1097,11 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel23;
