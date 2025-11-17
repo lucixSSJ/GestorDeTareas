@@ -125,9 +125,9 @@ CREATE TABLE sesiones_usuarios (
 );
 
 -- Insertar datos de ejemplo
-INSERT INTO usuarios (nombres, apellidos, email, username, password_hash, notificaciones_vencimiento, dias_antes_vencimiento) VALUES 
-('Luciano', 'Bances', 'luciano@gmail.com', 'luciano', 'luciano', TRUE, 1),
-('María', 'Gómez', 'maria.gomez@email.com', 'mariagomez', 'prueba', TRUE, 2);
+INSERT INTO usuarios (nombres, apellidos, email, username, password_hash) VALUES 
+('Luciano', 'Bances', 'luciano@gmail.com', 'luciano', '6T2WjEGtcyUX9XgAYhjwAcScJ13W7X0RD6Tc+i4kR+g='), -- password: luciano
+('María', 'Gómez', 'maria.gomez@email.com', 'prueba', 'B+rqO3k0oM5R7x+CsjB73RNP1XxOu9PfwE/vNxvZ8Yg='); -- password: prueba123
 
 INSERT INTO categorias (id_usuario, nombre_categoria, color) VALUES 
 (1, 'Trabajo', '#007bff'),
