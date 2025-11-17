@@ -1,4 +1,4 @@
-package utilidad;
+package gestortareas.utilidad.db;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
