@@ -4,139 +4,17 @@
  */
 package gestortareas.interfacesGUI;
 
-import utilidad.WindowStateManager;
-import domain.Tarea;
-import service.TareaService;
-import javax.swing.JOptionPane;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-
 /**
  *
  * @author SERT
  */
 public class frmModificarTarea extends javax.swing.JFrame {
 
-    private Tarea tareaAModificar;
-    private javax.swing.JFrame ventanaPadre;
-    private TareaService tareaService;
-
     /**
      * Creates new form Login
      */
     public frmModificarTarea() {
         initComponents();
-        WindowStateManager.getInstance().configureWindow(this);
-        this.setTitle("TaskFlow - Modificar Tarea");
-        inicializarComponentes();
-    }
-    
-    /**
-     * Constructor que recibe la ventana anterior para mantener el estado
-     */
-    public frmModificarTarea(javax.swing.JFrame ventanaAnterior) {
-        initComponents();
-        if (ventanaAnterior != null) {
-            WindowStateManager.getInstance().transferState(ventanaAnterior, this);
-        } else {
-            WindowStateManager.getInstance().configureWindow(this);
-        }
-        this.setTitle("TaskFlow - Modificar Tarea");
-        inicializarComponentes();
-    }
-    
-    /**
-     * Constructor que recibe la tarea a modificar y la ventana padre
-     */
-    public frmModificarTarea(Tarea tarea, javax.swing.JFrame ventanaPadre) {
-        initComponents();
-        this.tareaAModificar = tarea;
-        this.ventanaPadre = ventanaPadre;
-        this.tareaService = TareaService.getInstance();
-        
-        if (ventanaPadre != null) {
-            WindowStateManager.getInstance().transferState(ventanaPadre, this);
-        } else {
-            WindowStateManager.getInstance().configureWindow(this);
-        }
-        this.setTitle("TaskFlow - Modificar Tarea");
-        inicializarComponentes();
-        cargarDatosTarea();
-    }
-    
-    private void inicializarComponentes() {
-        // Configurar ComboBoxes
-        jComboBox1.removeAllItems(); // Categoría
-        jComboBox1.addItem("Sin categoría");
-        jComboBox1.addItem("Trabajo");
-        jComboBox1.addItem("Personal");
-        jComboBox1.addItem("Estudio");
-        jComboBox1.addItem("Hogar");
-        
-        jComboBox2.removeAllItems(); // Estado
-        jComboBox2.addItem("Pendiente");
-        jComboBox2.addItem("En progreso");
-        jComboBox2.addItem("Completada");
-        
-        jComboBox3.removeAllItems(); // Prioridad
-        jComboBox3.addItem("Baja");
-        jComboBox3.addItem("Media");
-        jComboBox3.addItem("Alta");
-        
-        // Configurar botón de regreso
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                regresarAVentanaAnterior();
-            }
-        });
-    }
-    
-    private void cargarDatosTarea() {
-        if (tareaAModificar != null) {
-            // Cargar título y descripción
-            jTextField1.setText(tareaAModificar.getTitulo());
-            jTextField2.setText(tareaAModificar.getDescripcion());
-            
-            // Cargar fecha de vencimiento
-            if (tareaAModificar.getFechaVencimiento() != null) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                jTextField3.setText(tareaAModificar.getFechaVencimiento().format(formatter));
-            }
-            
-            // Cargar categoría
-            String categoria = tareaAModificar.getCategoria();
-            if (categoria != null && !categoria.isEmpty()) {
-                // Convertir "Categoría 1" a nombre real
-                if (categoria.startsWith("Categoría")) {
-                    jComboBox1.setSelectedItem("Trabajo"); // Por defecto
-                } else {
-                    jComboBox1.setSelectedItem(categoria);
-                }
-            }
-            
-            // Cargar estado
-            String estado = tareaAModificar.getEstado();
-            if (estado != null) {
-                switch (estado.toLowerCase()) {
-                    case "pendiente" -> jComboBox2.setSelectedItem("Pendiente");
-                    case "en_progreso" -> jComboBox2.setSelectedItem("En progreso");
-                    case "completada" -> jComboBox2.setSelectedItem("Completada");
-                    default -> jComboBox2.setSelectedItem("Pendiente");
-                }
-            }
-            
-            // Cargar prioridad
-            String prioridad = tareaAModificar.getPrioridad();
-            if (prioridad != null) {
-                switch (prioridad.toLowerCase()) {
-                    case "baja" -> jComboBox3.setSelectedItem("Baja");
-                    case "media" -> jComboBox3.setSelectedItem("Media");
-                    case "alta" -> jComboBox3.setSelectedItem("Alta");
-                    default -> jComboBox3.setSelectedItem("Media");
-                }
-            }
-        }
     }
 
     /**
@@ -506,11 +384,11 @@ public class frmModificarTarea extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        guardarCambiosTarea();
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        cancelarModificacion();
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -532,114 +410,6 @@ public class frmModificarTarea extends javax.swing.JFrame {
     private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox3ActionPerformed
-
-    /**
-     * Método para guardar los cambios realizados a la tarea
-     */
-    private void guardarCambiosTarea() {
-        try {
-            if (tareaAModificar == null) {
-                JOptionPane.showMessageDialog(this, "Error: No hay tarea para modificar", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            // Validar campos obligatorios
-            String titulo = jTextField1.getText().trim();
-            if (titulo.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "El título es obligatorio", "Error", JOptionPane.ERROR_MESSAGE);
-                jTextField1.requestFocus();
-                return;
-            }
-            
-            // Actualizar los datos de la tarea
-            tareaAModificar.setTitulo(titulo);
-            tareaAModificar.setDescripcion(jTextField2.getText().trim());
-            
-            // Procesar fecha de vencimiento
-            String fechaTexto = jTextField3.getText().trim();
-            if (!fechaTexto.isEmpty()) {
-                try {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                    LocalDate fecha = LocalDate.parse(fechaTexto, formatter);
-                    tareaAModificar.setFechaVencimiento(fecha);
-                } catch (DateTimeParseException e) {
-                    JOptionPane.showMessageDialog(this, "Formato de fecha incorrecto. Use yyyy-MM-dd", "Error", JOptionPane.ERROR_MESSAGE);
-                    jTextField3.requestFocus();
-                    return;
-                }
-            }
-            
-            // Procesar categoría (por ahora como texto simple)
-            String categoriaSeleccionada = (String) jComboBox1.getSelectedItem();
-            tareaAModificar.setCategoria(categoriaSeleccionada);
-            
-            // Procesar estado
-            String estadoSeleccionado = (String) jComboBox2.getSelectedItem();
-            switch (estadoSeleccionado) {
-                case "Pendiente" -> tareaAModificar.setEstado("pendiente");
-                case "En progreso" -> tareaAModificar.setEstado("en_progreso");
-                case "Completada" -> tareaAModificar.setEstado("completada");
-                default -> tareaAModificar.setEstado("pendiente");
-            }
-            
-            // Procesar prioridad
-            String prioridadSeleccionada = (String) jComboBox3.getSelectedItem();
-            switch (prioridadSeleccionada) {
-                case "Baja" -> tareaAModificar.setPrioridad("baja");
-                case "Media" -> tareaAModificar.setPrioridad("media");
-                case "Alta" -> tareaAModificar.setPrioridad("alta");
-                default -> tareaAModificar.setPrioridad("media");
-            }
-            
-            // Guardar en la base de datos
-            if (tareaService == null) {
-                tareaService = TareaService.getInstance();
-            }
-            
-            boolean actualizado = tareaService.actualizarTarea(tareaAModificar);
-            
-            if (actualizado) {
-                JOptionPane.showMessageDialog(this, "Tarea actualizada exitosamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                regresarAVentanaAnterior();
-            } else {
-                JOptionPane.showMessageDialog(this, "Error al actualizar la tarea", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-    }
-    
-    /**
-     * Método para cancelar la modificación
-     */
-    private void cancelarModificacion() {
-        int respuesta = JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro de que desea cancelar? Los cambios no guardados se perderán.", 
-            "Confirmar cancelación", 
-            JOptionPane.YES_NO_OPTION, 
-            JOptionPane.QUESTION_MESSAGE);
-            
-        if (respuesta == JOptionPane.YES_OPTION) {
-            regresarAVentanaAnterior();
-        }
-    }
-    
-    /**
-     * Método para regresar a la ventana anterior
-     */
-    private void regresarAVentanaAnterior() {
-        if (ventanaPadre != null) {
-            ventanaPadre.setVisible(true);
-            WindowStateManager.getInstance().transferState(this, ventanaPadre);
-        } else {
-            // Si no hay ventana padre, ir a la ventana principal de tareas
-            frmTareasGeneral tareasGeneral = new frmTareasGeneral(this);
-            tareasGeneral.setVisible(true);
-        }
-        this.dispose();
-    }
 
     /**
      * @param args the command line arguments

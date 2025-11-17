@@ -20,7 +20,7 @@ public class GestorTareasApp {
                 inicioSesion.setVisible(true);
             } catch (Exception e) {
                 e.printStackTrace();
-                javax.swing.JOptionPane.showMessageDialog(null,
+                JOptionPane.showMessageDialog(null,
                         "Error al iniciar la aplicación: " + e.getMessage(),
                         "Error", JOptionPane.ERROR_MESSAGE);
             }

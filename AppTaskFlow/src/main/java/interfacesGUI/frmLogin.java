@@ -4,173 +4,17 @@
  */
 package interfacesGUI;
 
-import service.UsuarioService;
-import javax.swing.JOptionPane;
-import utilidad.WindowStateManager;
-
 /**
- * Interfaz de inicio de sesión
- * @author Luciano
+ *
+ * @author mchav
  */
 public class frmLogin extends javax.swing.JFrame {
-
-    private UsuarioService usuarioService;
 
     /**
      * Creates new form frmLogin
      */
     public frmLogin() {
         initComponents();
-        usuarioService = new UsuarioService();
-        configurarVentana();
-    }
-    
-    private void configurarVentana() {
-        WindowStateManager.getInstance().configureWindow(this);
-        this.setTitle("TaskFlow - Inicio de Sesión");
-        this.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-        
-        // Centrar ventana
-        this.setLocationRelativeTo(null);
-        
-        // Configurar eventos Enter
-        configurarEventosEnter();
-        
-        // Configurar campos editables
-        txtUsuario.setEditable(true);
-        txtContraseña.setEditable(true);
-        
-        // Configurar placeholders
-        configurarPlaceholders();
-    }
-    
-    private void configurarPlaceholders() {
-        // Agregar listeners para manejar placeholders
-        txtUsuario.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                if ("Usuario".equals(txtUsuario.getText())) {
-                    txtUsuario.setText("");
-                    txtUsuario.setForeground(java.awt.Color.BLACK);
-                }
-            }
-            
-            @Override
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                if (txtUsuario.getText().trim().isEmpty()) {
-                    txtUsuario.setText("Usuario");
-                    txtUsuario.setForeground(new java.awt.Color(102, 102, 102));
-                }
-            }
-        });
-        
-        txtContraseña.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                if ("Contraseña".equals(txtContraseña.getText())) {
-                    txtContraseña.setText("");
-                    txtContraseña.setForeground(java.awt.Color.BLACK);
-                }
-            }
-            
-            @Override
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                if (txtContraseña.getText().trim().isEmpty()) {
-                    txtContraseña.setText("Contraseña");
-                    txtContraseña.setForeground(new java.awt.Color(102, 102, 102));
-                }
-            }
-        });
-    }
-    
-    private void configurarEventosEnter() {
-        // Enter en campo usuario pasa a contraseña
-        txtUsuario.addActionListener(e -> txtContraseña.requestFocus());
-        
-        // Enter en contraseña ejecuta login
-        txtContraseña.addActionListener(e -> realizarLogin());
-    }
-    
-    private void realizarLogin() {
-        String username = txtUsuario.getText().trim();
-        String password = txtContraseña.getText().trim();
-        
-        // Limpiar placeholders
-        if ("Usuario".equals(username)) {
-            username = "";
-        }
-        if ("Contraseña".equals(password)) {
-            password = "";
-        }
-        
-        if (username.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor ingrese su usuario", 
-                                        "Campo requerido", JOptionPane.WARNING_MESSAGE);
-            txtUsuario.requestFocus();
-            return;
-        }
-        
-        if (password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor ingrese su contraseña", 
-                                        "Campo requerido", JOptionPane.WARNING_MESSAGE);
-            txtContraseña.requestFocus();
-            return;
-        }
-        
-        ingresar.setEnabled(false);
-        ingresar.setText("Validando...");
-        
-        try {
-            boolean loginExitoso = usuarioService.login(username, password);
-            
-            if (loginExitoso) {
-                JOptionPane.showMessageDialog(this, 
-                    "¡Bienvenido " + UsuarioService.getUsuarioLogueado().getNombreCompleto() + "!", 
-                    "Login exitoso", JOptionPane.INFORMATION_MESSAGE);
-                
-                // Abrir pantalla principal
-                abrirPantallaPrincipal();
-            } else {
-                JOptionPane.showMessageDialog(this, 
-                    "Usuario o contraseña incorrectos", 
-                    "Error de autenticación", JOptionPane.ERROR_MESSAGE);
-                limpiarCampos();
-                txtUsuario.requestFocus();
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-                "Error al intentar iniciar sesión: " + e.getMessage(), 
-                "Error", JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        } finally {
-            ingresar.setEnabled(true);
-            ingresar.setText("Ingresar");
-        }
-    }
-    
-    private void abrirPantallaPrincipal() {
-        this.setVisible(false);
-        
-        // Crear y mostrar pantalla principal
-        java.awt.EventQueue.invokeLater(() -> {
-            new frmPantallaPrincipal().setVisible(true);
-        });
-        
-        this.dispose();
-    }
-    
-    private void limpiarCampos() {
-        txtContraseña.setText("");
-        txtContraseña.requestFocus();
-    }
-    
-    private void abrirRegistro() {
-        // TODO: Crear frmRegistro
-        JOptionPane.showMessageDialog(this, "Funcionalidad de registro próximamente", 
-                                    "En desarrollo", JOptionPane.INFORMATION_MESSAGE);
-        // frmRegistro registro = new frmRegistro();
-        // registro.setVisible(true);
-        // this.setVisible(false);
     }
 
     /**
@@ -296,27 +140,19 @@ public class frmLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsuarioActionPerformed
-        // Limpiar placeholder y mover a contraseña
-        if ("Usuario".equals(txtUsuario.getText())) {
-            txtUsuario.setText("");
-        }
-        txtContraseña.requestFocus();
+        // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
     private void txtContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtContraseñaActionPerformed
-        // Limpiar placeholder y ejecutar login
-        if ("Contraseña".equals(txtContraseña.getText())) {
-            txtContraseña.setText("");
-        }
-        realizarLogin();
+        // TODO add your handling code here:
     }//GEN-LAST:event_txtContraseñaActionPerformed
 
     private void ingresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarActionPerformed
-        realizarLogin();
+        // TODO add your handling code here:
     }//GEN-LAST:event_ingresarActionPerformed
 
     private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
-        abrirRegistro();
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnRegistroActionPerformed
 
     /**

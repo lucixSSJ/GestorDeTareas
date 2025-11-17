@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7734b18c-a5f3-47ae-b092-71d3fd699210" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/appTaskFlow/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/appTaskFlow/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/domain/Tarea.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/domain/Tarea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/InterfazPrueba.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/InterfazPrueba.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmAgregarNuevaTarea.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmAgregarNuevaTarea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmCategorias.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmCategorias.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmExportarTareas.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmExportarTareas.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmModificarTarea.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmModificarTarea.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmPantallaPrincipal.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmPantallaPrincipal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmTareasGeneral.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmTareasGeneral.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmTareasPrioridad.form" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/interfacesGUI/frmTareasPrioridad.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/lib/mysql-connector-j-8.0.33.jar" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/lib/mysql-connector-j-8.0.33.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,21 +17,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "lucixSSJ"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;lucixSSJ&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/lucixSSJ/GestorDeTareas.git",
-    "accountId": "9412d4f0-c91b-4fad-ab62-d048ccb27e06"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/lucixSSJ/GestorDeTareas.git&quot;,
+    &quot;accountId&quot;: &quot;9412d4f0-c91b-4fad-ab62-d048ccb27e06&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="35LFEqnktx1hJFftcYhZQEFXiQh" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -55,6 +46,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Luciano/Desktop/Proyecto_DiseñoPatrones/GestorDeTareas/AppTaskFlow/src/main/java/interfacesGUI",
@@ -139,5 +131,13 @@
       <updated>1762881336533</updated>
     </task>
     <servers />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>
