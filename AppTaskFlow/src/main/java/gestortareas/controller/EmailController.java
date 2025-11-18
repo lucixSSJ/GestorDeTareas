@@ -1,6 +1,6 @@
 package gestortareas.controller;
 
-import gestortareas.service.EmailService;
+import gestortareas.dao.impl.EmailDAOImpl;
 import org.apache.commons.mail.EmailException;
 
 /**
@@ -8,9 +8,9 @@ import org.apache.commons.mail.EmailException;
  * @author Michael Medina
  */
 public class EmailController {
-    private final EmailService emailEnviar;
+    private final EmailDAOImpl emailEnviar;
 
-    public EmailController(EmailService emailService) {
+    public EmailController(EmailDAOImpl emailService) {
         this.emailEnviar = emailService;
     }
 

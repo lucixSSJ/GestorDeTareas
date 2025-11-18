@@ -14,14 +14,14 @@ import java.util.Scanner;
 public class TestEmail {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String correo = "micgaelma@gmail.com";
+        String correo = "micgael25ma@gmail.com";
         String token;
         
         EmailService emailService = new EmailService();
         UsuarioDAOImpl usuario = new UsuarioDAOImpl();
         
         EmailDAOImpl emailDAO = new EmailDAOImpl(usuario, emailService);
-        EmailController email = new EmailController(emailService);
+        EmailController email = new EmailController(emailDAO);
         
         UsuarioService usuaroService = new UsuarioService();
         
