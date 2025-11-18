@@ -1,10 +1,11 @@
 package gestortareas.controller;
 
+import java.util.Scanner;
+
 import gestortareas.dao.impl.EmailDAOImpl;
 import gestortareas.dao.impl.UsuarioDAOImpl;
 import gestortareas.service.EmailService;
 import gestortareas.service.UsuarioService;
-import java.util.Scanner;
 
 
 /**
@@ -21,7 +22,7 @@ public class TestEmail {
         UsuarioDAOImpl usuario = new UsuarioDAOImpl();
         
         EmailDAOImpl emailDAO = new EmailDAOImpl(usuario, emailService);
-        EmailController email = new EmailController(emailService);
+        EmailController email = new EmailController(emailDAO);
         
         UsuarioService usuaroService = new UsuarioService();
         
