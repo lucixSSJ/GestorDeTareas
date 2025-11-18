@@ -15,7 +15,7 @@ import gestortareas.service.UsuarioService;
 public class TestEmail {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String correo = "franzsanzz2@gmail.com";
+        String correo = "@gmail.com";
         String token;
         
         EmailService emailService = new EmailService();
