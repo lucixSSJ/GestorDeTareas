@@ -1,25 +1,32 @@
 package gestortareas.controller;
 
-import gestortareas.dao.impl.EmailDAOImpl;
-import org.apache.commons.mail.EmailException;
-
+import gestortareas.interfacesGUI.frmIngresarCodigoClave;
+import gestortareas.interfacesGUI.frmResetPassword;
+import gestortareas.service.EmailService;
+import gestortareas.service.UsuarioService;
 /**
  *
  * @author Michael Medina
  */
 public class EmailController {
-    private final EmailDAOImpl emailEnviar;
+    private frmResetPassword resetPassword;
 
-    public EmailController(EmailDAOImpl emailService) {
-        this.emailEnviar = emailService;
+    public EmailController(frmResetPassword resetPassword) {
+        this.resetPassword = resetPassword;
     }
 
-    public void EnviarCorreo(String email) {
+    public void abrirEnvioCorreo() {
+        this.resetPassword.setVisible(true);
+        this.resetPassword.setResizable(false);
+        this.resetPassword.setLocationRelativeTo(null);
+    }
 
-        try {
-            this.emailEnviar.enviarCorreo(email);
-        } catch (EmailException ex) {
-            System.out.println("Error al enviar el correo: " + ex.getMessage());
-        }
+    public void abrirActualizarClave(EmailService emailService,
+            UsuarioService usuarioService, String correo) {
+
+        frmIngresarCodigoClave ingresarCodigo = new frmIngresarCodigoClave(emailService, usuarioService, correo);
+        ingresarCodigo.setVisible(true);
+        ingresarCodigo.setResizable(true);
+        ingresarCodigo.setLocationRelativeTo(null);
     }
 }

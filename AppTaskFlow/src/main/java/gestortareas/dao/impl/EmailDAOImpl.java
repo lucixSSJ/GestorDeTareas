@@ -12,20 +12,38 @@ public class EmailDAOImpl implements IEmailDAO {
 
     private final UsuarioDAOImpl usuario;
     private final EmailService emailService;
-
-     public EmailDAOImpl(UsuarioDAOImpl usuario, EmailService emailService) {
+    private String mensaje;
+    public EmailDAOImpl(UsuarioDAOImpl usuario, EmailService emailService) {
         this.usuario = usuario;
         this.emailService = emailService;
     }
 
     @Override
     public void enviarCorreo(String email) throws EmailException {
-
-        if (usuario.existeEmail(email)) {
+        boolean existe = usuario.existeEmail(email);
+        
+        System.out.println("Existe el correo: "+existe);
+        
+        if (!existe) {
+            System.out.println("El correo no existe");
+            this.mensaje = "El correo no existe";
+        }else{
+            this.mensaje = " ";
+            System.out.println("El correo existe");
+            System.out.println("Mensaje: "+this.mensaje);
+            
             this.emailService.enviarCorreo(email);
-        } else {
-            System.out.println("El correo ingresado no existe");
         }
-
     }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+    
+    
+    
 }
