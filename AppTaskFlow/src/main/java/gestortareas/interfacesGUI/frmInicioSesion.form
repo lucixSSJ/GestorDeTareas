@@ -46,27 +46,28 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="212" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jLabel2" max="32767" attributes="0"/>
-                              <Component id="jLabel3" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="jButtonIniciarSesion" min="-2" pref="113" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                                  <Component id="jButtonRegistrarse" min="-2" pref="113" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jLabel2" max="32767" attributes="0"/>
+                                      <Component id="jLabel3" min="-2" pref="100" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="jTextUsuario" pref="175" max="32767" attributes="0"/>
+                                      <Component id="jPasswordField" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="resetClave" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="99" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jTextUsuario" pref="130" max="32767" attributes="0"/>
-                              <Component id="jPasswordField" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="321" max="-2" attributes="0"/>
-                          <Component id="jButtonIniciarSesion" min="-2" pref="113" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="259" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  <Component id="jButtonRegistrarse" min="-2" pref="113" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -86,10 +87,13 @@
                       <Component id="jPasswordField" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                  <Component id="jButtonIniciarSesion" min="-2" pref="36" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
-                  <Component id="jButtonRegistrarse" min="-2" pref="36" max="-2" attributes="0"/>
-                  <EmptySpace pref="105" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jButtonIniciarSesion" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="jButtonRegistrarse" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="resetClave" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="199" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -163,6 +167,17 @@
         <Component class="javax.swing.JPasswordField" name="jPasswordField">
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jPasswordFieldActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JLabel" name="resetClave">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&#xbf;Olvidaste tu contrase&#xf1;a?"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="resetClaveMouseClicked"/>
           </Events>
         </Component>
       </SubComponents>

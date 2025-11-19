@@ -18,6 +18,7 @@ public class GestorTareasApp {
             try {
                 frmInicioSesion inicioSesion = new frmInicioSesion();
                 inicioSesion.setVisible(true);
+                inicioSesion.setLocationRelativeTo(null);
             } catch (Exception e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null,

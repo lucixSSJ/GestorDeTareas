@@ -14,6 +14,7 @@ import gestortareas.service.UsuarioService;
  */
 public class TestEmail {
     public static void main(String[] args) {
+        /*
         Scanner sc = new Scanner(System.in);
         String correo = "@gmail.com";
         String token;
@@ -40,7 +41,7 @@ public class TestEmail {
         }else{
             System.out.println("Algo salio mal");
         }
-        
+        */
         
     }
 }

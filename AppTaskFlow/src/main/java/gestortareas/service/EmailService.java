@@ -57,7 +57,13 @@ public class EmailService implements IEmailDAO{
             return false;
         }
         
-        return codigoAlmacenado.equals(codigo) && expiracion.isAfter(LocalDateTime.now());
+        if (codigoAlmacenado.equals(codigo) && expiracion.isAfter(LocalDateTime.now())) {
+            token.clear();
+            tiempoExpiracion.clear();
+            return true;
+        }
+        
+        return false;
     }
     
     private String generarToken(){
