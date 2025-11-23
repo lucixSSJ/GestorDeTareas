@@ -4,10 +4,15 @@
  */
 package gestortareas.interfacesGUI;
 
-import gestortareas.controller.DashboardController;
+import gestortareas.controller.CategoriaController;
 import gestortareas.controller.NavigationController;
 import gestortareas.controller.SessionController;
+import gestortareas.interfacesAuxiliares.FrmAuxEditarCategoria;
+import gestortareas.interfacesAuxiliares.FrmAuxNuevaCategoria;
+import gestortareas.model.Categoria;
 import gestortareas.model.Usuario;
+
+import java.util.List;
 
 /**
  *
@@ -17,6 +22,10 @@ public class frmCategorias extends javax.swing.JFrame {
     private Usuario usuario;
     private NavigationController navigationController;
     private SessionController sessionController;
+    private CategoriaController categoriaController;
+    private Categoria categoriaSeleccionada;
+
+    private javax.swing.table.DefaultTableModel modeloTabla;
 
     /**
      * Creates new form Login
@@ -29,7 +38,200 @@ public class frmCategorias extends javax.swing.JFrame {
         this.usuario = usuario;
         this.navigationController = navigationController;
         this.sessionController = new SessionController(usuario);
+        this.categoriaController = new CategoriaController(this, usuario);
         initComponents();
+        configurarInterfaz();
+    }
+
+    private void configurarInterfaz(){
+        setTitle("Gestión de Categorías - " + usuario.getNombres());
+        setLocationRelativeTo(null);
+
+        configurarTablaCategorias();
+        categoriaController.cargarCategorias();
+    }
+
+    private void configurarTablaCategorias(){
+        //columnas para incluir el ID (oculto)
+        String[] columnas = {"ID", "Nombre de Categoria", "N° de tareas vinculadas"};
+
+        modeloTabla = new javax.swing.table.DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        jTableMostrarCategoriasDisponibles.setModel(modeloTabla);
+
+        // Ocultar la columna del ID
+        jTableMostrarCategoriasDisponibles.removeColumn(jTableMostrarCategoriasDisponibles.getColumnModel().getColumn(0));
+
+        jTableMostrarCategoriasDisponibles.getColumnModel().getColumn(0).setPreferredWidth(300);
+        jTableMostrarCategoriasDisponibles.getColumnModel().getColumn(1).setPreferredWidth(150);
+
+        javax.swing.table.DefaultTableCellRenderer centerRenderer = new javax.swing.table.DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(javax.swing.JLabel.CENTER);
+        jTableMostrarCategoriasDisponibles.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
+
+        jTableMostrarCategoriasDisponibles.getSelectionModel().addListSelectionListener(event -> {
+            if (!event.getValueIsAdjusting()) {
+                manejarSeleccionCategoria();
+            }
+        });
+    }
+
+
+    public void mostrarCategorias(List<Categoria> categorias){
+        modeloTabla.setRowCount(0);
+
+        for (Categoria categoria : categorias){
+            Object[] fila = {
+                    categoria.getId(),
+                    categoria.getNombre(),
+                    categoria.getNumeroTareas()
+            };
+            modeloTabla.addRow(fila);
+        }
+
+        if (categorias.isEmpty()){
+            Object[] filaVacia = {-1, "No hay categorias registradas", 0};
+            modeloTabla.addRow(filaVacia);
+        }
+
+        System.out.println("Tabla actualizada con " + categorias.size() + " categorías.");
+    }
+
+    private void abrirFormularioNuevaCategoria(){
+        FrmAuxNuevaCategoria formNuevaCategoria = new FrmAuxNuevaCategoria(this, usuario, categoriaController);
+        formNuevaCategoria.setVisible(true);
+    }
+
+    private void editarCategoriaSeleccionada() {
+        if (categoriaSeleccionada == null) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Por favor, seleccione una categoría para editar",
+                    "Selección Requerida",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        abrirFormularioEditarCategoria();
+    }
+
+    private void abrirFormularioEditarCategoria() {
+        FrmAuxEditarCategoria formEditarCategoria = new FrmAuxEditarCategoria(
+                this,
+                usuario,
+                categoriaController,
+                categoriaSeleccionada
+        );
+        formEditarCategoria.setVisible(true);
+    }
+
+    private void manejarSeleccionCategoria(){
+        int filaSeleccionada = jTableMostrarCategoriasDisponibles.getSelectedRow();
+
+        if (filaSeleccionada >= 0) {
+            int idCategoria = (Integer) modeloTabla.getValueAt(filaSeleccionada, 0);
+
+            if (idCategoria != -1) {
+                // Buscar la categoría por ID
+                List<Categoria> categorias = categoriaController.obtenerCategoriasActuales();
+                categoriaSeleccionada = categorias.stream()
+                        .filter(cat -> cat.getId() == idCategoria)
+                        .findFirst()
+                        .orElse(null);
+
+                if (categoriaSeleccionada != null) {
+                    jButtonEditarCategoria.setEnabled(true);
+                    jButtonEliminarCategoria.setEnabled(true);
+                } else {
+                    limpiarSeleccion();
+                }
+            } else {
+                limpiarSeleccion();
+            }
+        } else {
+            limpiarSeleccion();
+        }
+    }
+
+    private void limpiarSeleccion(){
+        categoriaSeleccionada = null;
+        jButtonEditarCategoria.setEnabled(false);
+        jButtonEliminarCategoria.setEnabled(false);
+        jButtonEliminarCategoria.setToolTipText(null);
+        jTableMostrarCategoriasDisponibles.clearSelection();
+    }
+
+    private void eliminarCategoriaSeleccionada(){
+        if (categoriaSeleccionada == null) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Por favor, seleccione una categoría para eliminar",
+                    "Selección Requerida",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this,
+                "¿Está seguro que desea eliminar la categoría:\n\n" +
+                        "'" + categoriaSeleccionada.getNombre() + "'?\n\n" +
+                        "Esta acción no se puede deshacer.",
+                "Confirmar Eliminación",
+                javax.swing.JOptionPane.YES_NO_OPTION,
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+
+        if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+            ejecutarEliminacion();
+        }
+    }
+
+    private void ejecutarEliminacion(){
+        try {
+            // Verificar si la categoría tiene tareas asociadas
+            if (categoriaSeleccionada.getNumeroTareas() > 0) {
+                mostrarDialogoTareasAsociadas();
+                return;
+            }
+
+            // Proceder con la eliminación
+            boolean exito = categoriaController.eliminarCategoriaDirecta(categoriaSeleccionada.getId());
+
+            if (exito) {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Categoría eliminada exitosamente",
+                        "Eliminación Exitosa",
+                        javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+                // Limpiar selección y recargar categorías
+                limpiarSeleccion();
+                categoriaController.cargarCategorias();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this,
+                        "Error al eliminar la categoría",
+                        "Error",
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this,
+                    "Error al eliminar categoría: " + e.getMessage(),
+                    "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void mostrarDialogoTareasAsociadas(){
+        int opcion = javax.swing.JOptionPane.showConfirmDialog(this,
+                "No se puede eliminar la categoría '" + categoriaSeleccionada.getNombre() + "'\n" +
+                        "porque tiene " + categoriaSeleccionada.getNumeroTareas() + " tareas asociadas.\n\n" +
+                        "¿Desea ver las tareas asociadas a esta categoría?",
+                "No se puede eliminar",
+                javax.swing.JOptionPane.YES_NO_OPTION,
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+
+
     }
 
     /**
@@ -52,25 +254,16 @@ public class frmCategorias extends javax.swing.JFrame {
         jButtonExportar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
         jButtonCerrarSesion = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jTextFieldNombreCategoria = new javax.swing.JTextField();
-        jLabel23 = new javax.swing.JLabel();
-        jTextFieldDescripcionCategoria = new javax.swing.JTextField();
-        jButtonVaciarFormulario = new javax.swing.JButton();
-        jButtonRegistrarCategoria = new javax.swing.JButton();
-        jPanel7 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableMostrarCategoriasDisponibles = new javax.swing.JTable();
         jButtonEliminarCategoria = new javax.swing.JButton();
-        jButtonModificarCategoria = new javax.swing.JButton();
+        jButtonEditarCategoria = new javax.swing.JButton();
+        jTextFieldBuscarCategoriaPorNombre = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jButtonCategoriaNueva = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -180,22 +373,14 @@ public class frmCategorias extends javax.swing.JFrame {
                 .addComponent(jButtonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(41, 43, 66));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/usuario 32.png"))); // NOI18N
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/buscar.png"))); // NOI18N
-
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
 
         jButtonCerrarSesion.setBackground(new java.awt.Color(255, 0, 51));
         jButtonCerrarSesion.setForeground(new java.awt.Color(0, 0, 102));
@@ -214,15 +399,11 @@ public class frmCategorias extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 567, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addGap(51, 51, 51))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,16 +415,11 @@ public class frmCategorias extends javax.swing.JFrame {
                         .addGap(9, 9, 9))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(32, 32, 32))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(jLabel5)
+                                .addGap(6, 6, 6))
+                            .addComponent(jButtonCerrarSesion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(35, 35, 35))))
         );
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
@@ -251,144 +427,17 @@ public class frmCategorias extends javax.swing.JFrame {
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/menu.png"))); // NOI18N
         jLabel12.setText(" Categorias registradas");
 
-        jPanel4.setBackground(new java.awt.Color(207, 207, 227));
-        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jPanel4.setForeground(new java.awt.Color(255, 255, 255));
-
-        jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(102, 102, 102))); // NOI18N
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(32, 32, 32));
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/categoria.png"))); // NOI18N
-        jLabel13.setText("Registrar nueva Categoria");
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(28, Short.MAX_VALUE)
-                .addComponent(jLabel13)
-                .addGap(25, 25, 25))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jLabel13)
-                .addContainerGap(17, Short.MAX_VALUE))
-        );
-
-        jLabel22.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check.png"))); // NOI18N
-        jLabel22.setText("Nombre de categoria");
-
-        jTextFieldNombreCategoria.setFont(new java.awt.Font("Segoe UI Semilight", 0, 13)); // NOI18N
-        jTextFieldNombreCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNombreCategoriaActionPerformed(evt);
-            }
-        });
-
-        jLabel23.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check.png"))); // NOI18N
-        jLabel23.setText("Descripcion");
-
-        jTextFieldDescripcionCategoria.setFont(new java.awt.Font("Segoe UI Semilight", 0, 13)); // NOI18N
-        jTextFieldDescripcionCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldDescripcionCategoriaActionPerformed(evt);
-            }
-        });
-
-        jButtonVaciarFormulario.setBackground(new java.awt.Color(0, 80, 202));
-        jButtonVaciarFormulario.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButtonVaciarFormulario.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonVaciarFormulario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nada.png"))); // NOI18N
-        jButtonVaciarFormulario.setText("Vaciar");
-        jButtonVaciarFormulario.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 102, 255))); // NOI18N
-        jButtonVaciarFormulario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonVaciarFormularioActionPerformed(evt);
-            }
-        });
-
-        jButtonRegistrarCategoria.setBackground(new java.awt.Color(73, 167, 73));
-        jButtonRegistrarCategoria.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButtonRegistrarCategoria.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonRegistrarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/registrar.png"))); // NOI18N
-        jButtonRegistrarCategoria.setText("Registrar");
-        jButtonRegistrarCategoria.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(68, 164, 61))); // NOI18N
-        jButtonRegistrarCategoria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRegistrarCategoriaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(47, 47, 47)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel22)
-                    .addComponent(jTextFieldNombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel23)
-                    .addComponent(jTextFieldDescripcionCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jButtonVaciarFormulario, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonRegistrarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37)
-                .addComponent(jLabel22)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextFieldNombreCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel23)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextFieldDescripcionCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonVaciarFormulario, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonRegistrarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(115, Short.MAX_VALUE))
-        );
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 11, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
         jTableMostrarCategoriasDisponibles.setBackground(new java.awt.Color(195, 216, 229));
         jTableMostrarCategoriasDisponibles.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
         jTableMostrarCategoriasDisponibles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Nombre de la Categoria", "Descripcion", "N° de tareas vinculadas"
+                "Nombre de la Categoria", "N° de tareas vinculadas"
             }
         ));
         jTableMostrarCategoriasDisponibles.setGridColor(new java.awt.Color(255, 255, 255));
@@ -406,15 +455,31 @@ public class frmCategorias extends javax.swing.JFrame {
             }
         });
 
-        jButtonModificarCategoria.setBackground(new java.awt.Color(248, 246, 138));
-        jButtonModificarCategoria.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButtonModificarCategoria.setForeground(new java.awt.Color(51, 51, 51));
-        jButtonModificarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
-        jButtonModificarCategoria.setText("Modificar");
-        jButtonModificarCategoria.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(250, 233, 104), new java.awt.Color(250, 233, 104), new java.awt.Color(250, 233, 104), new java.awt.Color(250, 233, 104)));
-        jButtonModificarCategoria.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEditarCategoria.setBackground(new java.awt.Color(248, 246, 138));
+        jButtonEditarCategoria.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonEditarCategoria.setForeground(new java.awt.Color(51, 51, 51));
+        jButtonEditarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/editar.png"))); // NOI18N
+        jButtonEditarCategoria.setText("Editar");
+        jButtonEditarCategoria.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(250, 233, 104), new java.awt.Color(250, 233, 104), new java.awt.Color(250, 233, 104), new java.awt.Color(250, 233, 104)));
+        jButtonEditarCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonModificarCategoriaActionPerformed(evt);
+                jButtonEditarCategoriaActionPerformed(evt);
+            }
+        });
+
+        jTextFieldBuscarCategoriaPorNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldBuscarCategoriaPorNombreActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/lupa negro 24px.png"))); // NOI18N
+
+        jButtonCategoriaNueva.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/signo-de-mas.png"))); // NOI18N
+        jButtonCategoriaNueva.setBorder(null);
+        jButtonCategoriaNueva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCategoriaNuevaActionPerformed(evt);
             }
         });
 
@@ -427,44 +492,43 @@ public class frmCategorias extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonCategoriaNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextFieldBuscarCategoriaPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(94, 94, 94)
                         .addComponent(jButtonEliminarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(102, 102, 102)
-                        .addComponent(jButtonModificarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButtonEditarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(104, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jLabel12)
-                        .addGap(24, 24, 24)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonEliminarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonModificarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(33, 33, 33))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(55, Short.MAX_VALUE))))
+                        .addGap(7, 7, 7)
+                        .addComponent(jTextFieldBuscarCategoriaPorNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonCategoriaNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonEliminarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonEditarCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(121, 121, 121)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -474,7 +538,9 @@ public class frmCategorias extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,24 +550,17 @@ public class frmCategorias extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
 
-    //boton para modificar categoria
-    private void jButtonModificarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarCategoriaActionPerformed
+    
+    //textfiels para buscar categoria por nombres
+    private void jTextFieldBuscarCategoriaPorNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldBuscarCategoriaPorNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonModificarCategoriaActionPerformed
+    }//GEN-LAST:event_jTextFieldBuscarCategoriaPorNombreActionPerformed
 
-    //boton para vaciar el formulario
-    private void jButtonVaciarFormularioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVaciarFormularioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonVaciarFormularioActionPerformed
-
-    //boton para guardar/registrar categoria
-    private void jButtonRegistrarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarCategoriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonRegistrarCategoriaActionPerformed
+    //boton para editar categoria
+    private void jButtonEditarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarCategoriaActionPerformed
+        editarCategoriaSeleccionada();
+    }//GEN-LAST:event_jButtonEditarCategoriaActionPerformed
 
     //botón para ir a inicio
     private void jButtonInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInicioActionPerformed
@@ -535,69 +594,30 @@ public class frmCategorias extends javax.swing.JFrame {
 
     //botón para eliminar categoria
     private void jButtonEliminarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarCategoriaActionPerformed
-        // TODO add your handling code here:
+        eliminarCategoriaSeleccionada();
     }//GEN-LAST:event_jButtonEliminarCategoriaActionPerformed
 
-    //ingresar el nombre de la categoria
-    private void jTextFieldNombreCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombreCategoriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNombreCategoriaActionPerformed
-
-    //ingresar la descripción de la categoria
-    private void jTextFieldDescripcionCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldDescripcionCategoriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDescripcionCategoriaActionPerformed
+    //abrir interfaz de agregar categorias nuevas
+    private void jButtonCategoriaNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCategoriaNuevaActionPerformed
+        abrirFormularioNuevaCategoria();
+    }//GEN-LAST:event_jButtonCategoriaNuevaActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
 
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmCategorias().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonCategoriaNueva;
     private javax.swing.JButton jButtonCerrarSesion;
+    private javax.swing.JButton jButtonEditarCategoria;
     private javax.swing.JButton jButtonEliminarCategoria;
     private javax.swing.JButton jButtonEstado;
     private javax.swing.JButton jButtonExportar;
     private javax.swing.JButton jButtonInicio;
-    private javax.swing.JButton jButtonModificarCategoria;
     private javax.swing.JButton jButtonPrioridad;
-    private javax.swing.JButton jButtonRegistrarCategoria;
     private javax.swing.JButton jButtonTareas;
-    private javax.swing.JButton jButtonVaciarFormulario;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
@@ -605,14 +625,9 @@ public class frmCategorias extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableMostrarCategoriasDisponibles;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextFieldDescripcionCategoria;
-    private javax.swing.JTextField jTextFieldNombreCategoria;
+    private javax.swing.JTextField jTextFieldBuscarCategoriaPorNombre;
     // End of variables declaration//GEN-END:variables
 }

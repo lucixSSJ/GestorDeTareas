@@ -24,7 +24,6 @@ CREATE TABLE categorias (
     id_categoria INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     nombre_categoria VARCHAR(100) NOT NULL,
-    color VARCHAR(7) DEFAULT '#007bff',
     fecha_creacion DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE,
     UNIQUE KEY unique_categoria_usuario (id_usuario, nombre_categoria)
@@ -125,14 +124,14 @@ CREATE TABLE sesiones_usuarios (
 );
 
 -- Insertar datos de ejemplo
-INSERT INTO usuarios (nombres, apellidos, email, username, password_hash) VALUES 
-('Luciano', 'Bances', 'luciano@gmail.com', 'luciano', '6T2WjEGtcyUX9XgAYhjwAcScJ13W7X0RD6Tc+i4kR+g='), -- password: luciano
-('María', 'Gómez', 'maria.gomez@email.com', 'prueba', 'B+rqO3k0oM5R7x+CsjB73RNP1XxOu9PfwE/vNxvZ8Yg='); -- password: prueba123
+INSERT INTO usuarios (nombres, apellidos, email, username, password_hash, notificaciones_vencimiento, dias_antes_vencimiento) VALUES 
+('Luciano', 'Bances', 'luciano@gmail.com', 'luciano', '6T2WjEGtcyUX9XgAYhjwAcScJ13W7X0RD6Tc+i4kR+g=', TRUE, 1),
+('María', 'Gómez', 'maria.gomez@email.com', 'mariagomez', 'B+rqO3k0oM5R7x+CsjB73RNP1XxOu9PfwE/vNxvZ8Yg=', TRUE, 2);
 
-INSERT INTO categorias (id_usuario, nombre_categoria, color) VALUES 
-(1, 'Trabajo', '#007bff'),
-(1, 'Personal', '#28a745'),
-(2, 'Estudio', '#dc3545');
+INSERT INTO categorias (id_usuario, nombre_categoria) VALUES 
+(1, 'Trabajo'),
+(1, 'Personal'),
+(2, 'Estudio');
 
 INSERT INTO tareas (id_usuario, id_categoria, nombre_tarea, descripcion, fecha_limite, prioridad) VALUES 
 (1, 1, 'Reunión de equipo', 'Preparar presentación para la reunión semanal', DATE_ADD(NOW(), INTERVAL 2 DAY), 'alta'),
