@@ -3,29 +3,20 @@ package gestortareas.model;
 import java.util.Date;
 
 public class Tarea {
-    private int idTarea;
     private String nombre;
     private String descripcion;
     private Date fechaLimite;
     private String prioridad;
+    private Usuario usuario;
 
     public Tarea() {
     }
 
-    public Tarea(int idTarea, String descripcion, String nombre, Date fechaLimite, String prioridad) {
-        this.idTarea = idTarea;
+    public Tarea(String descripcion, String nombre, Date fechaLimite, String prioridad) {
         this.descripcion = descripcion;
         this.nombre = nombre;
         this.fechaLimite = fechaLimite;
         this.prioridad = prioridad;
-    }
-
-    public int getIdTarea() {
-        return idTarea;
-    }
-
-    public void setIdTarea(int idTarea) {
-        this.idTarea = idTarea;
     }
 
     public String getNombre() {
@@ -63,7 +54,6 @@ public class Tarea {
     @Override
     public String toString() {
         return "Tarea{" +
-                "idTarea=" + idTarea +
                 ", nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", fechaLimite=" + fechaLimite +
