@@ -10,6 +10,7 @@ import gestortareas.utilidad.db.DatabaseConnection;
 import gestortareas.utilidad.passwordhasher.PasswordHasher;
 
 public class MigradorPassword {
+    /**
     public static void migrarPasswordsExistentes() {
         String selectSql = "SELECT id_usuario, password_hash FROM usuarios WHERE LENGTH(password_hash) < 50";
         String updateSql = "UPDATE usuarios SET password_hash = ? WHERE id_usuario = ?";
@@ -42,8 +43,11 @@ public class MigradorPassword {
             System.err.println("Error en migración: " + e.getMessage());
         }
     }
+    */
 
-    // Ejecuta esto UNA vez para corregir todas las contraseñas
+
+    // Ejecutar una vez para corregir las contraseñas
+    /**
     public static void rehashearTodasLasContraseñas() {
         String selectSql = "SELECT id_usuario, password_hash FROM usuarios";
         String updateSql = "UPDATE usuarios SET password_hash = ? WHERE id_usuario = ?";
@@ -79,7 +83,10 @@ public class MigradorPassword {
             System.err.println("Error en re-hasheo: " + e.getMessage());
         }
     }
+    */
 
+
+    /**
     public static void reiniciarSistemaCompleto() {
         try (Connection conn = DatabaseConnection.getConnection();
              Statement stmt = conn.createStatement()) {
@@ -107,7 +114,10 @@ public class MigradorPassword {
             System.err.println("Error reiniciando sistema: " + e.getMessage());
         }
     }
+     */
 
+
+    /**
     public static void verificarTodosLosHashes() {
         System.out.println("HASHES CORRECTOS:");
         System.out.println("luciano: " + PasswordHasher.hashPassword("luciano"));
@@ -115,7 +125,10 @@ public class MigradorPassword {
         System.out.println("test123: " + PasswordHasher.hashPassword("test123"));
         System.out.println("password: " + PasswordHasher.hashPassword("password"));
     }
+     */
 
+
+    /**
     public static void pruebaUsuarioNose() {
         String passwordFromUser = "luciano"; // Lo que el usuario ingresa
         String storedHashForNose = "6T2WjEGtcyUX9XgAYhjwAcScJ13W7X0RD6Tc+i4kR+g="; // Hash en BD
@@ -127,8 +140,10 @@ public class MigradorPassword {
         boolean resultado = PasswordHasher.verificarPassword(passwordFromUser, storedHashForNose);
         System.out.println("Resultado verificación: " + resultado);
     }
+    */
 
-    // Ejecutar esto una sola vez
+
+    // ejecutar para pruebas de fallas
     public static void main(String[] args) {
         //migrarPasswordsExistentes();
         //rehashearTodasLasContraseñas();
@@ -137,6 +152,6 @@ public class MigradorPassword {
         //System.out.println(nuevoHash);
         //PasswordHasher.testConsistencia();
         //verificarTodosLosHashes();
-        pruebaUsuarioNose();
+        //pruebaUsuarioNose();
     }
 }

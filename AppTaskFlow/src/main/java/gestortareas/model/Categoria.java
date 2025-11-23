@@ -1,46 +1,51 @@
 package gestortareas.model;
 
+import java.time.LocalDateTime;
+
 public class Categoria {
-    private Usuario usuario;
-    private String nameCategory;
-    private String color;
+    private int id;
+    private int usuarioId;
+    private String nombre;
+    private LocalDateTime fechaCreacion;
+    private int numeroTareas;
 
-    public Categoria(Usuario usuario, String nameCategory, String color) {
-        this.usuario = usuario;
-        this.nameCategory = nameCategory;
-        this.color = color;
+    public Categoria() {}
+
+    public Categoria(int usuarioId, String nombre) {
+        this.usuarioId = usuarioId;
+        this.nombre = nombre;
+        this.numeroTareas = 0;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Categoria(int id, int usuarioId, String nombre, LocalDateTime fechaCreacion) {
+        this.id = id;
+        this.usuarioId = usuarioId;
+        this.nombre = nombre;
+        this.fechaCreacion = fechaCreacion;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public int getUsuarioId() { return usuarioId; }
+    public void setUsuarioId(int usuarioId) { this.usuarioId = usuarioId; }
+
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
+
+    public LocalDateTime getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+
+    public int getNumeroTareas() {
+        return numeroTareas;
     }
 
-    public String getNameCategory() {
-        return nameCategory;
-    }
-
-    public void setNameCategory(String nameCategory) {
-        this.nameCategory = nameCategory;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
+    public void setNumeroTareas(int numeroTareas) {
+        this.numeroTareas = numeroTareas;
     }
 
     @Override
     public String toString() {
-        return "Categoria{" +
-                "usuario=" + usuario +
-                ", nameCategory='" + nameCategory + '\'' +
-                ", color='" + color + '\'' +
-                '}';
+        return nombre + " (" + numeroTareas + " tareas)";
     }
 }
