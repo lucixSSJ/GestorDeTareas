@@ -14,7 +14,7 @@ import java.util.Properties;
  * @author Luciano
  */
 public class DatabaseConnection {
-    private static final String URL = "jdbc:mysql://localhost:3306/gestor_tareas";
+    private static final String URL = "jdbc:mysql://localhost:3306/gestor_tareas?allowPublicKeyRetrieval=true&useSSL=false";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "123456"; //ponen su password de su MySQL
 

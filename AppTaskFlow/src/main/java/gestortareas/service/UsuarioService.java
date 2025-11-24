@@ -5,6 +5,8 @@ import gestortareas.dao.impl.UsuarioDAOImpl;
 import gestortareas.model.Usuario;
 import gestortareas.utilidad.passwordhasher.PasswordHasher;
 
+import java.util.*;
+
 public class UsuarioService {
 
     private final UsuarioDAO usuarioDAO;
@@ -84,6 +86,9 @@ public class UsuarioService {
         }
 
         return this.usuarioDAO.actualizarContraseña(PasswordHasher.hashPassword(password), email);
+    }
 
+    public List<Usuario> obtenerTodosUsuarios() {
+        return this.usuarioDAO.obtenerTodosUsuarios();
     }
 }

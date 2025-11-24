@@ -5,7 +5,9 @@ import gestortareas.model.Usuario;
 import gestortareas.utilidad.db.DatabaseConnection;
 import gestortareas.utilidad.passwordhasher.PasswordHasher;
 
+import java.util.List;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
     @Override
@@ -165,10 +167,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         usuario.setApellidos(rs.getString("apellidos"));
         usuario.setEmail(rs.getString("email"));
         usuario.setUsername(rs.getString("username"));
-        usuario.setPasswordHash(rs.getString("password_hash"));
+        //usuario.setPasswordHash(rs.getString("password_hash"));
         usuario.setNotificacionesVencimiento(rs.getBoolean("notificaciones_vencimiento"));
         usuario.setDiasAntesVencimiento(rs.getInt("dias_antes_vencimiento"));
-        usuario.setActivo(rs.getBoolean("activo"));
+        //usuario.setActivo(rs.getBoolean("activo"));
 
         // Fechas
         Timestamp fechaRegistro = rs.getTimestamp("fecha_registro");
@@ -199,5 +201,27 @@ public class UsuarioDAOImpl implements UsuarioDAO {
             DatabaseConnection.reconnect();
             return false;
         }
-    }    
+    }
+
+    @Override
+    public List<Usuario> obtenerTodosUsuarios() {
+        List<Usuario> usuarios = new ArrayList<>();
+        String sql =  "SELECT id_usuario, nombres, apellidos FROM usuarios";
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+        ){
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Usuario user = new Usuario();
+                user.setIdUsuario(rs.getInt("id_usuario"));
+                user.setNombres(rs.getString("nombres"));
+                user.setApellidos(rs.getString("apellidos"));
+                usuarios.add(user);
+            }
+            return usuarios;
+        }catch (SQLException ex){
+            System.out.println("Error al obtener todos usuarios: "+ex.getMessage());
+        }
+        return usuarios;
+    }
 }

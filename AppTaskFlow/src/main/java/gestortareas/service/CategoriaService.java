@@ -73,4 +73,8 @@ public class CategoriaService {
             throw new IllegalArgumentException("El nombre de la categoría no puede tener más de 100 caracteres");
         }
     }
+
+    public List<Categoria> obtenerCategorias() {
+        return categoriaDAO.obtenerTodosCategorias();
+    }
 }

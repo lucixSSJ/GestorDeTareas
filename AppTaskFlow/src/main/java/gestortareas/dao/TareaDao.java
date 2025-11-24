@@ -4,10 +4,13 @@
  */
 package gestortareas.dao;
 
+import gestortareas.model.Tarea;
+
 /**
  *
- * @author Luciano
+ * @author Michael Medina
  */
-public class TareaDao {
-    
+public interface TareaDao {
+    boolean create(Tarea tarea);
+    boolean existe(String nombreTarea);
 }

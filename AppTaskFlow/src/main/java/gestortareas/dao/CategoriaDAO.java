@@ -12,4 +12,5 @@ public interface CategoriaDAO {
     boolean existeCategoriaUsuario(int usuarioId, String nombreCategoria);
     Categoria obtenerPorId(int categoriaId);
     boolean existeNombreCategoria(int usuarioId, String nombreCategoria, int excludeCategoriaId);
+    List<Categoria> obtenerTodosCategorias();
 }

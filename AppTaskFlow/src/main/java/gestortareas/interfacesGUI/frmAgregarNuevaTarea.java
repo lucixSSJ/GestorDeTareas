@@ -4,17 +4,32 @@
  */
 package gestortareas.interfacesGUI;
 
+import gestortareas.controller.TareaController;
+import gestortareas.model.Categoria;
+import gestortareas.model.Tarea;
+import gestortareas.model.Usuario;
+import gestortareas.model.enums.Prioridad;
+
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+
 /**
  *
- * @author SERT
+ * @author Michael Medina
  */
 public class frmAgregarNuevaTarea extends javax.swing.JFrame {
-
     /**
      * Creates new form Login
      */
-    public frmAgregarNuevaTarea() {
+    private TareaController tareaController;
+    public frmAgregarNuevaTarea(TareaController tareaController) {
+        this.tareaController = tareaController;
         initComponents();
+        llenarComboBoxCategoria();
+        llenarComboPrioridad();
+        llenarUsuarios();
     }
 
     /**
@@ -34,25 +49,24 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonCrearTarea = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
-        jLabel23 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel24 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel25 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel28 = new javax.swing.JLabel();
+        jLbTitulo = new javax.swing.JLabel();
+        jTextTitulo = new javax.swing.JTextField();
+        jLbDescripcion = new javax.swing.JLabel();
+        jTextDescripcion = new javax.swing.JTextField();
+        jLbFecha = new javax.swing.JLabel();
+        jLbCategoria = new javax.swing.JLabel();
+        jLbPrioridad = new javax.swing.JLabel();
+        jLbUsuario = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jTextField4 = new javax.swing.JTextField();
+        jComboBoxCategoria = new javax.swing.JComboBox<>();
+        jComboBoxPrioridad = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
+        Fecha = new com.toedter.calendar.JDateChooser();
+        jComboBoxUsuarios = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
 
         jCheckBox1.setText("jCheckBox1");
@@ -115,80 +129,60 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
                         .addGap(41, 41, 41))))
         );
 
-        jButton1.setBackground(new java.awt.Color(255, 51, 51));
-        jButton1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nota.png"))); // NOI18N
-        jButton1.setText("Crear tarea");
-        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51)));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCrearTarea.setBackground(new java.awt.Color(255, 51, 51));
+        jButtonCrearTarea.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonCrearTarea.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonCrearTarea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nota.png"))); // NOI18N
+        jButtonCrearTarea.setText("Crear tarea");
+        jButtonCrearTarea.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51)));
+        jButtonCrearTarea.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonCrearTareaActionPerformed(evt);
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(0, 80, 202));
-        jButton3.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/error.png"))); // NOI18N
-        jButton3.setText("Cancelar");
-        jButton3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 102, 255))); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCancelar.setBackground(new java.awt.Color(0, 80, 202));
+        jButtonCancelar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/error.png"))); // NOI18N
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 102, 255))); // NOI18N
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonCancelarActionPerformed(evt);
             }
         });
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        jLabel23.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
-        jLabel23.setText("Titulo:");
+        jLbTitulo.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        jLbTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
+        jLbTitulo.setText("Titulo:");
 
-        jLabel24.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
-        jLabel24.setText("Descripcion:");
+        jLbDescripcion.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        jLbDescripcion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
+        jLbDescripcion.setText("Descripcion:");
 
-        jLabel25.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
-        jLabel25.setText("Fecha:");
+        jLbFecha.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        jLbFecha.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
+        jLbFecha.setText("Fecha:");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
+        jLbCategoria.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        jLbCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
+        jLbCategoria.setText("Categoria:");
 
-        jLabel26.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel26.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
-        jLabel26.setText("Categoria:");
+        jLbPrioridad.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        jLbPrioridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
+        jLbPrioridad.setText("Prioridad:");
 
-        jLabel27.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
-        jLabel27.setText("Prioridad:");
-
-        jLabel28.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
-        jLabel28.setText("E-mail:");
+        jLbUsuario.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        jLbUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
+        jLbUsuario.setText("Usuario");
 
         jLabel29.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
         jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exportar negro 24px.png"))); // NOI18N
         jLabel29.setText("Adjuntar archivo");
-
-        jLabel1.setText("jLabel1");
-
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
-
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
-            }
-        });
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -216,6 +210,8 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
             .addGap(0, 8, Short.MAX_VALUE)
         );
 
+        jComboBoxUsuarios.setModel(new javax.swing.DefaultComboBoxModel<>());
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -228,33 +224,31 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
                         .addGap(43, 43, 43)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel23)
+                                .addComponent(jLbTitulo)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel25)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLbCategoria)
+                                    .addComponent(jLbFecha))
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jComboBoxCategoria, 0, 249, Short.MAX_VALUE)
+                                    .addComponent(Fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jLabel29)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel26)
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLbPrioridad)
+                                    .addComponent(jLbUsuario))
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel29)
-                                .addGap(26, 26, 26)
-                                .addComponent(jLabel1))
-                            .addComponent(jLabel28)
-                            .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
-                                    .addComponent(jLabel27)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jComboBoxPrioridad, 0, 249, Short.MAX_VALUE)
+                                    .addComponent(jComboBoxUsuarios, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(jLabel24)
+                        .addComponent(jLbDescripcion)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
@@ -262,37 +256,35 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel23)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLbTitulo)
+                    .addComponent(jTextTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel24)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLbDescripcion)
+                    .addComponent(jTextDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel25)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLbFecha)
+                    .addComponent(Fecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel26)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLbCategoria)
+                    .addComponent(jComboBoxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel27)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLbPrioridad)
+                    .addComponent(jComboBoxPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel28)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 21, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel29)
-                    .addComponent(jLabel1))
-                .addGap(41, 41, 41))
+                    .addComponent(jLbUsuario)
+                    .addComponent(jComboBoxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addComponent(jLabel29)
+                .addContainerGap())
         );
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
@@ -310,8 +302,8 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonCrearTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(60, 60, 60)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
@@ -334,9 +326,9 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonCrearTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26))))
         );
 
@@ -354,216 +346,97 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {                                                
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarNuevaTarea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarNuevaTarea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarNuevaTarea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmAgregarNuevaTarea.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmAgregarNuevaTarea().setVisible(true);
-            }
-        });
     }
 
+    private void jButtonCrearTareaActionPerformed(java.awt.event.ActionEvent evt) {
+        Categoria categoria = (Categoria) jComboBoxCategoria.getSelectedItem();
+        Usuario usuario = (Usuario) jComboBoxUsuarios.getSelectedItem();
+        Prioridad prioridad = Prioridad.valueOf(jComboBoxPrioridad.getSelectedItem().toString());
+        String titulo = jTextTitulo.getText();
+        String descripcion = jTextDescripcion.getText();
+
+        Date fechaLimite = Fecha.getDate();
+
+        if (fechaLimite == null) {
+            this.tareaController.mensaje("Fecha esta vacia");
+            return;
+        }
+
+        validarFecha(fechaLimite);
+
+        long fecha = fechaLimite.getTime();
+        java.sql.Date fechaSQL = new java.sql.Date(fecha);
+
+        Tarea tarea = new Tarea.TareaBuilder()
+                .setNombre(titulo)
+                .setDescripcion(descripcion)
+                .setPrioridad(prioridad.toString())
+                .setUsuario(usuario)
+                .setIdCategoria(categoria.getId())
+                .setFechaLimite(fechaSQL)
+                .build();
+        int result = this.tareaController.createTarea(tarea);
+
+        if (result == 1) this.tareaController.mensaje("Usuario no econtrado");
+        if (result == 2) this.tareaController.mensaje("Los campos del nombre y descripcion son importantes");
+        if (result == 3) this.tareaController.mensaje("La tarea ya existe");
+        if (result == 4) this.tareaController.mensaje("Categoria no encontrada");
+        if (result == 5) this.tareaController.mensaje("Error al crear el tarea");
+        if (result == 6) this.tareaController.mensaje("Tarea creada exitosamente");
+
+
+        // this.tareaController.mensaje("Categoria seleccionada: "+categoria.getNombre()+"Con id: "+categoria.getId());
+    }
+
+    private void validarFecha(Date fecha){
+        LocalDate fechaLimite = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fechaHoy = LocalDate.now();
+
+        if (fechaLimite.isEqual(fechaHoy)){
+            this.tareaController.mensaje("La fecha no puede ser la misma de hoy");
+        }
+    }
+
+    private void llenarComboPrioridad(){
+        this.tareaController.llenarComboBoxPrioridad(jComboBoxPrioridad);
+    }
+
+    private void llenarComboBoxCategoria(){
+        this.tareaController.llenarComboBox(jComboBoxCategoria);
+    }
+
+    public void llenarUsuarios(){
+        this.tareaController.llenarComboxUsuarios(jComboBoxUsuarios);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser Fecha;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonCancelar;
+    private javax.swing.JButton jButtonCrearTarea;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<Categoria> jComboBoxCategoria;
+    private javax.swing.JComboBox<String> jComboBoxPrioridad;
+    private javax.swing.JComboBox<Usuario> jComboBoxUsuarios;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
-    private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
-    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLbCategoria;
+    private javax.swing.JLabel jLbDescripcion;
+    private javax.swing.JLabel jLbFecha;
+    private javax.swing.JLabel jLbPrioridad;
+    private javax.swing.JLabel jLbTitulo;
+    private javax.swing.JLabel jLbUsuario;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextDescripcion;
+    private javax.swing.JTextField jTextTitulo;
     // End of variables declaration//GEN-END:variables
 }
