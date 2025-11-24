@@ -46,6 +46,6 @@ public class Categoria {
 
     @Override
     public String toString() {
-        return nombre + " (" + numeroTareas + " tareas)";
+        return this.nombre;
     }
 }

@@ -188,6 +188,25 @@ public class CategoriaDAOImpl implements CategoriaDAO {
         return false;
     }
 
+    @Override
+    public List<Categoria> obtenerTodosCategorias() {
+        List<Categoria> categorias = new ArrayList<>();
+        String sql = "SELECT * FROM categorias";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+        PreparedStatement sp = conn.prepareStatement(sql)
+        ){
+            ResultSet rs = sp.executeQuery();
+            while (rs.next()) {
+                categorias.add(mapearCategoria(rs));
+            }
+            return categorias;
+        }catch (SQLException e){
+            System.out.println("Error al obtener todos categorias: " + e.getMessage());
+        }
+        return List.of();
+    }
+
     private Categoria mapearCategoria(ResultSet rs) throws SQLException {
         Categoria categoria = new Categoria();
         categoria.setId(rs.getInt("id_categoria"));
