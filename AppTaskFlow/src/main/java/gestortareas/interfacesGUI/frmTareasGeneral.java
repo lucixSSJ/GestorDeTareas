@@ -7,6 +7,7 @@ package gestortareas.interfacesGUI;
 import gestortareas.controller.DashboardController;
 import gestortareas.controller.NavigationController;
 import gestortareas.controller.SessionController;
+import gestortareas.controller.TareaController;
 import gestortareas.model.Usuario;
 
 /**
@@ -17,6 +18,7 @@ public class frmTareasGeneral extends javax.swing.JFrame {
     private Usuario usuario;
     private NavigationController navigationController;
     private SessionController sessionController;
+    private TareaController tareaController;
 
     /**
      * Creates new form Login
@@ -36,6 +38,7 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         this.usuario = usuario;
         this.navigationController = navigationController;
         this.sessionController = new SessionController(usuario);
+        this.tareaController = new TareaController();
         initComponents();
         configurarInterfaz();
     }
@@ -984,9 +987,9 @@ public class frmTareasGeneral extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCerrarSesionActionPerformed
 
     //botón para que aparezca la interfaz de agregar tarea nueva
-    private void jButtonTareaNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTareaNuevaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonTareaNuevaActionPerformed
+    private void jButtonTareaNuevaActionPerformed(java.awt.event.ActionEvent evt) {
+        this.tareaController.abrirVistaNuevaTarea();
+    }
 
     //btn para ir a la interfas principal
     private void jButtonInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInicioActionPerformed
