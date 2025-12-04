@@ -17,7 +17,11 @@ public class Tarea {
     private List<ArchivoAdjunto> archivoAdjunto;
     private ImagenTarea imagenTarea;
     private int idCategoria;
-    public Tarea(int idTarea, Usuario usuario, String nombre, String descripcion, Date fechaLimite, String prioridad, String estado, List<ArchivoAdjunto> archivoAdjunto, ImagenTarea imagenTarea, int idCategoria)
+    private int recordatorio;
+    private Date fechaArchivada;
+    public Tarea(int idTarea, Usuario usuario, String nombre, 
+            String descripcion, Date fechaLimite, String prioridad, String estado, 
+            List<ArchivoAdjunto> archivoAdjunto, ImagenTarea imagenTarea, int idCategoria,int recordatorio,Date fechaArchivada)
     {
         this.idTarea = idTarea;
         this.usuario = usuario;
@@ -29,6 +33,8 @@ public class Tarea {
         this.archivoAdjunto = archivoAdjunto;
         this.imagenTarea = imagenTarea;
         this.idCategoria = idCategoria;
+        this.recordatorio = recordatorio;
+        this.fechaArchivada = fechaArchivada;
     }
 
     public static class TareaBuilder implements Build<Tarea> {
@@ -42,6 +48,8 @@ public class Tarea {
         private List<ArchivoAdjunto> archivoAdjunto = new ArrayList<>();
         private ImagenTarea imagenTarea;
         private int idCategoria;
+        private int recordatorio;
+        private Date fechaArchivada;
         public TareaBuilder() {
         }
 
@@ -94,10 +102,21 @@ public class Tarea {
             this.imagenTarea = imagenTarea;
             return this;
         }
-
+        
+        public TareaBuilder setRecordatorio(int recordatorio) {
+            this.recordatorio = recordatorio;
+            return this;
+        }
+        
+        public TareaBuilder setFechaArchivada(Date fechaArchivada) {
+            this.fechaArchivada = fechaArchivada;
+            return this;
+        }
+        
+        
         @Override
         public Tarea build() {
-            return new Tarea(idTarea,usuario,nombre,descripcion,fechaLimite,prioridad,estado,archivoAdjunto,imagenTarea,idCategoria);
+            return new Tarea(idTarea,usuario,nombre,descripcion,fechaLimite,prioridad,estado,archivoAdjunto,imagenTarea,idCategoria,recordatorio,fechaArchivada);
         }
     }
 
@@ -183,6 +202,24 @@ public class Tarea {
     public void setImagenTarea(ImagenTarea imagenTarea) {
         this.imagenTarea = imagenTarea;
     }
+
+    public int getRecordatorio() {
+        return recordatorio;
+    }
+
+    public void setRecordatorio(int recordatorio) {
+        this.recordatorio = recordatorio;
+    }
+
+    public Date getFechaArchivada() {
+        return fechaArchivada;
+    }
+
+    public void setFechaArchivada(Date fechaArchivada) {
+        this.fechaArchivada = fechaArchivada;
+    }
+    
+    
 
     @Override
     public String toString() {

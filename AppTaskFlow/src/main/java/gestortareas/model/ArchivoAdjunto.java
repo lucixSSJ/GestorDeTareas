@@ -21,6 +21,9 @@ public class ArchivoAdjunto {
         this.fechaSubida = fechaSubida;
     }
 
+    public ArchivoAdjunto() {
+    }
+
     public Long getIdArchivo() {
         return idArchivo;
     }
