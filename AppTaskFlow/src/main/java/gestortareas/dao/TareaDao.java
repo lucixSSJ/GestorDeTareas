@@ -11,6 +11,6 @@ import gestortareas.model.Tarea;
  * @author Michael Medina
  */
 public interface TareaDao {
-    boolean create(Tarea tarea);
+    int create(Tarea tarea);
     boolean existe(String nombreTarea);
 }

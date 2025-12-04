@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package gestortareas.interfacesGUI;
 
 import gestortareas.controller.TareaController;
@@ -9,21 +5,25 @@ import gestortareas.model.Categoria;
 import gestortareas.model.Tarea;
 import gestortareas.model.Usuario;
 import gestortareas.model.enums.Prioridad;
+import java.io.File;
 
-import java.text.DateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.swing.JFileChooser;
 
 /**
  *
  * @author Michael Medina
  */
 public class frmAgregarNuevaTarea extends javax.swing.JFrame {
+
     /**
      * Creates new form Login
      */
     private TareaController tareaController;
+    private List<File> archivosSeleccionados = new ArrayList();
+
     public frmAgregarNuevaTarea(TareaController tareaController) {
         this.tareaController = tareaController;
         initComponents();
@@ -60,7 +60,7 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
         jLbCategoria = new javax.swing.JLabel();
         jLbPrioridad = new javax.swing.JLabel();
         jLbUsuario = new javax.swing.JLabel();
-        jLabel29 = new javax.swing.JLabel();
+        adjuntarArchivo = new javax.swing.JLabel();
         jComboBoxCategoria = new javax.swing.JComboBox<>();
         jComboBoxPrioridad = new javax.swing.JComboBox<>();
         jPanel5 = new javax.swing.JPanel();
@@ -180,9 +180,15 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
         jLbUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check icono.png"))); // NOI18N
         jLbUsuario.setText("Usuario");
 
-        jLabel29.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jLabel29.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exportar negro 24px.png"))); // NOI18N
-        jLabel29.setText("Adjuntar archivo");
+        adjuntarArchivo.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        adjuntarArchivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exportar negro 24px.png"))); // NOI18N
+        adjuntarArchivo.setText("Adjuntar archivo");
+        adjuntarArchivo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        adjuntarArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                adjuntarArchivoMouseClicked(evt);
+            }
+        });
 
         jPanel5.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -210,8 +216,6 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
             .addGap(0, 8, Short.MAX_VALUE)
         );
 
-        jComboBoxUsuarios.setModel(new javax.swing.DefaultComboBoxModel<>());
-
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -235,7 +239,7 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jComboBoxCategoria, 0, 249, Short.MAX_VALUE)
                                     .addComponent(Fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jLabel29)
+                            .addComponent(adjuntarArchivo)
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLbPrioridad)
@@ -283,7 +287,7 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
                     .addComponent(jLbUsuario)
                     .addComponent(jComboBoxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-                .addComponent(jLabel29)
+                .addComponent(adjuntarArchivo)
                 .addContainerGap())
         );
 
@@ -346,72 +350,77 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {                                                
+    private void adjuntarArchivoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adjuntarArchivoMouseClicked
+        JFileChooser jFileChooser = new JFileChooser();
+        jFileChooser.setMultiSelectionEnabled(true);
+
+        int seleccion = jFileChooser.showOpenDialog(this);
+
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            File[] files = jFileChooser.getSelectedFiles();
+
+            for (File file : files) {
+                this.archivosSeleccionados.add(file);
+                System.out.println("ruta archivo: " + file.getAbsolutePath());
+                System.out.println("Nombre de archivo: " + file.getName());
+                System.out.println("Tamaño del archivo: " + file.length());
+            }
+
+        }
+    }//GEN-LAST:event_adjuntarArchivoMouseClicked
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {
 
     }
 
     private void jButtonCrearTareaActionPerformed(java.awt.event.ActionEvent evt) {
         Categoria categoria = (Categoria) jComboBoxCategoria.getSelectedItem();
         Usuario usuario = (Usuario) jComboBoxUsuarios.getSelectedItem();
+        System.out.println("Usuario seleccionado: "+usuario.getIdUsuario());
         Prioridad prioridad = Prioridad.valueOf(jComboBoxPrioridad.getSelectedItem().toString());
         String titulo = jTextTitulo.getText();
         String descripcion = jTextDescripcion.getText();
 
         Date fechaLimite = Fecha.getDate();
-
+        
         if (fechaLimite == null) {
+            System.out.println("fecha vacia");
             this.tareaController.mensaje("Fecha esta vacia");
             return;
         }
-
-        validarFecha(fechaLimite);
-
-        long fecha = fechaLimite.getTime();
-        java.sql.Date fechaSQL = new java.sql.Date(fecha);
-
+        
         Tarea tarea = new Tarea.TareaBuilder()
                 .setNombre(titulo)
                 .setDescripcion(descripcion)
                 .setPrioridad(prioridad.toString())
                 .setUsuario(usuario)
                 .setIdCategoria(categoria.getId())
-                .setFechaLimite(fechaSQL)
+                .setFechaLimite(fechaLimite)
                 .build();
-        int result = this.tareaController.createTarea(tarea);
-
-        if (result == 1) this.tareaController.mensaje("Usuario no econtrado");
-        if (result == 2) this.tareaController.mensaje("Los campos del nombre y descripcion son importantes");
-        if (result == 3) this.tareaController.mensaje("La tarea ya existe");
-        if (result == 4) this.tareaController.mensaje("Categoria no encontrada");
-        if (result == 5) this.tareaController.mensaje("Error al crear el tarea");
-        if (result == 6) this.tareaController.mensaje("Tarea creada exitosamente");
-
-
-        // this.tareaController.mensaje("Categoria seleccionada: "+categoria.getNombre()+"Con id: "+categoria.getId());
+        this.tareaController.createTarea(tarea, archivosSeleccionados);
     }
 
-    private void validarFecha(Date fecha){
-        LocalDate fechaLimite = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        LocalDate fechaHoy = LocalDate.now();
-
-        if (fechaLimite.isEqual(fechaHoy)){
-            this.tareaController.mensaje("La fecha no puede ser la misma de hoy");
-        }
-    }
-
-    private void llenarComboPrioridad(){
+    private void llenarComboPrioridad() {
         this.tareaController.llenarComboBoxPrioridad(jComboBoxPrioridad);
     }
 
-    private void llenarComboBoxCategoria(){
+    private void llenarComboBoxCategoria() {
         this.tareaController.llenarComboBox(jComboBoxCategoria);
     }
 
-    public void llenarUsuarios(){
+    public void llenarUsuarios() {
         this.tareaController.llenarComboxUsuarios(jComboBoxUsuarios);
     }
+
+    public static void main(String[] args) {
+        TareaController tareaController = new TareaController();
+        //frmAgregarNuevaTarea frm = new frmAgregarNuevaTarea(tareaController);
+        tareaController.abrirVistaNuevaTarea();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser Fecha;
+    private javax.swing.JLabel adjuntarArchivo;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonCrearTarea;
@@ -421,7 +430,6 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
     private javax.swing.JComboBox<Usuario> jComboBoxUsuarios;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLbCategoria;
