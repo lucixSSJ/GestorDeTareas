@@ -64,10 +64,8 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButtonInicio = new javax.swing.JButton();
-        jButtonExportar = new javax.swing.JButton();
-        jButtonPrioridad = new javax.swing.JButton();
         jButtonCategoria = new javax.swing.JButton();
-        jButtonEstado = new javax.swing.JButton();
+        jButtonArchivados = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -85,6 +83,8 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         TableTareas = new javax.swing.JTable();
         verDetalle = new javax.swing.JButton();
+        jButtonExportarPDF = new javax.swing.JButton();
+        jButtonExportarICS = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -125,28 +125,6 @@ public class frmTareasGeneral extends javax.swing.JFrame {
             }
         });
 
-        jButtonExportar.setBackground(new java.awt.Color(0, 0, 51));
-        jButtonExportar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButtonExportar.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exportar (1).png"))); // NOI18N
-        jButtonExportar.setText("Exportar");
-        jButtonExportar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExportarActionPerformed(evt);
-            }
-        });
-
-        jButtonPrioridad.setBackground(new java.awt.Color(0, 0, 51));
-        jButtonPrioridad.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButtonPrioridad.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonPrioridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/estrella.png"))); // NOI18N
-        jButtonPrioridad.setText("Prioridad");
-        jButtonPrioridad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPrioridadActionPerformed(evt);
-            }
-        });
-
         jButtonCategoria.setBackground(new java.awt.Color(0, 0, 51));
         jButtonCategoria.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jButtonCategoria.setForeground(new java.awt.Color(255, 255, 255));
@@ -158,14 +136,14 @@ public class frmTareasGeneral extends javax.swing.JFrame {
             }
         });
 
-        jButtonEstado.setBackground(new java.awt.Color(0, 0, 51));
-        jButtonEstado.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButtonEstado.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonEstado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/archivos.png"))); // NOI18N
-        jButtonEstado.setText("Estado");
-        jButtonEstado.addActionListener(new java.awt.event.ActionListener() {
+        jButtonArchivados.setBackground(new java.awt.Color(0, 0, 51));
+        jButtonArchivados.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButtonArchivados.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonArchivados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/archivos.png"))); // NOI18N
+        jButtonArchivados.setText("Archivados");
+        jButtonArchivados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEstadoActionPerformed(evt);
+                jButtonArchivadosActionPerformed(evt);
             }
         });
 
@@ -175,26 +153,19 @@ public class frmTareasGeneral extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jButtonExportar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButtonPrioridad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButtonEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButtonArchivados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
                 .addComponent(jButtonInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addComponent(jButtonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonArchivados, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -342,10 +313,34 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         verDetalle.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         verDetalle.setForeground(new java.awt.Color(255, 255, 255));
         verDetalle.setText("Ver Detalles");
-        verDetalle.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        verDetalle.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         verDetalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 verDetalleActionPerformed(evt);
+            }
+        });
+
+        jButtonExportarPDF.setBackground(new java.awt.Color(255, 51, 51));
+        jButtonExportarPDF.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonExportarPDF.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonExportarPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pdf.png"))); // NOI18N
+        jButtonExportarPDF.setText("Exportar PDF");
+        jButtonExportarPDF.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51)));
+        jButtonExportarPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExportarPDFActionPerformed(evt);
+            }
+        });
+
+        jButtonExportarICS.setBackground(new java.awt.Color(0, 80, 202));
+        jButtonExportarICS.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonExportarICS.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonExportarICS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ics.png"))); // NOI18N
+        jButtonExportarICS.setText("Exportar ICS");
+        jButtonExportarICS.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 102, 255))); // NOI18N
+        jButtonExportarICS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExportarICSActionPerformed(evt);
             }
         });
 
@@ -355,25 +350,33 @@ public class frmTareasGeneral extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonTareaNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(verDetalle)
-                        .addContainerGap(251, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jScrollPaneTareas)
-                        .addGap(15, 15, 15))))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonTareaNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(jButton2)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(verDetalle)
+                                .addContainerGap(251, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jScrollPaneTareas)
+                                .addGap(15, 15, 15))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonExportarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(52, 52, 52)
+                        .addComponent(jButtonExportarICS, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47))))
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -396,8 +399,12 @@ public class frmTareasGeneral extends javax.swing.JFrame {
                                 .addComponent(jButtonTareaNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel12)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPaneTareas, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(jScrollPaneTareas, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonExportarICS, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonExportarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(16, 16, 16))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -444,25 +451,23 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         navigationController.volverAlDashboard(this);
     }//GEN-LAST:event_jButtonInicioActionPerformed
 
-    //botón para ir a la interfaz de exportar
-    private void jButtonExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonExportarActionPerformed
-
-    //botón para ir a la interfaz de prioridad
-    private void jButtonPrioridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrioridadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonPrioridadActionPerformed
-
     //botón para ir a la interfaz de categorías
     private void jButtonCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCategoriaActionPerformed
         navigationController.irACategoriasDesdeTareas(this);
     }//GEN-LAST:event_jButtonCategoriaActionPerformed
 
     //botón para ir a la interfaz de estado
-    private void jButtonEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadoActionPerformed
+    private void jButtonArchivadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonArchivadosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonEstadoActionPerformed
+    }//GEN-LAST:event_jButtonArchivadosActionPerformed
+
+    private void jButtonExportarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportarPDFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonExportarPDFActionPerformed
+
+    private void jButtonExportarICSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportarICSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonExportarICSActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {
         int filaSeleccionada = this.TableTareas.getSelectedRow();
@@ -549,12 +554,12 @@ public class frmTareasGeneral extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton eliminar;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButtonArchivados;
     private javax.swing.JButton jButtonCategoria;
     private javax.swing.JButton jButtonCerrarSesion;
-    private javax.swing.JButton jButtonEstado;
-    private javax.swing.JButton jButtonExportar;
+    private javax.swing.JButton jButtonExportarICS;
+    private javax.swing.JButton jButtonExportarPDF;
     private javax.swing.JButton jButtonInicio;
-    private javax.swing.JButton jButtonPrioridad;
     private javax.swing.JButton jButtonTareaNueva;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;

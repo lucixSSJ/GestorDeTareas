@@ -47,9 +47,7 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
         jPanel18 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jButtonCategoria = new javax.swing.JButton();
-        jButtonEstado = new javax.swing.JButton();
-        jButtonExportar = new javax.swing.JButton();
-        jButtonPrioridad = new javax.swing.JButton();
+        jButtonArchivados = new javax.swing.JButton();
         jButtonTareas = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -155,36 +153,14 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jButtonEstado.setBackground(new java.awt.Color(0, 0, 51));
-        jButtonEstado.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButtonEstado.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonEstado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/archivos.png"))); // NOI18N
-        jButtonEstado.setText("Estado");
-        jButtonEstado.addActionListener(new java.awt.event.ActionListener() {
+        jButtonArchivados.setBackground(new java.awt.Color(0, 0, 51));
+        jButtonArchivados.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButtonArchivados.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonArchivados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/archivos.png"))); // NOI18N
+        jButtonArchivados.setText("Archivados");
+        jButtonArchivados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEstadoActionPerformed(evt);
-            }
-        });
-
-        jButtonExportar.setBackground(new java.awt.Color(0, 0, 51));
-        jButtonExportar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButtonExportar.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exportar (1).png"))); // NOI18N
-        jButtonExportar.setText("Exportar");
-        jButtonExportar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExportarActionPerformed(evt);
-            }
-        });
-
-        jButtonPrioridad.setBackground(new java.awt.Color(0, 0, 51));
-        jButtonPrioridad.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButtonPrioridad.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonPrioridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/estrella.png"))); // NOI18N
-        jButtonPrioridad.setText("Prioridad");
-        jButtonPrioridad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPrioridadActionPerformed(evt);
+                jButtonArchivadosActionPerformed(evt);
             }
         });
 
@@ -205,10 +181,8 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonTareas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButtonPrioridad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
-            .addComponent(jButtonEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButtonExportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButtonArchivados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,13 +192,9 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(jButtonTareas, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
                 .addComponent(jButtonCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonArchivados, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -925,12 +895,9 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel13))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addContainerGap(0, Short.MAX_VALUE))
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -987,19 +954,9 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCategoriaActionPerformed
 
     //abrir interfaz de estado
-    private void jButtonEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadoActionPerformed
+    private void jButtonArchivadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonArchivadosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonEstadoActionPerformed
-
-    //abrir interfaz exportar
-    private void jButtonExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonExportarActionPerformed
-
-    //botón para abrir la interfaz de prioridad
-    private void jButtonPrioridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrioridadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonPrioridadActionPerformed
+    }//GEN-LAST:event_jButtonArchivadosActionPerformed
 
     private void mostrarNombreUsuario(){
         if (usuario != null && jTextFieldNombresUsuario != null){
@@ -1047,11 +1004,9 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonArchivados;
     private javax.swing.JButton jButtonCategoria;
     private javax.swing.JButton jButtonCerrarSesion;
-    private javax.swing.JButton jButtonEstado;
-    private javax.swing.JButton jButtonExportar;
-    private javax.swing.JButton jButtonPrioridad;
     private javax.swing.JButton jButtonTareas;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -1081,7 +1036,6 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
@@ -1089,7 +1043,6 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel60;
     private javax.swing.JLabel jLabel61;
     private javax.swing.JLabel jLabel62;
@@ -1100,8 +1053,6 @@ public class frmPantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel23;
