@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7734b18c-a5f3-47ae-b092-71d3fd699210" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AppTaskFlow/lib/mysql-connector-j-8.0.33.jar" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/lib/mysql-connector-j-8.0.33.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/gestortareas/controller/TestTarea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/gestortareas/interfacesGUI/frmTareasGeneral.form" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/gestortareas/interfacesGUI/frmTareasGeneral.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AppTaskFlow/src/main/java/gestortareas/interfacesGUI/frmTareasGeneral.java" beforeDir="false" afterPath="$PROJECT_DIR$/AppTaskFlow/src/main/java/gestortareas/interfacesGUI/frmTareasGeneral.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,12 +24,12 @@
     &quot;assignee&quot;: &quot;lucixSSJ&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/lucixSSJ/GestorDeTareas.git&quot;,
-    &quot;accountId&quot;: &quot;9412d4f0-c91b-4fad-ab62-d048ccb27e06&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/lucixSSJ/GestorDeTareas.git",
+    "accountId": "090df419-9d1d-4164-afb8-9230175585fc"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -47,12 +48,15 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "ramMichael",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Luciano/Desktop/Proyecto_DiseñoPatrones/GestorDeTareas/AppTaskFlow/src/main/java/interfacesGUI",
+    "last_opened_file_path": "D:/Agosto - 2025/GestorDeTareas",
+    "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -122,6 +126,14 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-b598e85cdad2-JavaScript-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="7734b18c-a5f3-47ae-b092-71d3fd699210" name="Changes" comment="" />
@@ -129,8 +141,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762881336533</updated>
+      <workItem from="1765213606867" duration="84000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>

@@ -1,6 +1,7 @@
 package gestortareas.controller;
 
 import gestortareas.dao.impl.EmailDAOImpl;
+import gestortareas.dao.impl.UsuarioDAOImpl;
 import gestortareas.interfacesGUI.frmInicioSesion;
 import gestortareas.interfacesGUI.frmPantallaPrincipal;
 import gestortareas.interfacesGUI.frmRegistrarse;
@@ -18,7 +19,7 @@ public class LoginController {
     private Usuario usuarioLogueado;
     
     public LoginController(frmInicioSesion frmInicioSesion) {
-        this.usuarioService = new UsuarioService();
+        this.usuarioService = new UsuarioService(new UsuarioDAOImpl());
         this.frmInicioSesion = frmInicioSesion;
     }
 

@@ -1,5 +1,6 @@
 package gestortareas.controller;
 
+import gestortareas.dao.impl.CategoriaDAOImpl;
 import gestortareas.interfacesGUI.frmCategorias;
 import gestortareas.model.Categoria;
 import gestortareas.model.Usuario;
@@ -17,7 +18,7 @@ public class CategoriaController {
     public CategoriaController(frmCategorias vista, Usuario usuario) {
         this.vista = vista;
         this.usuario = usuario;
-        this.categoriaService = new CategoriaService();
+        this.categoriaService = new CategoriaService(new CategoriaDAOImpl());
     }
 
     public void cargarCategorias() {

@@ -4,7 +4,11 @@
  */
 package gestortareas.dao;
 
+import gestortareas.DTO.TareaDetalle;
 import gestortareas.model.Tarea;
+import gestortareas.model.Usuario;
+
+import java.util.List;
 
 /**
  *
@@ -13,4 +17,8 @@ import gestortareas.model.Tarea;
 public interface TareaDao {
     int create(Tarea tarea);
     boolean existe(String nombreTarea);
+    List<Tarea> getTareas(Usuario user);
+    TareaDetalle getTareaIDdetalle(int idTarea);
+    boolean actualizarTarea(Tarea tarea);
+    Tarea obtenerTarea(int idTarea);
 }

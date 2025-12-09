@@ -1,12 +1,14 @@
-package gestortareas.model;
+package gestortareas.DTO;
 
+import gestortareas.model.ArchivoAdjunto;
+import gestortareas.model.Categoria;
+import gestortareas.model.ImagenTarea;
+import gestortareas.model.Usuario;
 
-import java.util.*;
 import java.util.Date;
-/*
-* Autor: Michael Medina
- */
-public class Tarea {
+import java.util.List;
+
+public class TareaDTO {
     private int idTarea;
     private Usuario usuario; //este es el usuario a quien se le asigna la tarea
     private String nombre;
@@ -19,9 +21,12 @@ public class Tarea {
     private Categoria categoria;
     private int recordatorio;
     private Date fechaArchivada;
-    public Tarea(int idTarea, Usuario usuario, String nombre, 
-            String descripcion, Date fechaLimite, String prioridad, String estado, 
-            List<ArchivoAdjunto> archivoAdjunto, ImagenTarea imagenTarea, Categoria categoria,int recordatorio,Date fechaArchivada)
+
+    public TareaDTO() {}
+
+    public TareaDTO(int idTarea, Usuario usuario, String nombre,
+                    String descripcion, Date fechaLimite, String prioridad, String estado,
+                    List<ArchivoAdjunto> archivoAdjunto, ImagenTarea imagenTarea, Categoria categoria, int recordatorio, Date fechaArchivada)
     {
         this.idTarea = idTarea;
         this.usuario = usuario;
@@ -35,100 +40,6 @@ public class Tarea {
         this.categoria = categoria;
         this.recordatorio = recordatorio;
         this.fechaArchivada = fechaArchivada;
-    }
-
-    public static class TareaBuilder implements Build<Tarea> {
-        private int idTarea;
-        private Usuario usuario; //este es el usuario a quien se le asigna la tarea
-        private String nombre;
-        private String descripcion;
-        private Date fechaLimite;
-        private String prioridad;
-        private String estado;
-        private final List<ArchivoAdjunto> archivoAdjunto = new ArrayList<>();
-        private ImagenTarea imagenTarea;
-        private Categoria categoria;
-        private int recordatorio;
-        private Date fechaArchivada;
-        public TareaBuilder() {
-        }
-
-        public TareaBuilder setCategoria(Categoria categoria) {
-            this.categoria = categoria;
-            return this;
-        }
-
-        public TareaBuilder setIdTarea(int idTarea) {
-            this.idTarea = idTarea;
-            return this;
-        }
-
-        public TareaBuilder setUsuario(Usuario usuario) {
-            this.usuario = usuario;
-            return this;
-        }
-
-        public TareaBuilder setNombre(String nombre) {
-            this.nombre = nombre;
-            return this;
-        }
-
-        public TareaBuilder setDescripcion(String descripcion) {
-            this.descripcion = descripcion;
-            return this;
-        }
-
-        public TareaBuilder setFechaLimite(Date fechaLimite) {
-            this.fechaLimite = fechaLimite;
-            return this;
-        }
-
-        public TareaBuilder setPrioridad(String prioridad) {
-            this.prioridad = prioridad;
-            return this;
-        }
-
-        public TareaBuilder setEstado(String estado) {
-            this.estado = estado;
-            return this;
-        }
-
-        public TareaBuilder setArchivoAdjunto(ArchivoAdjunto archivoAdjunto) {
-            this.archivoAdjunto.add(archivoAdjunto);
-            return this;
-        }
-
-        public TareaBuilder setImagenTarea(ImagenTarea imagenTarea) {
-            this.imagenTarea = imagenTarea;
-            return this;
-        }
-        
-        public TareaBuilder setRecordatorio(int recordatorio) {
-            this.recordatorio = recordatorio;
-            return this;
-        }
-        
-        public TareaBuilder setFechaArchivada(Date fechaArchivada) {
-            this.fechaArchivada = fechaArchivada;
-            return this;
-        }
-        
-        
-        @Override
-        public Tarea build() {
-            return new Tarea(idTarea,usuario,nombre,descripcion,fechaLimite,prioridad,estado,archivoAdjunto,imagenTarea, categoria,recordatorio,fechaArchivada);
-        }
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public Tarea() {
     }
 
     public int getIdTarea() {
@@ -203,6 +114,14 @@ public class Tarea {
         this.imagenTarea = imagenTarea;
     }
 
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
     public int getRecordatorio() {
         return recordatorio;
     }
@@ -221,7 +140,7 @@ public class Tarea {
 
     @Override
     public String toString() {
-        return "Tarea{" +
+        return "TareaDTO{" +
                 "idTarea=" + idTarea +
                 ", usuario=" + usuario +
                 ", nombre='" + nombre + '\'' +

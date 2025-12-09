@@ -31,7 +31,7 @@ public class frmResetPassword extends javax.swing.JFrame {
         usuario = new UsuarioDAOImpl();
         emailDAO = new EmailDAOImpl(usuario, emailService);
         email = new EmailController(this);
-        usuarioService = new UsuarioService();
+        usuarioService = new UsuarioService(new UsuarioDAOImpl());
         initComponents();
     }
 

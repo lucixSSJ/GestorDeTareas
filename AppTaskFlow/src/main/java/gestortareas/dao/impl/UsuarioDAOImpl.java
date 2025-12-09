@@ -2,6 +2,7 @@ package gestortareas.dao.impl;
 
 import gestortareas.dao.UsuarioDAO;
 import gestortareas.model.Usuario;
+import gestortareas.service.UsuarioService;
 import gestortareas.utilidad.db.DatabaseConnection;
 import gestortareas.utilidad.passwordhasher.PasswordHasher;
 
