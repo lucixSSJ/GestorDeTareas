@@ -1,5 +1,6 @@
 package gestortareas.interfacesGUI;
 
+import com.toedter.calendar.JTextFieldDateEditor;
 import gestortareas.controller.TareaController;
 import gestortareas.model.Categoria;
 import gestortareas.model.Tarea;
@@ -27,6 +28,10 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
     public frmAgregarNuevaTarea(TareaController tareaController) {
         this.tareaController = tareaController;
         initComponents();
+        this.Fecha.setDateFormatString("dd/MM/yyyy HH:mm");
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) this.Fecha.getDateEditor();
+        editor.setEditable(true);
+        
         llenarComboBoxCategoria();
         llenarComboPrioridad();
         llenarUsuarios();
@@ -156,6 +161,8 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
             .addGap(0, 8, Short.MAX_VALUE)
         );
 
+        Fecha.setDateFormatString("d MMM y HH:mm\n");
+
         jButtonCrearTarea.setBackground(new java.awt.Color(255, 51, 51));
         jButtonCrearTarea.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
         jButtonCrearTarea.setForeground(new java.awt.Color(255, 255, 255));
@@ -173,7 +180,7 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
         jButtonCancelar.setForeground(new java.awt.Color(255, 255, 255));
         jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/error.png"))); // NOI18N
         jButtonCancelar.setText("Cancelar");
-        jButtonCancelar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 12), new java.awt.Color(51, 102, 255))); // NOI18N
+        jButtonCancelar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 102, 255))); // NOI18N
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelarActionPerformed(evt);
@@ -345,7 +352,7 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
         
         if (fechaLimite == null) {
             System.out.println("fecha vacia");
-            this.tareaController.mensaje("Fecha esta vacia");
+            this.tareaController.mensaje("Formato de fecha inválido.  Usa:  dd/MM/yyyy HH: mm");
             return;
         }
         
