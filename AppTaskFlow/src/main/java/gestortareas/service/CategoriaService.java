@@ -9,8 +9,8 @@ import java.util.List;
 public class CategoriaService {
     private final CategoriaDAO categoriaDAO;
 
-    public CategoriaService() {
-        this.categoriaDAO = new CategoriaDAOImpl();
+    public CategoriaService(CategoriaDAO categoriaDAO) {
+        this.categoriaDAO = categoriaDAO;
     }
 
     public List<Categoria> obtenerCategoriasUsuario(int usuarioId) {
@@ -57,7 +57,7 @@ public class CategoriaService {
         return categoriaDAO.eliminar(categoriaId);
     }
 
-    public Categoria obtenerCategoriaPorId(int categoriaId) {
+    public Categoria obtenerPorId(int categoriaId) {
         if (categoriaId <= 0) {
             throw new IllegalArgumentException("ID de categoría inválido");
         }

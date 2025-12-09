@@ -4,6 +4,7 @@
  */
 package gestortareas.service;
 
+import gestortareas.dao.ArchivoDao;
 import gestortareas.dao.impl.ArchivoImpl;
 import gestortareas.model.ArchivoAdjunto;
 import java.io.File;
@@ -25,11 +26,11 @@ import java.util.stream.Collectors;
  */
 public class ArchivoService {
 
-    private final ArchivoImpl archivoImplements;
+    private final ArchivoDao archivoImplements;
     private final String RUTA_BASE = "tarea/Archivos/";
 
-    public ArchivoService() {
-        this.archivoImplements = new ArchivoImpl();
+    public ArchivoService(ArchivoDao archivoDao) {
+        this.archivoImplements = archivoDao;
     }
 
     public boolean createArchivo(List<File> archivos, int idTarea) {

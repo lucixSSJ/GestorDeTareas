@@ -16,12 +16,12 @@ public class Tarea {
     private String estado;
     private List<ArchivoAdjunto> archivoAdjunto;
     private ImagenTarea imagenTarea;
-    private int idCategoria;
+    private Categoria categoria;
     private int recordatorio;
     private Date fechaArchivada;
     public Tarea(int idTarea, Usuario usuario, String nombre, 
             String descripcion, Date fechaLimite, String prioridad, String estado, 
-            List<ArchivoAdjunto> archivoAdjunto, ImagenTarea imagenTarea, int idCategoria,int recordatorio,Date fechaArchivada)
+            List<ArchivoAdjunto> archivoAdjunto, ImagenTarea imagenTarea, Categoria categoria,int recordatorio,Date fechaArchivada)
     {
         this.idTarea = idTarea;
         this.usuario = usuario;
@@ -32,7 +32,7 @@ public class Tarea {
         this.estado = estado;
         this.archivoAdjunto = archivoAdjunto;
         this.imagenTarea = imagenTarea;
-        this.idCategoria = idCategoria;
+        this.categoria = categoria;
         this.recordatorio = recordatorio;
         this.fechaArchivada = fechaArchivada;
     }
@@ -45,16 +45,16 @@ public class Tarea {
         private Date fechaLimite;
         private String prioridad;
         private String estado;
-        private List<ArchivoAdjunto> archivoAdjunto = new ArrayList<>();
+        private final List<ArchivoAdjunto> archivoAdjunto = new ArrayList<>();
         private ImagenTarea imagenTarea;
-        private int idCategoria;
+        private Categoria categoria;
         private int recordatorio;
         private Date fechaArchivada;
         public TareaBuilder() {
         }
 
-        public TareaBuilder setIdCategoria(int idCategoria) {
-            this.idCategoria = idCategoria;
+        public TareaBuilder setCategoria(Categoria categoria) {
+            this.categoria = categoria;
             return this;
         }
 
@@ -116,16 +116,16 @@ public class Tarea {
         
         @Override
         public Tarea build() {
-            return new Tarea(idTarea,usuario,nombre,descripcion,fechaLimite,prioridad,estado,archivoAdjunto,imagenTarea,idCategoria,recordatorio,fechaArchivada);
+            return new Tarea(idTarea,usuario,nombre,descripcion,fechaLimite,prioridad,estado,archivoAdjunto,imagenTarea, categoria,recordatorio,fechaArchivada);
         }
     }
 
-    public int getIdCategoria() {
-        return idCategoria;
+    public Categoria getCategoria() {
+        return categoria;
     }
 
-    public void setIdCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public Tarea() {
@@ -218,8 +218,6 @@ public class Tarea {
     public void setFechaArchivada(Date fechaArchivada) {
         this.fechaArchivada = fechaArchivada;
     }
-    
-    
 
     @Override
     public String toString() {
@@ -231,8 +229,8 @@ public class Tarea {
                 ", fechaLimite=" + fechaLimite +
                 ", prioridad='" + prioridad + '\'' +
                 ", estado='" + estado + '\'' +
-                ", archivoAdjunto=" + archivoAdjunto +
-                ", imagenTarea=" + imagenTarea +
+                ", categoria=" + categoria +
+                ", fechaArchivada=" + fechaArchivada +
                 '}';
     }
 }

@@ -44,13 +44,8 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jCheckBox1 = new javax.swing.JCheckBox();
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButtonCrearTarea = new javax.swing.JButton();
-        jButtonCancelar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLbTitulo = new javax.swing.JLabel();
         jTextTitulo = new javax.swing.JTextField();
@@ -67,6 +62,8 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
         jPanel7 = new javax.swing.JPanel();
         Fecha = new com.toedter.calendar.JDateChooser();
         jComboBoxUsuarios = new javax.swing.JComboBox<>();
+        jButtonCrearTarea = new javax.swing.JButton();
+        jButtonCancelar = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
 
         jCheckBox1.setText("jCheckBox1");
@@ -75,33 +72,7 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(231, 231, 239));
 
-        jPanel2.setBackground(new java.awt.Color(72, 74, 93));
-
-        jLabel2.setFont(new java.awt.Font("Yu Gothic UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/check blanco24px.png"))); // NOI18N
-        jLabel2.setText("Tareas");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(286, Short.MAX_VALUE))
-        );
-
         jPanel3.setBackground(new java.awt.Color(41, 43, 66));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/atras32.png"))); // NOI18N
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logo.png"))); // NOI18N
 
@@ -110,48 +81,17 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(140, 140, 140)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(45, 45, 45))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(41, 41, 41))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(17, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
         );
-
-        jButtonCrearTarea.setBackground(new java.awt.Color(255, 51, 51));
-        jButtonCrearTarea.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButtonCrearTarea.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonCrearTarea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nota.png"))); // NOI18N
-        jButtonCrearTarea.setText("Crear tarea");
-        jButtonCrearTarea.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51)));
-        jButtonCrearTarea.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCrearTareaActionPerformed(evt);
-            }
-        });
-
-        jButtonCancelar.setBackground(new java.awt.Color(0, 80, 202));
-        jButtonCancelar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButtonCancelar.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/error.png"))); // NOI18N
-        jButtonCancelar.setText("Cancelar");
-        jButtonCancelar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 102, 255))); // NOI18N
-        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelarActionPerformed(evt);
-            }
-        });
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -216,6 +156,30 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
             .addGap(0, 8, Short.MAX_VALUE)
         );
 
+        jButtonCrearTarea.setBackground(new java.awt.Color(255, 51, 51));
+        jButtonCrearTarea.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonCrearTarea.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonCrearTarea.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/nota.png"))); // NOI18N
+        jButtonCrearTarea.setText("Crear tarea");
+        jButtonCrearTarea.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51)));
+        jButtonCrearTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCrearTareaActionPerformed(evt);
+            }
+        });
+
+        jButtonCancelar.setBackground(new java.awt.Color(0, 80, 202));
+        jButtonCancelar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        jButtonCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/error.png"))); // NOI18N
+        jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("sansserif", 0, 12), new java.awt.Color(51, 102, 255))); // NOI18N
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -223,7 +187,7 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(43, 43, 43)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,9 +201,8 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
                                     .addComponent(jLbFecha))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jComboBoxCategoria, 0, 249, Short.MAX_VALUE)
-                                    .addComponent(Fecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(adjuntarArchivo)
+                                    .addComponent(jComboBoxCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Fecha, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)))
                             .addGroup(jPanel6Layout.createSequentialGroup()
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLbPrioridad)
@@ -253,7 +216,15 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
                         .addComponent(jLbDescripcion)
                         .addGap(18, 18, 18)
                         .addComponent(jTextDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jButtonCrearTarea, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(adjuntarArchivo)
+                .addGap(37, 37, 37))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,9 +257,12 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLbUsuario)
                     .addComponent(jComboBoxUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-                .addComponent(adjuntarArchivo)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(adjuntarArchivo, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jButtonCrearTarea, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                    .addComponent(jButtonCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 0, 18)); // NOI18N
@@ -301,46 +275,32 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonCrearTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(60, 60, 60)
+                .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
                     .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(78, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel12)
-                        .addGap(21, 21, 21)
-                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(32, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonCrearTarea, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))))
+                .addGap(33, 33, 33)
+                .addComponent(jLabel12)
+                .addGap(21, 21, 21)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,7 +354,7 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
                 .setDescripcion(descripcion)
                 .setPrioridad(prioridad.toString())
                 .setUsuario(usuario)
-                .setIdCategoria(categoria.getId())
+                .setCategoria(categoria)
                 .setFechaLimite(fechaLimite)
                 .build();
         this.tareaController.createTarea(tarea, archivosSeleccionados);
@@ -429,9 +389,7 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxPrioridad;
     private javax.swing.JComboBox<Usuario> jComboBoxUsuarios;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLbCategoria;
     private javax.swing.JLabel jLbDescripcion;
     private javax.swing.JLabel jLbFecha;
@@ -439,7 +397,6 @@ public class frmAgregarNuevaTarea extends javax.swing.JFrame {
     private javax.swing.JLabel jLbTitulo;
     private javax.swing.JLabel jLbUsuario;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;

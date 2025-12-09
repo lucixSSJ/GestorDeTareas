@@ -1,7 +1,12 @@
 package gestortareas.controller;
 
-import gestortareas.dao.CategoriaDAO;
-import gestortareas.dao.TareaDao;
+import gestortareas.DTO.TareaDTO;
+import gestortareas.DTO.TareaDetalle;
+import gestortareas.dao.impl.ArchivoImpl;
+import gestortareas.dao.impl.CategoriaDAOImpl;
+import gestortareas.dao.impl.TareaImplem;
+import gestortareas.dao.impl.UsuarioDAOImpl;
+import gestortareas.interfacesGUI.DetalleTarea;
 import gestortareas.interfacesGUI.frmAgregarNuevaTarea;
 import gestortareas.model.Categoria;
 import gestortareas.model.Tarea;
@@ -16,6 +21,7 @@ import java.io.File;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,8 +35,8 @@ public class TareaController {
 
     public TareaController() {
         this.vistaNuevaTarea = new frmAgregarNuevaTarea(this);
-        this.tareaService = new TareaService();
-        this.archivoService = new ArchivoService();
+        this.tareaService = new TareaService(new TareaImplem(),new UsuarioDAOImpl(),new CategoriaDAOImpl());
+        this.archivoService = new ArchivoService(new ArchivoImpl());
     }
 
     public void abrirVistaNuevaTarea() {
@@ -45,7 +51,7 @@ public class TareaController {
     }
 
     public void llenarComboBox(JComboBox<Categoria> comboCategoria) {
-        CategoriaService categoriaService = new CategoriaService();
+        CategoriaService categoriaService = new CategoriaService(new CategoriaDAOImpl());
         DefaultComboBoxModel<Categoria> model = new DefaultComboBoxModel<>();
 
         List<Categoria> listCategoria = categoriaService.obtenerCategorias();
@@ -91,7 +97,7 @@ public class TareaController {
     }
 
     public void llenarComboxUsuarios(JComboBox<Usuario> jComboBoxUsuarios) {
-        UsuarioService userService = new UsuarioService();
+        UsuarioService userService = new UsuarioService(new UsuarioDAOImpl());
 
         List<Usuario> userList = userService.obtenerTodosUsuarios();
 
@@ -111,4 +117,74 @@ public class TareaController {
         }
 
     }
+
+
+    public void obetenerTodasLasTareas(Usuario user, JTable tableTareas) {
+        DefaultTableModel model = new DefaultTableModel(null, new String[]{"ID", "Nombre", "Descripcion", "Fecha Limite", "Prioridad", "Categoria"});
+        ResultadoOperacion<List<TareaDTO>> tareas = this.tareaService.getTareas(user);
+
+        if (!tareas.esExitoso()) {
+            tareas.mostrarDialogo(vistaNuevaTarea);
+        }
+
+        List<TareaDTO> tareasDTO = tareas.getDatos();
+        for (TareaDTO tareaDTO : tareasDTO) {
+            System.out.println(tareaDTO.getCategoria().getNombre());
+            Object[] fila = new Object[6];
+            fila[0] = tareaDTO.getIdTarea();
+            fila[1] = tareaDTO.getNombre();
+            fila[2] = tareaDTO.getDescripcion();
+            fila[3] = tareaDTO.getFechaLimite();
+            fila[4] = tareaDTO.getPrioridad().toUpperCase();
+            fila[5] = tareaDTO.getCategoria().getNombre().toUpperCase();
+            model.addRow(fila);
+        }
+        tableTareas.setModel(model);
+        tableTareas.removeColumn(tableTareas.getColumnModel().getColumn(0));
+    }
+
+    public void getTareaIDDetalle(int idTarea){
+        if (idTarea == 0){
+            mensaje("Debe seleccionar una tarea");
+        }
+
+        ResultadoOperacion<TareaDetalle> resultadoOperacion = tareaService.getTareaDetalle(idTarea);
+
+        if (!resultadoOperacion.esExitoso()) {
+            resultadoOperacion.mostrarDialogo(vistaNuevaTarea);
+        }
+
+        TareaDetalle tareaDetalle = resultadoOperacion.getDatos();
+        DetalleTarea detalle = new DetalleTarea(vistaNuevaTarea,true,tareaDetalle);
+        detalle.setLocationRelativeTo(null);
+        detalle.setVisible(true);
+        /*
+        String detalleTarea = String.format("""
+                Nombre de la Persona Asignada: %s
+                Titulo de la Tarea: %s
+                Descripcion: %s
+                Fecha Limite: %s
+                Prioridad: %s
+                Categoria: %s
+                Estado: %s
+                Archivos Adjuntos: %d
+                """,tareaDetalle.getNombresCompletos(),tareaDetalle.getNombreTarea(),tareaDetalle.getDescripcion(),
+                tareaDetalle.getFechaLimite(),tareaDetalle.getPrioridad(),tareaDetalle.getCategoria(),tareaDetalle.getEstado(),
+                tareaDetalle.getNumeroArchivosAdjuntos()
+        );
+        JOptionPane.showMessageDialog(vistaNuevaTarea, detalleTarea);
+
+         */
+    }
+
+    public Tarea obtenerTarea(int idTarea){
+        ResultadoOperacion<Tarea> resultadoOperacion = this.tareaService.obtenerTarea(idTarea);
+
+        if (!resultadoOperacion.esExitoso()) {
+            resultadoOperacion.mostrarDialogo(vistaNuevaTarea);
+        }
+
+        return  resultadoOperacion.getDatos();
+    }
+
 }

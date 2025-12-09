@@ -1,7 +1,6 @@
 package gestortareas.service;
 
 import gestortareas.dao.UsuarioDAO;
-import gestortareas.dao.impl.UsuarioDAOImpl;
 import gestortareas.model.Usuario;
 import gestortareas.utilidad.passwordhasher.PasswordHasher;
 
@@ -12,8 +11,8 @@ public class UsuarioService {
     private final UsuarioDAO usuarioDAO;
     private final EmailService emailService;
 
-    public UsuarioService() {
-        this.usuarioDAO = new UsuarioDAOImpl();
+    public UsuarioService(UsuarioDAO usuarioDAO) {
+        this.usuarioDAO = usuarioDAO;
         this.emailService = new EmailService();
     }
 
@@ -74,7 +73,7 @@ public class UsuarioService {
         return usuarioDAO.registrarUsuario(usuario);
     }
 
-    public Usuario obtenerUsuarioPorId(int id) {
+    public Usuario obtenerPorId(int id) {
         return usuarioDAO.obtenerPorId(id);
     }
 
