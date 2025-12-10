@@ -14,6 +14,9 @@ import javax.swing.*;
  */
 public class GestorTareasApp {
     public static void main(String[] args){
+
+        gestortareas.config.NotificacionConfig.inicializarSistemaNotificaciones();
+
         SwingUtilities.invokeLater(() ->{
             try {
                 frmInicioSesion inicioSesion = new frmInicioSesion();

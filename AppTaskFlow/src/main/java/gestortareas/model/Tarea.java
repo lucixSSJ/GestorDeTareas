@@ -8,9 +8,10 @@ import java.util.Date;
  */
 public class Tarea {
     private int idTarea;
-    private Usuario usuario; //este es el usuario a quien se le asigna la tarea
+    private Usuario usuario;
     private String nombre;
     private String descripcion;
+    private Date fechaCreacion;
     private Date fechaLimite;
     private String prioridad;
     private String estado;
@@ -19,14 +20,17 @@ public class Tarea {
     private Categoria categoria;
     private int recordatorio;
     private Date fechaArchivada;
+
+
     public Tarea(int idTarea, Usuario usuario, String nombre, 
-            String descripcion, Date fechaLimite, String prioridad, String estado, 
+            String descripcion, Date fechaCreacion, Date fechaLimite, String prioridad, String estado,
             List<ArchivoAdjunto> archivoAdjunto, ImagenTarea imagenTarea, Categoria categoria,int recordatorio,Date fechaArchivada)
     {
         this.idTarea = idTarea;
         this.usuario = usuario;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.fechaCreacion = fechaCreacion;
         this.fechaLimite = fechaLimite;
         this.prioridad = prioridad;
         this.estado = estado;
@@ -42,6 +46,7 @@ public class Tarea {
         private Usuario usuario; //este es el usuario a quien se le asigna la tarea
         private String nombre;
         private String descripcion;
+        private Date fechaCreacion;
         private Date fechaLimite;
         private String prioridad;
         private String estado;
@@ -50,6 +55,7 @@ public class Tarea {
         private Categoria categoria;
         private int recordatorio;
         private Date fechaArchivada;
+
         public TareaBuilder() {
         }
 
@@ -75,6 +81,11 @@ public class Tarea {
 
         public TareaBuilder setDescripcion(String descripcion) {
             this.descripcion = descripcion;
+            return this;
+        }
+
+        public TareaBuilder setFechaCreacion(Date fechaCreacion) {
+            this.fechaCreacion = fechaCreacion;
             return this;
         }
 
@@ -116,8 +127,18 @@ public class Tarea {
         
         @Override
         public Tarea build() {
-            return new Tarea(idTarea,usuario,nombre,descripcion,fechaLimite,prioridad,estado,archivoAdjunto,imagenTarea, categoria,recordatorio,fechaArchivada);
+            return new Tarea(idTarea,usuario,nombre,descripcion, fechaCreacion,
+                    fechaLimite,prioridad,estado,archivoAdjunto,imagenTarea,
+                    categoria,recordatorio,fechaArchivada);
         }
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public Categoria getCategoria() {
@@ -226,6 +247,7 @@ public class Tarea {
                 ", usuario=" + usuario +
                 ", nombre='" + nombre + '\'' +
                 ", descripcion='" + descripcion + '\'' +
+                ", fechaCreacion=" + fechaCreacion +
                 ", fechaLimite=" + fechaLimite +
                 ", prioridad='" + prioridad + '\'' +
                 ", estado='" + estado + '\'' +

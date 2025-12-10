@@ -18,7 +18,8 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nombres, String apellidos, String email, String username, String passwordHash) {
+    public Usuario(String nombres, String apellidos, String email,
+                   String username, String passwordHash) {
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.email = email;

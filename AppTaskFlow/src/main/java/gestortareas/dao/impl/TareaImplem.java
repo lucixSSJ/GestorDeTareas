@@ -16,23 +16,34 @@ import java.util.List;
 import java.util.Map;
 
 public class TareaImplem implements TareaDao {
+
     @Override
     public int create(Tarea tarea) {
-        String insert ="INSERT INTO tareas (id_usuario, id_categoria, nombre_tarea, descripcion, fecha_limite, prioridad) VALUES(?,?,?,?,?,?);";
-        int idGenerado;
-        try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(insert,Statement.RETURN_GENERATED_KEYS);
-            ){
+        String insert = "INSERT INTO tareas (id_usuario, id_categoria, nombre_tarea, " +
+                "descripcion, fecha_creacion, fecha_limite, prioridad) " +
+                "VALUES(?,?,?,?,?,?,?)";
 
-            ps.setInt(1,tarea.getUsuario().getIdUsuario());
-            ps.setInt(2,tarea.getCategoria().getId());
+        int idGenerado = -1;
+
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setInt(1, tarea.getUsuario().getIdUsuario());
+            ps.setInt(2, tarea.getCategoria().getId());
             ps.setString(3, tarea.getNombre());
             ps.setString(4, tarea.getDescripcion());
-            ps.setTimestamp(5, new Timestamp(tarea.getFechaLimite().getTime()));
-            ps.setString(6, tarea.getPrioridad());
+
+            if (tarea.getFechaCreacion() != null) {
+                ps.setTimestamp(5, new Timestamp(tarea.getFechaCreacion().getTime()));
+            } else {
+                ps.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+            }
+
+            ps.setTimestamp(6, new Timestamp(tarea.getFechaLimite().getTime()));
+            ps.setString(7, tarea.getPrioridad());
 
             int filasAfectadas = ps.executeUpdate();
-            
+
             if (filasAfectadas > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
@@ -42,8 +53,8 @@ public class TareaImplem implements TareaDao {
             }
             
             return -1;
-        }catch (SQLException sqlException){
-            System.out.println("Hubo un error: "+sqlException.getMessage());
+        } catch (SQLException sqlException) {
+            System.out.println("Hubo un error: " + sqlException.getMessage());
             return -1;
         }
     }
@@ -67,11 +78,11 @@ public class TareaImplem implements TareaDao {
         List<Tarea> listTareas = new ArrayList<>();
         Map<Integer, Categoria> categorias = todasLasCategorias();
 
-        String SQL = "select * from tareas where id_usuario = ? and estado != ? order by estado,fecha_limite desc";
+        String SQL = "SELECT * FROM tareas WHERE id_usuario = ?";
         try(Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement ps = conn.prepareStatement(SQL)){
-            ps.setInt(1,user.getIdUsuario());
-            ps.setString(2,"archivada");
+            PreparedStatement ps = conn.prepareStatement(SQL)) {
+
+            ps.setInt(1, user.getIdUsuario());
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
@@ -84,11 +95,11 @@ public class TareaImplem implements TareaDao {
                     System.out.println("No hay ninguna categoria con ese id");
                 }
 
-
                 Tarea tarea = new Tarea.TareaBuilder()
                         .setIdTarea(rs.getInt("id_tarea"))
                         .setNombre(rs.getString("nombre_tarea"))
                         .setDescripcion(rs.getString("descripcion"))
+                        .setFechaCreacion(rs.getTimestamp("fecha_creacion"))
                         .setFechaLimite(rs.getTimestamp("fecha_limite"))
                         .setUsuario(user)
                         .setEstado(rs.getString("estado"))
@@ -214,14 +225,14 @@ public class TareaImplem implements TareaDao {
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1,idTarea);
+            ps.setInt(1, idTarea);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
                 int idUsuario = rs.getInt("id_usuario");
                 int idCategoria = rs.getInt("id_categoria");
-
                 String descripcion = rs.getString("descripcion");
+                Timestamp fechaCreacion = rs.getTimestamp("fecha_creacion");
                 Timestamp fechaLimite = rs.getTimestamp("fecha_limite");
                 String prioridad = rs.getString("prioridad");
                 String estado = rs.getString("estado");
@@ -235,6 +246,7 @@ public class TareaImplem implements TareaDao {
                         .setIdTarea(idTarea)
                         .setUsuario(usuario)
                         .setDescripcion(descripcion)
+                        .setFechaCreacion(fechaCreacion)
                         .setFechaLimite(fechaLimite)
                         .setPrioridad(prioridad)
                         .setEstado(estado)

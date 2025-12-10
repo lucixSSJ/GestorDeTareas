@@ -82,7 +82,7 @@ CREATE TABLE logs_notificaciones (
     id_log INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
     id_tarea INT NULL,
-    tipo_notificacion ENUM('vencimiento', 'recordatorio') NOT NULL,
+    tipo_notificacion ENUM('creacion', 'recordatorio', 'vencimiento', 'actualizacion', 'completada') NOT NULL,
     email_destino VARCHAR(150) NOT NULL,
     asunto VARCHAR(255) NOT NULL,
     mensaje TEXT,
