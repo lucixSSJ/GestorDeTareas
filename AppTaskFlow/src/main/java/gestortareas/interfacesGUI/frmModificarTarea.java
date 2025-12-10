@@ -4,6 +4,7 @@
  */
 package gestortareas.interfacesGUI;
 
+import com.toedter.calendar.JTextFieldDateEditor;
 import gestortareas.controller.ActualizarController;
 import gestortareas.model.Categoria;
 import gestortareas.model.Tarea;
@@ -28,6 +29,9 @@ public class frmModificarTarea extends javax.swing.JFrame {
         initComponents();
         this.actualizarController = new ActualizarController(tarea);
         this.tarea = tarea;
+        this.jDateChooserFechaLimite.setDateFormatString("dd/MM/yyyy HH:mm");
+        JTextFieldDateEditor editor = (JTextFieldDateEditor) this.jDateChooserFechaLimite.getDateEditor();
+        editor.setEditable(true);
         llenarCamposFormulario();
     }
 
@@ -352,7 +356,7 @@ public class frmModificarTarea extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {
-        String nombreTarea = this.jTextFieldDescripcion.getText();
+        String nombreTarea = this.jTextFieldTitulo.getText();
         String descripcion = this.jTextFieldDescripcion.getText();
         Date fecha = this.jDateChooserFechaLimite.getDate();
         Categoria categoria = (Categoria)this.jComboBoxCategoria.getSelectedItem();
@@ -366,7 +370,7 @@ public class frmModificarTarea extends javax.swing.JFrame {
         }
 
         if(fecha==null){
-            JOptionPane.showMessageDialog(null,"Ingrese una Fecha");
+            JOptionPane.showMessageDialog(null,"Formato de fecha inválido. Usa:  dd/MM/yyyy HH: mm");
             return;
         }
 
@@ -376,6 +380,18 @@ public class frmModificarTarea extends javax.swing.JFrame {
         }
 
         System.out.println("Enviando para su Acutualizando de la tarea");
+        Tarea tarea = new Tarea.TareaBuilder()
+                .setIdTarea(this.tarea.getIdTarea())
+                .setNombre(nombreTarea)
+                .setDescripcion(descripcion)
+                .setFechaLimite(fecha)
+                .setCategoria(categoria)
+                .setUsuario(usuario)
+                .setEstado(estadoTarea.toString())
+                .setPrioridad(prioridad.toString())
+                .build();
+
+        this.actualizarController.actualizarTarea(tarea);
     }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

@@ -18,6 +18,8 @@ import gestortareas.service.TareaService;
 import gestortareas.service.UsuarioService;
 import gestortareas.utilidad.ResultadoOperacion;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.*;
@@ -120,7 +122,7 @@ public class TareaController {
 
 
     public void obetenerTodasLasTareas(Usuario user, JTable tableTareas) {
-        DefaultTableModel model = new DefaultTableModel(null, new String[]{"ID", "Nombre", "Descripcion", "Fecha Limite", "Prioridad", "Categoria"});
+        DefaultTableModel model = new DefaultTableModel(null, new String[]{"ID", "Nombre", "Descripcion", "Fecha Limite", "Prioridad", "Categoria","Estado"});
         ResultadoOperacion<List<TareaDTO>> tareas = this.tareaService.getTareas(user);
 
         if (!tareas.esExitoso()) {
@@ -132,19 +134,17 @@ public class TareaController {
 
         List<TareaDTO> tareasDTO = tareas.getDatos();
 
-        //verificar si es null o vacio
-        if (tareasDTO != null) {
-            for (TareaDTO tareaDTO : tareasDTO) {
-                System.out.println(tareaDTO.getCategoria().getNombre());
-                Object[] fila = new Object[6];
-                fila[0] = tareaDTO.getIdTarea();
-                fila[1] = tareaDTO.getNombre();
-                fila[2] = tareaDTO.getDescripcion();
-                fila[3] = tareaDTO.getFechaLimite();
-                fila[4] = tareaDTO.getPrioridad().toUpperCase();
-                fila[5] = tareaDTO.getCategoria().getNombre().toUpperCase();
-                model.addRow(fila);
-            }
+        for (TareaDTO tareaDTO : tareasDTO) {
+            System.out.println(tareaDTO.getCategoria().getNombre());
+            Object[] fila = new Object[7];
+            fila[0] = tareaDTO.getIdTarea();
+            fila[1] = tareaDTO.getNombre();
+            fila[2] = tareaDTO.getDescripcion();
+            fila[3] = formaterDate(tareaDTO.getFechaLimite());
+            fila[4] = tareaDTO.getPrioridad().toUpperCase();
+            fila[5] = tareaDTO.getCategoria().getNombre().toUpperCase();
+            fila[6] = tareaDTO.getEstado().toUpperCase();
+            model.addRow(fila);
         }
         tableTareas.setModel(model);
         tableTareas.removeColumn(tableTareas.getColumnModel().getColumn(0));
@@ -165,23 +165,6 @@ public class TareaController {
         DetalleTarea detalle = new DetalleTarea(vistaNuevaTarea,true,tareaDetalle);
         detalle.setLocationRelativeTo(null);
         detalle.setVisible(true);
-        /*
-        String detalleTarea = String.format("""
-                Nombre de la Persona Asignada: %s
-                Titulo de la Tarea: %s
-                Descripcion: %s
-                Fecha Limite: %s
-                Prioridad: %s
-                Categoria: %s
-                Estado: %s
-                Archivos Adjuntos: %d
-                """,tareaDetalle.getNombresCompletos(),tareaDetalle.getNombreTarea(),tareaDetalle.getDescripcion(),
-                tareaDetalle.getFechaLimite(),tareaDetalle.getPrioridad(),tareaDetalle.getCategoria(),tareaDetalle.getEstado(),
-                tareaDetalle.getNumeroArchivosAdjuntos()
-        );
-        JOptionPane.showMessageDialog(vistaNuevaTarea, detalleTarea);
-
-         */
     }
 
     public Tarea obtenerTarea(int idTarea){
@@ -194,4 +177,30 @@ public class TareaController {
         return  resultadoOperacion.getDatos();
     }
 
+    private String formaterDate(Date fecha){
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        return formato.format(fecha);
+    }
+
+    public void actualizarTarea(Tarea tarea) {
+        boolean ok = this.tareaService.actualizarTarea(tarea).getDatos();
+        if (ok) {
+            mensaje("Datos actualizados");
+        }else {
+            mensaje("Ocurrio un error al actualizar");
+        }
+    }
+
+    public void eliminarTarea(int idTarea) {
+        ResultadoOperacion<Boolean> resultadoOperacion = this.tareaService.eliminarTarea(idTarea);
+
+        if (!resultadoOperacion.esExitoso()) {
+            resultadoOperacion.mostrarDialogo(vistaNuevaTarea);
+            return;
+        }
+
+        if (resultadoOperacion.getDatos()) {
+            mensaje("Tarea eliminada");
+        }
+    }
 }

@@ -19,7 +19,7 @@ public class TareaImplem implements TareaDao {
     @Override
     public int create(Tarea tarea) {
         String insert ="INSERT INTO tareas (id_usuario, id_categoria, nombre_tarea, descripcion, fecha_limite, prioridad) VALUES(?,?,?,?,?,?);";
-        int idGenerado = -1;
+        int idGenerado;
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(insert,Statement.RETURN_GENERATED_KEYS);
             ){
@@ -67,10 +67,11 @@ public class TareaImplem implements TareaDao {
         List<Tarea> listTareas = new ArrayList<>();
         Map<Integer, Categoria> categorias = todasLasCategorias();
 
-        String SQL = "select * from tareas where id_usuario = ?";
+        String SQL = "select * from tareas where id_usuario = ? and estado != ? order by estado,fecha_limite desc";
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(SQL)){
             ps.setInt(1,user.getIdUsuario());
+            ps.setString(2,"archivada");
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
@@ -147,12 +148,12 @@ public class TareaImplem implements TareaDao {
 
         if (tarea.getNombre() != null && !tarea.getNombre().trim().isEmpty()) {
             sql.append("nombre_tarea = ?, ");
-            parametros. add(tarea.getNombre());
+            parametros.add(tarea.getNombre());
         }
 
         if (tarea.getDescripcion() != null && !tarea.getDescripcion().trim().isEmpty()) {
             sql.append("descripcion = ?, ");
-            parametros.add(tarea. getDescripcion());
+            parametros.add(tarea.getDescripcion());
         }
 
         if (tarea.getFechaLimite() != null) {
@@ -176,24 +177,26 @@ public class TareaImplem implements TareaDao {
         }
 
         if (tarea.getFechaArchivada() != null) {
-            sql.append("fecha_archivada = ?, ");
+            sql.append("fecha_archivado = ?, ");
             parametros.add(new Timestamp(tarea.getFechaArchivada().getTime()));
         }
 
-        // Verificar que se haya agregado al menos un campo
         if (parametros.isEmpty()) {
             System.out.println("No hay campos para actualizar");
             return false;
         }
 
         sql.setLength(sql.length() - 2);
-        sql.append(" WHERE id_tarea = ? ");
+        sql.append(" WHERE id_tarea = ?; ");
         parametros.add(tarea.getIdTarea());
+        parametros.forEach(System.out::println);
+        System.out.println(sql);
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql.toString())) {
 
             for (int i = 0; i < parametros.size(); i++) {
+                System.out.println("Parametro: "+parametros.get(i));
                 ps.setObject(i + 1, parametros.get(i));
             }
 
@@ -247,6 +250,21 @@ public class TareaImplem implements TareaDao {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public boolean eliminarTarea(int idTarea) {
+        String sql = "delete from tareas where id_tarea = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1,idTarea);
+            return ps.executeUpdate() > 0;
+
+        }catch (SQLException ex) {
+            System.out.println("Ocurrio un error al eliminar la tarea. Clase Tareaimpleme, Metodo Eliminar tarea");
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     private boolean mismaIdNombreTarea(int id,String nombre) {

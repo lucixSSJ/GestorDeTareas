@@ -150,4 +150,22 @@ public class TareaService {
             return ResultadoOperacion.error("No existe el tarea encontrada");
         }
     }
+
+    public ResultadoOperacion<Boolean> eliminarTarea(int Idtarea) {
+        if (Idtarea == 0) {
+            return ResultadoOperacion.advertencia("No hay una tarea seleccionada");
+        }
+
+        if (tareaDao.obtenerTarea(Idtarea) == null) {
+            return ResultadoOperacion.error("No existe el tarea seleccionada");
+        }
+
+        boolean ok = tareaDao.eliminarTarea(Idtarea);
+
+        if (ok) {
+            return ResultadoOperacion.exito("Tarea eliminada",true);
+        }else{
+            return ResultadoOperacion.error("No se pudo eliminar la tarea");
+        }
+    }
 }
