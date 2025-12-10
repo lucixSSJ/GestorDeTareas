@@ -85,9 +85,6 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         TableTareas = new javax.swing.JTable();
         verDetalle = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
-        jButtonExportarPDF = new javax.swing.JButton();
-        jButtonExportarICS = new javax.swing.JButton();
-
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -156,25 +153,24 @@ public class frmTareasGeneral extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jButtonCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonArchivados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButtonCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(60, 60, 60)
                 .addComponent(jButtonInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(28, 28, 28)
                 .addComponent(jButtonCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(2, 2, 2)
-                .addComponent(jButtonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
-
+                .addGap(56, 56, 56)
                 .addComponent(jButtonArchivados, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(41, 43, 66));
@@ -326,13 +322,12 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         verDetalle.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         verDetalle.setForeground(new java.awt.Color(255, 255, 255));
         verDetalle.setText("Ver Detalles");
-        verDetalle.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        verDetalle.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         verDetalle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 verDetalleActionPerformed(evt);
             }
         });
-
 
         btnActualizar.setBackground(new java.awt.Color(23, 162, 184));
         btnActualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -341,28 +336,6 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnActualizarActionPerformed(evt);
-
-        jButtonExportarPDF.setBackground(new java.awt.Color(255, 51, 51));
-        jButtonExportarPDF.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButtonExportarPDF.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonExportarPDF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pdf.png"))); // NOI18N
-        jButtonExportarPDF.setText("Exportar PDF");
-        jButtonExportarPDF.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51)));
-        jButtonExportarPDF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExportarPDFActionPerformed(evt);
-            }
-        });
-
-        jButtonExportarICS.setBackground(new java.awt.Color(0, 80, 202));
-        jButtonExportarICS.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jButtonExportarICS.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonExportarICS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/ics.png"))); // NOI18N
-        jButtonExportarICS.setText("Exportar ICS");
-        jButtonExportarICS.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 102, 255))); // NOI18N
-        jButtonExportarICS.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExportarICSActionPerformed(evt);
             }
         });
 
@@ -372,9 +345,9 @@ public class frmTareasGeneral extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-
                         .addComponent(jLabel12)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonTareaNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -393,33 +366,6 @@ public class frmTareasGeneral extends javax.swing.JFrame {
                         .addGap(6, 6, 6)
                         .addComponent(jScrollPaneTareas)
                         .addGap(15, 15, 15))))
-
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel12)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonTareaNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(jButton2)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(verDetalle)
-                                .addContainerGap(251, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jScrollPaneTareas)
-                                .addGap(15, 15, 15))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonExportarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(jButtonExportarICS, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))))
-
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
@@ -443,12 +389,8 @@ public class frmTareasGeneral extends javax.swing.JFrame {
                                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(verDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPaneTareas, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonExportarICS, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonExportarPDF, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(16, 16, 16))))
+                        .addComponent(jScrollPaneTareas, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -524,14 +466,6 @@ public class frmTareasGeneral extends javax.swing.JFrame {
     private void jButtonArchivadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonArchivadosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonArchivadosActionPerformed
-
-    private void jButtonExportarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportarPDFActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonExportarPDFActionPerformed
-
-    private void jButtonExportarICSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportarICSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonExportarICSActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int confirmar = JOptionPane.showConfirmDialog(null,"¿Está seguro de eliminar la Tarea?",
@@ -641,13 +575,9 @@ public class frmTareasGeneral extends javax.swing.JFrame {
     private javax.swing.JButton btnArchivar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
-          
     private javax.swing.JButton jButtonArchivados;
-
     private javax.swing.JButton jButtonCategoria;
     private javax.swing.JButton jButtonCerrarSesion;
-    private javax.swing.JButton jButtonExportarICS;
-    private javax.swing.JButton jButtonExportarPDF;
     private javax.swing.JButton jButtonInicio;
     private javax.swing.JButton jButtonTareaNueva;
     private javax.swing.JLabel jLabel12;
