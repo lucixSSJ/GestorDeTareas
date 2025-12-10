@@ -120,11 +120,7 @@
                   <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
                   <Component id="jButtonInicio" alignment="0" max="32767" attributes="0"/>
                   <Component id="jButtonTareas" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jButtonArchivados" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jButtonArchivados" alignment="0" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
