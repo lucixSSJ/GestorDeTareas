@@ -19,7 +19,7 @@ public class TareaImplem implements TareaDao {
     @Override
     public int create(Tarea tarea) {
         String insert ="INSERT INTO tareas (id_usuario, id_categoria, nombre_tarea, descripcion, fecha_limite, prioridad) VALUES(?,?,?,?,?,?);";
-        int idGenerado = -1;
+        int idGenerado;
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(insert,Statement.RETURN_GENERATED_KEYS);
             ){
