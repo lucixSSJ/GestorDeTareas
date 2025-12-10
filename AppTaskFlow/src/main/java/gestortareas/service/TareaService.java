@@ -62,9 +62,8 @@ public class TareaService {
             System.out.println("La fecha limite no puede ser la misma que la fecha actual");
             return ResultadoOperacion.advertencia("La fecha es igual a la actual");
         }else{
-            long fecha = tarea.getFechaLimite().getTime();
-            java.sql.Date fechaSQL = new java.sql.Date(fecha);
-            tarea.setFechaLimite(fechaSQL);
+            java.sql.Timestamp timestamp = new java.sql.Timestamp(tarea.getFechaLimite().getTime());
+            tarea.setFechaLimite(timestamp);
         }
         
         int idTarea = tareaDao.create(tarea); //devuelve el id de la tarea creada
@@ -100,10 +99,18 @@ public class TareaService {
 
         List<Tarea> tareas = tareaDao.getTareas(user);
         ModelMapper modelMapper = new ModelMapper();
-        if (!tareas.isEmpty()){
-            return ResultadoOperacion.exito("",tareas.stream().map(tarea -> modelMapper.map(tarea,TareaDTO.class)).toList());
-        }else {
-            return ResultadoOperacion.advertencia("Ocurrio un problema al obtener los tareas");
+
+        // Siempre devolver una lista, aunque esté vacía
+        List<TareaDTO> tareasDTO = tareas.stream()
+                .map(tarea -> modelMapper.map(tarea, TareaDTO.class))
+                .toList();
+
+        // Si hay tareas, devolver éxito con los datos
+        if (!tareasDTO.isEmpty()) {
+            return ResultadoOperacion.exito("Tareas obtenidas correctamente", tareasDTO);
+        } else {
+            // Si no hay tareas, devolver éxito con lista vacía
+            return ResultadoOperacion.exito("No hay tareas disponibles", tareasDTO);
         }
     }
 

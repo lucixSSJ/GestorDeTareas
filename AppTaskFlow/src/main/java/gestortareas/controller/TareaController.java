@@ -127,9 +127,13 @@ public class TareaController {
 
         if (!tareas.esExitoso()) {
             tareas.mostrarDialogo(vistaNuevaTarea);
+            //agreamos
+            tableTareas.setModel(model);
+            return;
         }
 
         List<TareaDTO> tareasDTO = tareas.getDatos();
+
         for (TareaDTO tareaDTO : tareasDTO) {
             System.out.println(tareaDTO.getCategoria().getNombre());
             Object[] fila = new Object[7];

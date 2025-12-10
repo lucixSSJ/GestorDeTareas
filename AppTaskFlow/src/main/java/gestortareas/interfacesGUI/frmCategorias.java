@@ -249,9 +249,7 @@ public class frmCategorias extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jButtonInicio = new javax.swing.JButton();
         jButtonTareas = new javax.swing.JButton();
-        jButtonPrioridad = new javax.swing.JButton();
-        jButtonEstado = new javax.swing.JButton();
-        jButtonExportar = new javax.swing.JButton();
+        jButtonArchivados = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -289,7 +287,7 @@ public class frmCategorias extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jButtonInicio.setBackground(new java.awt.Color(0, 0, 51));
@@ -314,36 +312,14 @@ public class frmCategorias extends javax.swing.JFrame {
             }
         });
 
-        jButtonPrioridad.setBackground(new java.awt.Color(0, 0, 51));
-        jButtonPrioridad.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButtonPrioridad.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonPrioridad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/estrella.png"))); // NOI18N
-        jButtonPrioridad.setText("Prioridad");
-        jButtonPrioridad.addActionListener(new java.awt.event.ActionListener() {
+        jButtonArchivados.setBackground(new java.awt.Color(0, 0, 51));
+        jButtonArchivados.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jButtonArchivados.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonArchivados.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/archivos.png"))); // NOI18N
+        jButtonArchivados.setText("Archivados");
+        jButtonArchivados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPrioridadActionPerformed(evt);
-            }
-        });
-
-        jButtonEstado.setBackground(new java.awt.Color(0, 0, 51));
-        jButtonEstado.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButtonEstado.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonEstado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/archivos.png"))); // NOI18N
-        jButtonEstado.setText("Estado");
-        jButtonEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEstadoActionPerformed(evt);
-            }
-        });
-
-        jButtonExportar.setBackground(new java.awt.Color(0, 0, 51));
-        jButtonExportar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButtonExportar.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonExportar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/exportar (1).png"))); // NOI18N
-        jButtonExportar.setText("Exportar");
-        jButtonExportar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExportarActionPerformed(evt);
+                jButtonArchivadosActionPerformed(evt);
             }
         });
 
@@ -354,26 +330,19 @@ public class frmCategorias extends javax.swing.JFrame {
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jButtonTareas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButtonPrioridad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButtonEstado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jButtonExportar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jButtonArchivados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(46, 46, 46)
                 .addComponent(jButtonInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonTareas, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonExportar, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(jButtonArchivados, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 239, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(41, 43, 66));
@@ -572,20 +541,10 @@ public class frmCategorias extends javax.swing.JFrame {
         navigationController.irATareasDesdeCategorias(this);
     }//GEN-LAST:event_jButtonTareasActionPerformed
 
-    //botón para ir a prioridad
-    private void jButtonPrioridadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrioridadActionPerformed
+    //botón para ir a archivados
+    private void jButtonArchivadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonArchivadosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonPrioridadActionPerformed
-
-    //botón para ir a estado
-    private void jButtonEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonEstadoActionPerformed
-
-    //botón para ir a exportar
-    private void jButtonExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonExportarActionPerformed
+    }//GEN-LAST:event_jButtonArchivadosActionPerformed
 
     //botón para cerrar sesión
     private void jButtonCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarSesionActionPerformed
@@ -608,14 +567,12 @@ public class frmCategorias extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonArchivados;
     private javax.swing.JButton jButtonCategoriaNueva;
     private javax.swing.JButton jButtonCerrarSesion;
     private javax.swing.JButton jButtonEditarCategoria;
     private javax.swing.JButton jButtonEliminarCategoria;
-    private javax.swing.JButton jButtonEstado;
-    private javax.swing.JButton jButtonExportar;
     private javax.swing.JButton jButtonInicio;
-    private javax.swing.JButton jButtonPrioridad;
     private javax.swing.JButton jButtonTareas;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;

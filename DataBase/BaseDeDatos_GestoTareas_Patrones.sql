@@ -139,6 +139,46 @@ INSERT INTO tareas (id_usuario, id_categoria, nombre_tarea, descripcion, fecha_l
 (2, 3, 'Estudiar para examen', 'Repasar capítulos 5 al 8', DATE_ADD(NOW(), INTERVAL 5 DAY), 'alta');
 
 -- Crear vistas útiles
+CREATE OR REPLACE VIEW vista_tareas_detalle AS
+SELECT  
+    us.id_usuario,
+    us.nombres,
+    us.apellidos,
+    us.email, 
+    ta.id_tarea,
+    ta.nombre_tarea,
+    ta.descripcion,
+    ta.fecha_limite,
+    ta.estado,
+    ta.prioridad,
+    ta.fecha_archivado,
+    ta.fecha_completada,
+    ta.fecha_creacion, ca.nombre_categoria,
+    COUNT(arch.id_archivo) AS numero_archivos
+FROM gestor_tareas.tareas AS ta 
+LEFT JOIN archivos_adjuntos AS arch 
+    ON arch.id_tarea = ta.id_tarea
+JOIN usuarios AS us 
+    ON ta.id_usuario = us.id_usuario
+JOIN categorias AS ca
+    ON ca.id_categoria = ta.id_categoria
+GROUP BY
+    us.id_usuario,
+    us.nombres,
+    us.apellidos,
+    us.email, 
+    ta.id_tarea,
+    ta.nombre_tarea,
+    ta.descripcion,
+    ta.fecha_limite,
+    ta.estado,
+    ta.prioridad,
+    ta.fecha_archivado,
+    ta.fecha_completada,
+    ta.fecha_creacion,
+    ca.nombre_categoria;
+
+
 CREATE VIEW vista_tareas_usuario AS
 SELECT 
     t.*,
