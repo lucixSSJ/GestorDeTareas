@@ -125,19 +125,26 @@ public class TareaController {
 
         if (!tareas.esExitoso()) {
             tareas.mostrarDialogo(vistaNuevaTarea);
+            //agreamos
+            tableTareas.setModel(model);
+            return;
         }
 
         List<TareaDTO> tareasDTO = tareas.getDatos();
-        for (TareaDTO tareaDTO : tareasDTO) {
-            System.out.println(tareaDTO.getCategoria().getNombre());
-            Object[] fila = new Object[6];
-            fila[0] = tareaDTO.getIdTarea();
-            fila[1] = tareaDTO.getNombre();
-            fila[2] = tareaDTO.getDescripcion();
-            fila[3] = tareaDTO.getFechaLimite();
-            fila[4] = tareaDTO.getPrioridad().toUpperCase();
-            fila[5] = tareaDTO.getCategoria().getNombre().toUpperCase();
-            model.addRow(fila);
+
+        //verificar si es null o vacio
+        if (tareasDTO != null) {
+            for (TareaDTO tareaDTO : tareasDTO) {
+                System.out.println(tareaDTO.getCategoria().getNombre());
+                Object[] fila = new Object[6];
+                fila[0] = tareaDTO.getIdTarea();
+                fila[1] = tareaDTO.getNombre();
+                fila[2] = tareaDTO.getDescripcion();
+                fila[3] = tareaDTO.getFechaLimite();
+                fila[4] = tareaDTO.getPrioridad().toUpperCase();
+                fila[5] = tareaDTO.getCategoria().getNombre().toUpperCase();
+                model.addRow(fila);
+            }
         }
         tableTareas.setModel(model);
         tableTareas.removeColumn(tableTareas.getColumnModel().getColumn(0));

@@ -53,7 +53,7 @@ public class DatabaseConnection {
                 properties.setProperty("autoReconnect", "true");
                 properties.setProperty("characterEncoding", "UTF-8");
                 properties.setProperty("useUnicode", "true");
-                properties.setProperty("serverTimezone", "UTC");
+                properties.setProperty("serverTimezone", "America/Lima");
                 properties.setProperty("tcpKeepAlive", "true"); // Nueva propiedad
 
                 connection = DriverManager.getConnection(URL, properties);
