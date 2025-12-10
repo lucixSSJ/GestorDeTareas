@@ -11,6 +11,8 @@ import gestortareas.dao.impl.UsuarioDAOImpl;
 import gestortareas.model.Tarea;
 import gestortareas.model.Usuario;
 import gestortareas.service.TareaService;
+import gestortareas.utilidad.ExportadorPDF;
+import gestortareas.utilidad.ExportadorICS;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -344,11 +346,21 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon("D:\\Agosto - 2025\\GestorDeTareas\\AppTaskFlow\\src\\main\\resources\\img\\pdf.png")); // NOI18N
         jButton1.setText("Exportar PDF");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         exportarICS.setBackground(new java.awt.Color(51, 102, 255));
         exportarICS.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         exportarICS.setIcon(new javax.swing.ImageIcon("D:\\Agosto - 2025\\GestorDeTareas\\AppTaskFlow\\src\\main\\resources\\img\\ics.png")); // NOI18N
         exportarICS.setText("Exportar ICS");
+        exportarICS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportarICSActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -540,6 +552,68 @@ public class frmTareasGeneral extends javax.swing.JFrame {
 
         int idTarea =  Integer.parseInt(this.TableTareas.getModel().getValueAt(filaSeleccionada, 0).toString());
         tareaController.getTareaIDDetalle(idTarea);
+    }
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+        // Exportar a PDF
+        int[] filasSeleccionadas = this.TableTareas.getSelectedRows();
+        if (filasSeleccionadas.length == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Debe seleccionar al menos una tarea de la tabla para exportar",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        java.util.List<Tarea> tareasAExportar = new java.util.ArrayList<>();
+
+        for (int fila : filasSeleccionadas) {
+            int idTarea = Integer.parseInt(this.TableTareas.getModel().getValueAt(fila, 0).toString());
+            Tarea tarea = this.tareaController.obtenerTarea(idTarea);
+            if (tarea != null) {
+                tareasAExportar.add(tarea);
+            }
+        }
+
+        if (!tareasAExportar.isEmpty()) {
+            ExportadorPDF.exportarTareasPDF(tareasAExportar);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "No se pudo obtener la información de las tareas seleccionadas",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void exportarICSActionPerformed(java.awt.event.ActionEvent evt) {
+        // Exportar a ICS
+        int[] filasSeleccionadas = this.TableTareas.getSelectedRows();
+        if (filasSeleccionadas.length == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Debe seleccionar al menos una tarea de la tabla para exportar",
+                    "Advertencia",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        java.util.List<Tarea> tareasAExportar = new java.util.ArrayList<>();
+
+        for (int fila : filasSeleccionadas) {
+            int idTarea = Integer.parseInt(this.TableTareas.getModel().getValueAt(fila, 0).toString());
+            Tarea tarea = this.tareaController.obtenerTarea(idTarea);
+            if (tarea != null) {
+                tareasAExportar.add(tarea);
+            }
+        }
+
+        if (!tareasAExportar.isEmpty()) {
+            ExportadorICS.exportarTareasICS(tareasAExportar);
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "No se pudo obtener la información de las tareas seleccionadas",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void configurarInterfaz(){
