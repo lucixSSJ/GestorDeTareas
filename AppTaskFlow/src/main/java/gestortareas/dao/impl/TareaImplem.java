@@ -67,10 +67,11 @@ public class TareaImplem implements TareaDao {
         List<Tarea> listTareas = new ArrayList<>();
         Map<Integer, Categoria> categorias = todasLasCategorias();
 
-        String SQL = "select * from tareas where id_usuario = ? order by estado,fecha_limite desc";
+        String SQL = "select * from tareas where id_usuario = ? and estado != ? order by estado,fecha_limite desc";
         try(Connection conn = DatabaseConnection.getConnection();
             PreparedStatement ps = conn.prepareStatement(SQL)){
             ps.setInt(1,user.getIdUsuario());
+            ps.setString(2,"archivada");
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()){
@@ -249,6 +250,21 @@ public class TareaImplem implements TareaDao {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public boolean eliminarTarea(int idTarea) {
+        String sql = "delete from tareas where id_tarea = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)){
+            ps.setInt(1,idTarea);
+            return ps.executeUpdate() > 0;
+
+        }catch (SQLException ex) {
+            System.out.println("Ocurrio un error al eliminar la tarea. Clase Tareaimpleme, Metodo Eliminar tarea");
+            ex.printStackTrace();
+        }
+        return false;
     }
 
     private boolean mismaIdNombreTarea(int id,String nombre) {

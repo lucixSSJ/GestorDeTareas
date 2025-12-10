@@ -178,4 +178,25 @@ public class TareaController {
         return formato.format(fecha);
     }
 
+    public void actualizarTarea(Tarea tarea) {
+        boolean ok = this.tareaService.actualizarTarea(tarea).getDatos();
+        if (ok) {
+            mensaje("Datos actualizados");
+        }else {
+            mensaje("Ocurrio un error al actualizar");
+        }
+    }
+
+    public void eliminarTarea(int idTarea) {
+        ResultadoOperacion<Boolean> resultadoOperacion = this.tareaService.eliminarTarea(idTarea);
+
+        if (!resultadoOperacion.esExitoso()) {
+            resultadoOperacion.mostrarDialogo(vistaNuevaTarea);
+            return;
+        }
+
+        if (resultadoOperacion.getDatos()) {
+            mensaje("Tarea eliminada");
+        }
+    }
 }

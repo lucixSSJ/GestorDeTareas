@@ -14,6 +14,7 @@ import gestortareas.service.TareaService;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
+import java.sql.Timestamp;
 
 /**
  *
@@ -75,8 +76,8 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jButtonCerrarSesion = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        eliminar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnArchivar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         jButtonTareaNueva = new javax.swing.JButton();
         jScrollPaneTareas = new javax.swing.JScrollPane();
@@ -265,21 +266,26 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         jLabel12.setForeground(new java.awt.Color(32, 32, 32));
         jLabel12.setText("Todas las tareas");
 
-        eliminar.setBackground(new java.awt.Color(255, 51, 51));
-        eliminar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        eliminar.setForeground(new java.awt.Color(255, 255, 255));
-        eliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/borrar.png"))); // NOI18N
-        eliminar.setText("Eliminar");
-        eliminar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51)));
-
-        jButton2.setBackground(new java.awt.Color(153, 204, 255));
-        jButton2.setFont(new java.awt.Font("Segoe UI Semibold", 1, 13)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(51, 51, 51));
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/seleccionar.png"))); // NOI18N
-        jButton2.setText("Seleccionar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setBackground(new java.awt.Color(255, 51, 51));
+        btnEliminar.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/borrar.png"))); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED, new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51), new java.awt.Color(255, 51, 51)));
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
+            }
+        });
+
+        btnArchivar.setBackground(new java.awt.Color(153, 204, 255));
+        btnArchivar.setFont(new java.awt.Font("Segoe UI Semibold", 1, 13)); // NOI18N
+        btnArchivar.setForeground(new java.awt.Color(51, 51, 51));
+        btnArchivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/seleccionar.png"))); // NOI18N
+        btnArchivar.setText("Archivar");
+        btnArchivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArchivarActionPerformed(evt);
             }
         });
 
@@ -373,11 +379,11 @@ public class frmTareasGeneral extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButtonTareaNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
-                        .addComponent(jButton2)
+                        .addComponent(btnArchivar)
                         .addGap(18, 18, 18)
                         .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(verDetalle)
                         .addGap(18, 18, 18)
@@ -405,9 +411,9 @@ public class frmTareasGeneral extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(btnActualizar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton2)
+                                    .addComponent(btnArchivar)
                                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(verDetalle, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPaneTareas, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -434,9 +440,29 @@ public class frmTareasGeneral extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnArchivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArchivarActionPerformed
+        int confirmar = JOptionPane.showConfirmDialog(null,"¿Está seguro de archivar la Tarea?",
+                "Confirmar Archivado",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+
+        if (confirmar == JOptionPane.YES_OPTION){
+            int filaSeleccionada = this.TableTareas.getSelectedRow();
+
+            if (filaSeleccionada == -1){
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una tarea de la tabla");
+                return;
+            }
+
+            int idTarea =  Integer.parseInt(this.TableTareas.getModel().getValueAt(filaSeleccionada, 0).toString());
+
+            Tarea tareaArchivar = new Tarea.TareaBuilder()
+                    .setIdTarea(idTarea)
+                    .setFechaArchivada(new Timestamp(System.currentTimeMillis()))
+                    .setEstado("archivada")
+                    .build();
+
+            this.tareaController.actualizarTarea(tareaArchivar);
+        }
+    }//GEN-LAST:event_btnArchivarActionPerformed
 
     //poner nombre
     private void jTextFieldNombresUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNombresUsuarioActionPerformed
@@ -477,6 +503,24 @@ public class frmTareasGeneral extends javax.swing.JFrame {
     private void jButtonEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEstadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonEstadoActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int confirmar = JOptionPane.showConfirmDialog(null,"¿Está seguro de eliminar la Tarea?",
+                "Confirmar Archivado",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+
+        if (confirmar == JOptionPane.YES_OPTION) {
+            int filaSeleccionada = this.TableTareas.getSelectedRow();
+
+            if (filaSeleccionada == -1) {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una tarea de la tabla");
+                return;
+            }
+
+            int idTarea = Integer.parseInt(this.TableTareas.getModel().getValueAt(filaSeleccionada, 0).toString());
+
+            this.tareaController.eliminarTarea(idTarea);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {
         this.tareaController.obetenerTodasLasTareas(this.usuario,this.TableTareas);
@@ -565,9 +609,9 @@ public class frmTareasGeneral extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TableTareas;
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnArchivar;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton eliminar;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonCategoria;
     private javax.swing.JButton jButtonCerrarSesion;
     private javax.swing.JButton jButtonEstado;

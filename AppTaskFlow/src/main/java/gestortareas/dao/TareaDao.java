@@ -21,4 +21,5 @@ public interface TareaDao {
     TareaDetalle getTareaIDdetalle(int idTarea);
     boolean actualizarTarea(Tarea tarea);
     Tarea obtenerTarea(int idTarea);
+    boolean eliminarTarea(int idTarea);
 }
